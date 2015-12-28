@@ -8,12 +8,12 @@ package com.d2s2.spade.models;
  *
  * @author Heshan Sandamal
  */
-public class Kiyath extends Item{
+public class Cutter extends Item{
     
-    private  String size;
+    private String size;
     private int noOfTips;
+    private String thickness;
 
-   
     /**
      * @return the size
      */
@@ -41,6 +41,21 @@ public class Kiyath extends Item{
     public void setNoOfTips(int noOfTips) {
         this.noOfTips = noOfTips;
     }
+
+    /**
+     * @return the thickness
+     */
+    public String getThickness() {
+        return thickness;
+    }
+
+    /**
+     * @param thickness the thickness to set
+     */
+    public void setThickness(String thickness) {
+        this.thickness = thickness;
+    }
+    
     
     
 }
