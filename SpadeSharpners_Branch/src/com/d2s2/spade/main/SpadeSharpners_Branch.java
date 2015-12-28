@@ -5,6 +5,9 @@
 package com.d2s2.spade.main;
 
 import com.d2s2.spade.view.MainInterface;
+import com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel;
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+import javax.swing.UIManager;
 
 /**
  *
@@ -17,6 +20,11 @@ public class SpadeSharpners_Branch {
      */
     public static void main(String[] args) {
         System.out.println("starting the application");
+        
+        try {
+            UIManager.setLookAndFeel(new WindowsLookAndFeel());
+        } catch (Exception e) {
+        }
         new MainInterface().setVisible(true);
     }
 }
