@@ -1,0 +1,114 @@
+
+----------------------------Customer---------------------------------------------
+
+CREATE TABLE Customer(
+	customerId varchar(10),
+	name varchar(30),
+	address varchar(50),
+	PRIMARY KEY(customerId)
+);
+
+
+CREATE TABLE CustomerTelephone(
+	customerId varchar(10),
+	telNo varchar(10),
+	PRIMARY KEY(customerId,telNo),
+	FOREIGN KEY F1(customerId) REFERENCES Customer(customerId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+CREATE TABLE CustPayment(
+	paymentId varchar(12),
+	customerId varchar(10),
+	type varchar(3),				cash:csh, cheque:chq
+	amount double,
+	discount double,
+	date date,
+	PRIMARY KEY(customerId),
+	FOREIGN KEY F1(customerId) REFERENCES Customer(customerId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+//another attributes should be added
+
+CREATE TABLE CustCheque(
+	paymentId varchar(12),
+	chequeNo varchar(20),
+	bank varchar(15),
+	expDate date,
+	issueDate date,
+	status varchar(10),		active or returned
+	PRIMARY KEY(paymentId),
+	FOREIGN KEY F1(paymentId) REFERENCES CustPayment(paymentId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE CustDebt(
+	customerId varchar(10),
+	amount double,
+	PRIMARY KEY(customerId),
+	FOREIGN KEY F1(customerId) REFERENCES Customer(customerId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+----------------------------------Supplier----------------------------------
+
+CREATE TABLE Supplier(
+	supplierId varchar(10),
+	name varchar(30),
+	address varchar(50),
+	email varchar(15),
+	PRIMARY KEY(supplierId)
+);
+
+
+CREATE TABLE SupplierTelephone(
+	supplierId varchar(10),
+	contactName varchar(10),
+	telNo varchar(10),
+	PRIMARY KEY(supplierId,telNo),
+	FOREIGN KEY F1(supplierId) REFERENCES Supplier(supplierId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE SupPayment(
+	paymentId varchar(12),
+	supplierId varchar(10),
+	type varchar(3),				cash:csh, cheque:chq
+	amount double,
+	date date,
+	PRIMARY KEY(supplierId),
+	FOREIGN KEY F1(supplierId) REFERENCES Supplier(supplierId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+CREATE TABLE SupCheque(
+	paymentId varchar(12),
+	chequeNo varchar(20),
+	bank varchar(15),
+	expDate date,
+	issueDate date,
+	status varchar(10),		active or returned
+	PRIMARY KEY(paymentId),
+	FOREIGN KEY F1(paymentId) REFERENCES SupPayment(paymentId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE SupDebt(
+	supplierId varchar(10),
+	amount double,
+	PRIMARY KEY(supplierId),
+	FOREIGN KEY F1(supplierId) REFERENCES Supplier(supplierId) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+
+
+
+
+
+
