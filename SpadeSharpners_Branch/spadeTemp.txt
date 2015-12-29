@@ -106,9 +106,18 @@ CREATE TABLE SupDebt(
 
 
 
+---------------------------------------------Item------------------------------------------------------
 
+CREATE TABLE ItemCategory(
+	itemCode varchar(8),				
+	category varchar(25),				
+	PRIMARY KEY(itemCode)
+);
 
-
+CREATE TABLE Brand(
+	brandId varchar(5) PRIMARY KEY,
+	brand varchar(20)
+);
 
 
 

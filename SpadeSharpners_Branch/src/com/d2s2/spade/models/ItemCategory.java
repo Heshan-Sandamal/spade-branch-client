@@ -11,6 +11,14 @@ package com.d2s2.spade.models;
 public class ItemCategory {
     private String itemCode;
     private String category;
+    
+    public static final String ITEMCODE="itemCode";
+    public static final String CATEGORY="category";
+
+    public ItemCategory(String itemCode, String category) {
+        this.itemCode=itemCode;
+        this.category=category;
+    }
 
     /**
      * @return the itemCode

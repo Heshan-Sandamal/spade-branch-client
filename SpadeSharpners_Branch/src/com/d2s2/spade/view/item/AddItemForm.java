@@ -5,8 +5,10 @@
 package com.d2s2.spade.view.item;
 
 import com.d2s2.spade.controllers.item.BrandController;
+import com.d2s2.spade.controllers.item.ItemCategoryController;
 import com.d2s2.spade.models.Brand;
 import com.d2s2.spade.models.Item;
+import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,15 +26,19 @@ public class AddItemForm extends javax.swing.JDialog {
      */
     Item item;
     private ArrayList<Brand> allBrands;
+    private ArrayList<ItemCategory> allCategories;
 
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         try {
             getAllBrands();
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        }
+        try {
+            getAllItemCategories();
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -142,7 +148,7 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel4.setText("Sale/Non-Sale");
 
-        salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
 
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -579,6 +585,11 @@ public class AddItemForm extends javax.swing.JDialog {
         itemCategoryAddButton.setText("Add");
 
         brandAddButton.setText("Add");
+        brandAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brandAddButtonActionPerformed(evt);
+            }
+        });
 
         supplierAddButton.setText("Add");
 
@@ -687,6 +698,10 @@ public class AddItemForm extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
+        int selectedIndex = itemCategoryCombo.getSelectedIndex();
+        if (selectedIndex != -1) {
+            itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
+        }
     }//GEN-LAST:event_itemCategoryComboItemStateChanged
 
     private void brandComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandComboItemStateChanged
@@ -699,6 +714,10 @@ public class AddItemForm extends javax.swing.JDialog {
     private void brandComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_brandComboActionPerformed
+
+    private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brandAddButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -844,6 +863,9 @@ public class AddItemForm extends javax.swing.JDialog {
 
     }
 
+    
+    //----------------------------------Constructor calls---------------------------------------------------
+    
     private void getAllBrands() throws ClassNotFoundException, SQLException {
         allBrands = BrandController.getAllBrands();
         brandCombo.removeAllItems();
@@ -853,4 +875,16 @@ public class AddItemForm extends javax.swing.JDialog {
 
 
     }
+    private void getAllItemCategories() throws ClassNotFoundException, SQLException {
+        allCategories = ItemCategoryController.getAllItemCategories();
+        itemCategoryCombo.removeAllItems();
+        for (ItemCategory itemCategory : allCategories) {
+            itemCategoryCombo.addItem(itemCategory.getCategory());
+        }
+        
+
+
+    }
+    
+    //---------------------------------------------------------------------------------------------------------------
 }
