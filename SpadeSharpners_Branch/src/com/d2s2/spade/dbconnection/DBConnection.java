@@ -19,7 +19,7 @@ public class DBConnection {
 
     private DBConnection() throws ClassNotFoundException, SQLException {
        Class.forName("com.mysql.jdbc.Driver");
-       connection = DriverManager.getConnection("jdbc:mysql://localhost/spades", "root", null);
+       connection = DriverManager.getConnection("jdbc:mysql://localhost/spadebranchdb", "root", "12345");
         
 
     }
