@@ -9,7 +9,6 @@ import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Customer;
 import com.d2s2.spade.models.CustomerTelephone;
-import java.awt.geom.Arc2D;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
