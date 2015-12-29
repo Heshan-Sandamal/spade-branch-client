@@ -82,9 +82,17 @@ public class AddBrandForm extends javax.swing.JDialog {
                 {null, null}
             },
             new String [] {
-                "Title 1", "Title 2"
+                "BrandID", "Brand Name"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(brandTable);
 
         jScrollPane3.setViewportView(jScrollPane2);
@@ -131,9 +139,9 @@ public class AddBrandForm extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(brandAddButton)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -188,6 +196,7 @@ public class AddBrandForm extends javax.swing.JDialog {
                 boolean addBrand = addBrand();
                 if (addBrand) {
                     JOptionPane.showMessageDialog(this, "New Brand type added successfully");
+                    getAllBrandTypes();
                 }else if(!addBrand && !isBrandEmpty){           
                     JOptionPane.showMessageDialog(this, "Failed to new brand type");
                 }

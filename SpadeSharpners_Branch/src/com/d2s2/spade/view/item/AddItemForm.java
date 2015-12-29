@@ -4,8 +4,14 @@
  */
 package com.d2s2.spade.view.item;
 
+import com.d2s2.spade.controllers.item.BrandController;
+import com.d2s2.spade.models.Brand;
 import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.Kiyath;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,11 +22,20 @@ public class AddItemForm extends javax.swing.JDialog {
     /**
      * Creates new form AddItemForm
      */
-    
     Item item;
+    private ArrayList<Brand> allBrands;
+
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        try {
+            getAllBrands();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -132,8 +147,23 @@ public class AddItemForm extends javax.swing.JDialog {
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        brandCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                brandComboItemStateChanged(evt);
+            }
+        });
+        brandCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brandComboActionPerformed(evt);
+            }
+        });
 
         itemCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemCategoryCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                itemCategoryComboItemStateChanged(evt);
+            }
+        });
 
         jLabel9.setText("Size");
 
@@ -656,6 +686,20 @@ public class AddItemForm extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
+    }//GEN-LAST:event_itemCategoryComboItemStateChanged
+
+    private void brandComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandComboItemStateChanged
+        int selectedIndex = brandCombo.getSelectedIndex();
+        if (selectedIndex != -1) {
+            brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
+        }
+    }//GEN-LAST:event_brandComboItemStateChanged
+
+    private void brandComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brandComboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -776,16 +820,15 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JTextField supplierIdTextField;
     // End of variables declaration//GEN-END:variables
 
-    
-      private void setItemDetails(){
-        
-        String code=codeTextField.getText();
-        String supplierId=supplierIdTextField.getText();
-        String brandId=brandTextField.getText();
-        String itemCode=itemCategoryIdTextField.getText();
-        String subId=subIdTextField.getText();
-        String salesType=salesTypeCombo.getSelectedItem().toString();
-        
+    private void setItemDetails() {
+
+        String code = codeTextField.getText();
+        String supplierId = supplierIdTextField.getText();
+        String brandId = brandTextField.getText();
+        String itemCode = itemCategoryIdTextField.getText();
+        String subId = subIdTextField.getText();
+        String salesType = salesTypeCombo.getSelectedItem().toString();
+
         item.setCode(code);
         item.setBrandId(brandId);
         item.setItemCode(itemCode);
@@ -793,19 +836,21 @@ public class AddItemForm extends javax.swing.JDialog {
         item.setType(salesType);
         item.setSupplierId(supplierId);
     }
-    
-    
-    private void addKiyath(){
-        item=new Kiyath();
-        
-        
-        
+
+    private void addKiyath() {
+        item = new Kiyath();
+
+
+
     }
-    
+
+    private void getAllBrands() throws ClassNotFoundException, SQLException {
+        allBrands = BrandController.getAllBrands();
+        brandCombo.removeAllItems();
+        for (Brand brand : allBrands) {
+            brandCombo.addItem(brand.getBrand());
+        }
 
 
-
-
-
-
+    }
 }
