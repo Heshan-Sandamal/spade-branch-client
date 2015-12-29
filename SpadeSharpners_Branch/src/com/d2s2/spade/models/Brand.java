@@ -11,6 +11,21 @@ package com.d2s2.spade.models;
 public class Brand {
     private String brandId;
     private String brand;
+    
+    public static final String BRANDID="brandId";;
+    public static final String BRAND="brand";
+    
+ 
+   
+
+    public Brand(String brandId, String brand) {
+        this.brandId=brandId;
+        this.brand=brand;
+    }
+
+    public Brand() {
+        
+    }
 
     /**
      * @return the brandId
