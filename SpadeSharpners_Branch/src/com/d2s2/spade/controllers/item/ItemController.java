@@ -9,6 +9,7 @@ import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Item;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -33,4 +34,14 @@ public class ItemController {
         
         return DBHandler.setData(connection, sql,ob)>0 ? true:false;
     }
+    
+    public static String getLastSubId(Item item) throws ClassNotFoundException, SQLException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = "SELECT subId FROM Item WHERE itemCode=? and brandId=? and supplierId=? ORDER BY itemCode,brandId,supplierId DESC LIMIT 1";
+        Object[] ob=new Object[]{item.getItemCode(),item.getBrandId(),item.getSupplierId()};
+        ResultSet resultSet = DBHandler.getData(connection, sql,ob);
+        resultSet.next();
+        return resultSet.getString(Item.SUBID);
+    }
+    
 }

@@ -7,6 +7,7 @@ package com.d2s2.spade.view.item;
 import com.d2s2.spade.controllers.item.BrandController;
 import com.d2s2.spade.controllers.item.CutterController;
 import com.d2s2.spade.controllers.item.ItemCategoryController;
+import com.d2s2.spade.controllers.item.ItemController;
 import com.d2s2.spade.controllers.item.KiyathController;
 import com.d2s2.spade.controllers.item.PlanerBladeController;
 import com.d2s2.spade.controllers.item.RouterCutterController;
@@ -22,6 +23,7 @@ import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +41,7 @@ public class AddItemForm extends javax.swing.JDialog {
     Item item;
     private ArrayList<Brand> allBrands;
     private ArrayList<ItemCategory> allCategories;
-    
+
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -48,12 +50,28 @@ public class AddItemForm extends javax.swing.JDialog {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         try {
             getAllItemCategories();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        try {
+            generateId();
+        } catch (ClassNotFoundException | SQLException ex) {
+
+            if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                subIdTextField.setText("SB-0001");
+            } else {
+                JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+            }
+        }
+
+
+
+
+
     }
 
     /**
@@ -80,7 +98,7 @@ public class AddItemForm extends javax.swing.JDialog {
         itemCategoryCombo = new javax.swing.JComboBox();
         itemCategoryIdTextField = new javax.swing.JTextField();
         supplierIdTextField = new javax.swing.JTextField();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        itemDetailsTab = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox();
@@ -150,6 +168,8 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel5.setText("Code");
 
+        codeTextField.setEnabled(false);
+
         jLabel1.setText("Item Category");
 
         jLabel2.setText("Brand");
@@ -162,7 +182,7 @@ public class AddItemForm extends javax.swing.JDialog {
 
         salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
 
-        supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001" }));
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         brandCombo.addItemListener(new java.awt.event.ItemListener() {
@@ -230,7 +250,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Kiyath", jPanel2);
+        itemDetailsTab.addTab("Kiyath", jPanel2);
 
         jLabel12.setText("Size");
 
@@ -271,7 +291,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Router Cutters", jPanel3);
+        itemDetailsTab.addTab("Router Cutters", jPanel3);
 
         jLabel13.setText("Size");
 
@@ -324,7 +344,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Planer Blades", jPanel4);
+        itemDetailsTab.addTab("Planer Blades", jPanel4);
 
         jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -381,7 +401,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cutters", jPanel5);
+        itemDetailsTab.addTab("Cutters", jPanel5);
 
         jComboBox11.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -443,7 +463,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Tips", jPanel6);
+        itemDetailsTab.addTab("Tips", jPanel6);
 
         jLabel21.setText("Size");
 
@@ -508,7 +528,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Wheels", jPanel7);
+        itemDetailsTab.addTab("Wheels", jPanel7);
 
         jLabel25.setText("Description");
 
@@ -540,7 +560,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(92, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Plux", jPanel8);
+        itemDetailsTab.addTab("Plux", jPanel8);
 
         jLabel26.setText("Type");
 
@@ -585,7 +605,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Silver Sole", jPanel9);
+        itemDetailsTab.addTab("Silver Sole", jPanel9);
 
         jLabel28.setText("Description");
 
@@ -622,7 +642,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(92, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Other", jPanel10);
+        itemDetailsTab.addTab("Other", jPanel10);
 
         itemCategoryAddButton.setText("Add");
 
@@ -642,7 +662,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(itemDetailsTab)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -728,7 +748,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(salesTypeCombo)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(itemDetailsTab, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
@@ -738,29 +758,64 @@ public class AddItemForm extends javax.swing.JDialog {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
-    
+
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
         int selectedIndex = itemCategoryCombo.getSelectedIndex();
         if (selectedIndex != -1) {
             itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
+
+            try {
+                generateId();
+            } catch (ClassNotFoundException | SQLException ex) {
+
+                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                    subIdTextField.setText("SB-0001");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+                }
+            }
+
+
+            setCode();
+
+
+
         }
     }//GEN-LAST:event_itemCategoryComboItemStateChanged
-    
+
     private void brandComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandComboItemStateChanged
         int selectedIndex = brandCombo.getSelectedIndex();
         if (selectedIndex != -1) {
             brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
+
+
+            try {
+                generateId();
+            } catch (ClassNotFoundException | SQLException ex) {
+
+                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                    subIdTextField.setText("SB-0001");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+                }
+            }
+
+            //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
+            if (!itemCategoryIdTextField.getText().isEmpty()) {
+                setCode();
+            }
+
         }
     }//GEN-LAST:event_brandComboItemStateChanged
-    
+
     private void brandComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_brandComboActionPerformed
-    
+
     private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_brandAddButtonActionPerformed
-    
+
     private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -768,16 +823,16 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addKiyath = addKiyath();
                 if (addKiyath) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    
+
                 }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_kiyathAddButtonActionPerformed
-    
+
     private void routerCutterAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routerCutterAddButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -785,16 +840,16 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addRouterCutter = addRouterCutter();
                 if (addRouterCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    
+
                 }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_routerCutterAddButtonActionPerformed
-    
+
     private void planerBladeAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planerBladeAddButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -802,16 +857,16 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addPlanerBlade = addPlanerBlade();
                 if (addPlanerBlade) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    
+
                 }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_planerBladeAddButtonActionPerformed
-    
+
     private void addCutterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCutterButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -819,16 +874,16 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addCutter = addCutter();
                 if (addCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    
+
                 }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_addCutterButtonActionPerformed
-    
+
     private void tipAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipAddButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -836,16 +891,16 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addTip = addTip();
                 if (addTip) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    
+
                 }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_tipAddButtonActionPerformed
-    
+
     private void wheelAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelAddButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -853,13 +908,13 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addwheel = addWheel();
                 if (addwheel) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    
+
                 }
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_wheelAddButtonActionPerformed
 
@@ -913,6 +968,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JButton itemCategoryAddButton;
     private javax.swing.JComboBox itemCategoryCombo;
     private javax.swing.JTextField itemCategoryIdTextField;
+    private javax.swing.JTabbedPane itemDetailsTab;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -960,7 +1016,6 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
@@ -984,14 +1039,20 @@ public class AddItemForm extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void setItemDetails() {
-        
+
         String code = codeTextField.getText();
         String supplierId = supplierIdTextField.getText();
         String brandId = brandTextField.getText();
         String itemCode = itemCategoryIdTextField.getText();
         String subId = subIdTextField.getText();
         String salesType = salesTypeCombo.getSelectedItem().toString();
-        
+
+        if (salesType.equals("Sale")) {
+            salesType = "sl";
+        } else {
+            salesType = "nsl";
+        }
+
         item.setCode(code);
         item.setBrandId(brandId);
         item.setItemCode(itemCode);
@@ -1007,19 +1068,19 @@ public class AddItemForm extends javax.swing.JDialog {
         for (Brand brand : allBrands) {
             brandCombo.addItem(brand.getBrand());
         }
-        
-        
+
+
     }
-    
+
     private void getAllItemCategories() throws ClassNotFoundException, SQLException {
         allCategories = ItemCategoryController.getAllItemCategories();
         itemCategoryCombo.removeAllItems();
         for (ItemCategory itemCategory : allCategories) {
             itemCategoryCombo.addItem(itemCategory.getCategory());
         }
-        
-        
-        
+
+
+
     }
     //---------------------------------------------------------------------------------------------------------------
 
@@ -1032,73 +1093,72 @@ public class AddItemForm extends javax.swing.JDialog {
         //get details from the view
         kiyath.setSize("large");
         kiyath.setNoOfTips(10);
-        
+
         return KiyathController.addItem(kiyath);
-        
+
     }
-    
+
     private boolean addRouterCutter() throws ClassNotFoundException, SQLException {
         item = new RouterCutter();
         setItemDetails();
-        
+
         RouterCutter routerCutter = (RouterCutter) item;
 
         //get details from view
         routerCutter.setSize("large");
-        
+
         return RouterCutterController.addItem(routerCutter);
     }
-    
+
     private boolean addPlanerBlade() throws ClassNotFoundException, SQLException {
-        
+
         item = new PlanerBlade();
         setItemDetails();
-        
+
         PlanerBlade planerBlade = (PlanerBlade) item;
 
         //get details from view
         planerBlade.setSize("large");
         planerBlade.setType("ss");
-        
+
         return PlanerBladeController.addItem(planerBlade);
-        
+
     }
-    
-    
+
     private boolean addCutter() throws ClassNotFoundException, SQLException {
-        
+
         item = new Cutter();
         setItemDetails();
-        
+
         Cutter cutter = (Cutter) item;
 
         //get details from view
         cutter.setNoOfTips(10);
         cutter.setSize("large");
         cutter.setThickness("10");
-        
+
         return CutterController.addItem(cutter);
-        
+
     }
-    
+
     private boolean addTip() throws ClassNotFoundException, SQLException {
         item = new Tip();
         setItemDetails();
-        
+
         Tip tip = (Tip) item;
 
         //get details from view
         tip.setSize("large");
         tip.setCountry("sri lanka");
         tip.setPrice(100.00);
-        
+
         return TipController.addItem(tip);
     }
-    
+
     private boolean addWheel() throws ClassNotFoundException, SQLException {
         item = new Wheel();
         setItemDetails();
-        
+
         Wheel wheel = (Wheel) item;
 
         //get details from view
@@ -1106,11 +1166,54 @@ public class AddItemForm extends javax.swing.JDialog {
         wheel.setCountry("omd");
         wheel.setDiameter(100.00);
         wheel.setHole(20.00);
-        
+
         return WheelController.addItem(wheel);
-        
+
     }
 
     //-----------------------------------------------------------------------------------------------
-    
+    private void generateId() throws ClassNotFoundException, SQLException {
+        item = new Item();
+
+        String supplierId = supplierIdTextField.getText();
+        String brandId = brandTextField.getText();
+        String itemCode = itemCategoryIdTextField.getText();
+
+        item.setSupplierId(supplierId);
+        item.setBrandId(brandId);
+        item.setItemCode(itemCode);
+
+        String lastId = ItemController.getLastSubId(item);          //SB-0001
+
+        lastId = lastId.substring(3);             //0001
+        int newIdVal = Integer.parseInt(lastId) + 1;
+
+        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
+        numberFormat.setGroupingUsed(false);
+        numberFormat.setMinimumIntegerDigits(4);
+        String newId = "SB-" + numberFormat.format(newIdVal);
+        subIdTextField.setText(newId);
+    }
+
+    private void setCode() {
+
+        try {
+            String itemCode = itemCategoryIdTextField.getText();
+            String brandId = brandTextField.getText();
+            String supplierId = supplierIdTextField.getText();
+            String subId = subIdTextField.getText();
+
+            itemCode = itemCode.substring(2);
+            brandId = brandId.substring(2);
+            supplierId = supplierId.substring(2);
+            subId = subId.substring(3);
+
+            codeTextField.setText(itemCode + ":" + brandId + ":" + supplierId + ":" + subId);
+        } catch (Exception e) {
+            codeTextField.setText("invalid");
+//            jPanel1.setEnabled(false);
+        }
+
+
+    }
 }
