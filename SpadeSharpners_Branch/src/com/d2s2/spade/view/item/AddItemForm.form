@@ -68,14 +68,12 @@
                                   <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="itemCategoryCombo" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="itemCategoryIdTextField" min="-2" pref="119" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="itemCategoryCombo" pref="130" max="32767" attributes="0"/>
                                   <Component id="codeTextField" max="32767" attributes="0"/>
                               </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="itemCategoryIdTextField" min="-2" pref="119" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -200,6 +198,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="subIdTextField">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="supplierCombo">
       <Properties>
@@ -244,6 +245,9 @@
     <Component class="javax.swing.JTextField" name="itemCategoryIdTextField">
     </Component>
     <Component class="javax.swing.JTextField" name="supplierIdTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="S-0001"/>
+      </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="itemDetailsTab">
 

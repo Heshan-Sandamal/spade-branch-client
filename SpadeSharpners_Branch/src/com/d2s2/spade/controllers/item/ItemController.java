@@ -37,7 +37,7 @@ public class ItemController {
     
     public static String getLastSubId(Item item) throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = "SELECT subId FROM Item WHERE itemCode=? and brandId=? and supplierId=? ORDER BY itemCode,brandId,supplierId DESC LIMIT 1";
+        String sql = "SELECT subId FROM Item WHERE itemCode=? and brandId=? and supplierId=? ORDER BY subId DESC LIMIT 1";
         Object[] ob=new Object[]{item.getItemCode(),item.getBrandId(),item.getSupplierId()};
         ResultSet resultSet = DBHandler.getData(connection, sql,ob);
         resultSet.next();

@@ -182,6 +182,8 @@ public class AddItemForm extends javax.swing.JDialog {
 
         salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
 
+        subIdTextField.setEnabled(false);
+
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001" }));
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -202,6 +204,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 itemCategoryComboItemStateChanged(evt);
             }
         });
+
+        supplierIdTextField.setText("S-0001");
 
         jLabel9.setText("Size");
 
@@ -695,12 +699,11 @@ public class AddItemForm extends javax.swing.JDialog {
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(itemCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(codeTextField))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(itemCategoryCombo, 0, 130, Short.MAX_VALUE)
+                                    .addComponent(codeTextField))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(itemCategoryAddButton)
@@ -823,6 +826,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addKiyath = addKiyath();
                 if (addKiyath) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
 
                 }
             }
@@ -840,6 +845,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addRouterCutter = addRouterCutter();
                 if (addRouterCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
 
                 }
             }
@@ -857,6 +864,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addPlanerBlade = addPlanerBlade();
                 if (addPlanerBlade) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
 
                 }
             }
@@ -874,6 +883,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addCutter = addCutter();
                 if (addCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
 
                 }
             }
@@ -891,6 +902,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addTip = addTip();
                 if (addTip) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
 
                 }
             }
@@ -908,6 +921,8 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addwheel = addWheel();
                 if (addwheel) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
 
                 }
             }
