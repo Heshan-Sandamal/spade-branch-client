@@ -7,6 +7,7 @@ package com.d2s2.spade.view.item;
 import com.d2s2.spade.controllers.item.BrandController;
 import com.d2s2.spade.models.Brand;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,6 +117,8 @@ public class AddBrandForm extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Add New Brand"));
 
         jLabel1.setText("Brand ID:");
+
+        brandIdTextField.setEditable(false);
 
         brandAddButton.setText("Add Brand");
         brandAddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -316,6 +319,28 @@ public class AddBrandForm extends javax.swing.JDialog {
             dtm.addRow(new Object[]{brand.getBrandId(),brand.getBrand()});
         }
         
+        int size = allBrands.size();
+        if (size != 0) {
+            generateId(allBrands.get(size - 1).getBrandId());
+        } else {
+            brandIdTextField.setText("B-001");
+            brandTextField.setText("");
+        }
+    }
+    
+    
+     private void generateId(String lastId) {
+        //SB-0001
+
+        lastId = lastId.substring(2);             //0001
+        int newIdVal = Integer.parseInt(lastId) + 1;
+
+        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
+        numberFormat.setGroupingUsed(false);
+        numberFormat.setMinimumIntegerDigits(3);
+        String newId = "B-" + numberFormat.format(newIdVal);
+        brandIdTextField.setText(newId);
+        brandTextField.setText("");
     }
     
     //-------------------------------------------------------------------------------------------------

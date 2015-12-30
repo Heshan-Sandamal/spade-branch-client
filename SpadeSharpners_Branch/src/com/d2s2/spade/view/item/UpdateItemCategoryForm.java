@@ -19,35 +19,36 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Heshan Sandamal
  */
-public class AddItemCategoryForm extends javax.swing.JDialog {
+public class UpdateItemCategoryForm extends javax.swing.JDialog {
 
     private boolean isCategoryEmpty;
     AddItemForm addItemForm;
+    private DefaultTableModel dtm;
 
     /**
      * Creates new form AddItemCategoryForm
      */
-    public AddItemCategoryForm(java.awt.Frame parent, boolean modal) {
+    public UpdateItemCategoryForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         addItemForm = null;
         try {
             getAllItemCategories();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddItemCategoryForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateItemCategoryForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
     }
 
-    AddItemCategoryForm(AddItemForm addItemForm, boolean b) {
+    UpdateItemCategoryForm(AddItemForm addItemForm, boolean b) {
         super(addItemForm, b);
         initComponents();
         this.addItemForm = addItemForm;               //to update itemcategoriesCombo in AddItemForm
         try {
             getAllItemCategories();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddItemCategoryForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateItemCategoryForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -73,13 +74,13 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Add New Category"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Update existing Category"));
 
         jLabel5.setText("Item Code:");
 
         itemCodeTextField.setEditable(false);
 
-        categoryAddButton.setText("Add Category");
+        categoryAddButton.setText("Update Category");
         categoryAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoryAddButtonActionPerformed(evt);
@@ -93,7 +94,7 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
@@ -101,7 +102,7 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(categoryAddButton)
                     .addComponent(itemCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(categoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(categoryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -122,7 +123,7 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("<html>View & Add <br> Item Categories</html>");
+        jLabel7.setText("<html>Update<br> Item Categories</html>");
 
         jLabel8.setText("Existing Item Categories:");
 
@@ -145,39 +146,50 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        categoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                categoryTableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(categoryTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
+                        .addGap(43, 43, 43)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel8)
+                        .addGap(7, 7, 7)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,11 +197,11 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
 
     private void categoryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this category??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this category??");
             if (showConfirmDialog == 0) {
-                boolean addCategory = addItemCategory();
-                if (addCategory) {
-                    JOptionPane.showMessageDialog(this, "New category type added successfully");
+                boolean updateCategory = updateItemCategory();
+                if (updateCategory) {
+                    JOptionPane.showMessageDialog(this, "category type updated successfully");
 
                     if (addItemForm != null) {
                         addItemForm.updateItemCategoriesCombo(categoryTextField.getText());
@@ -200,16 +212,25 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
 
 
 
-                } else if (!addCategory && !isCategoryEmpty) {
-                    JOptionPane.showMessageDialog(this, "Failed to new category");
+                } else if (!updateCategory && !isCategoryEmpty) {
+                    JOptionPane.showMessageDialog(this, "Failed to update category");
                 }
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Unable to new category due to " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to update category due to " + ex.getMessage());
             ex.printStackTrace();
         }
     }//GEN-LAST:event_categoryAddButtonActionPerformed
+
+    private void categoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryTableMouseClicked
+        int selectedRow = categoryTable.getSelectedRow();
+        dtm=(DefaultTableModel)categoryTable.getModel();
+        if(selectedRow!=-1){
+            itemCodeTextField.setText(dtm.getValueAt(categoryTable.getSelectedRow(), 0).toString());
+            categoryTextField.setText(dtm.getValueAt(categoryTable.getSelectedRow(), 1).toString());
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_categoryTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -228,20 +249,20 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemCategoryForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddItemCategoryForm dialog = new AddItemCategoryForm(new javax.swing.JFrame(), true);
+                UpdateItemCategoryForm dialog = new UpdateItemCategoryForm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -275,47 +296,29 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
             dtm.addRow(new Object[]{itemCategory.getItemCode(), itemCategory.getCategory()});
         }
 
-        int size = allCategories.size();
-        if (size != 0) {
-            generateId(allCategories.get(size - 1).getItemCode());
-        } else {
-            itemCodeTextField.setText("C-0001");
-            categoryTextField.setText("");
-        }
-
+        
 
 
 
     }
 
-    private void generateId(String lastId) {
-        //SB-0001
-
-        lastId = lastId.substring(2);             //0001
-        int newIdVal = Integer.parseInt(lastId) + 1;
-
-        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
-        numberFormat.setGroupingUsed(false);
-        numberFormat.setMinimumIntegerDigits(4);
-        String newId = "C-" + numberFormat.format(newIdVal);
-        itemCodeTextField.setText(newId);
-        categoryTextField.setText("");
-    }
 
     //----------------------------------------------------------------------------------------------
     //-----------------------------------add to database controller calls------------------------------
-    private boolean addItemCategory() throws ClassNotFoundException, SQLException {
+    
+
+    private boolean updateItemCategory() throws SQLException, ClassNotFoundException {
         String itemCode = itemCodeTextField.getText();
         String category = categoryTextField.getText();
 
-        if (category.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "category type can't be empty");
+        if (category.isEmpty() || itemCode.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "category type or itemCode can't be empty");
             isCategoryEmpty = true;              //isBrandEmpty->true when brandTextField is empty
             return false;
         } else {
             isCategoryEmpty = false;         ////isBrandEmpty->false when brandTextField is not empty
         }
 
-        return ItemCategoryController.addItemCategory(new ItemCategory(itemCode, category));
+        return ItemCategoryController.updateItemCategory(new ItemCategory(itemCode, category));
     }
 }

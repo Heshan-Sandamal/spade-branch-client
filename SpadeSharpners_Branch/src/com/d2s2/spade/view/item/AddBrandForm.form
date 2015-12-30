@@ -196,6 +196,9 @@
         <Component class="javax.swing.JTextField" name="brandTextField">
         </Component>
         <Component class="javax.swing.JTextField" name="brandIdTextField">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="brandAddButton">
           <Properties>
