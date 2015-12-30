@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +19,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Heshan Sandamal
  */
 public class AddItemCategoryForm extends javax.swing.JDialog {
+
     private boolean isCategoryEmpty;
+    AddItemForm addItemForm;
 
     /**
      * Creates new form AddItemCategoryForm
@@ -26,6 +29,18 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
     public AddItemCategoryForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        addItemForm=null;
+        try {
+            getAllItemCategories();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemCategoryForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    AddItemCategoryForm(AddItemForm addItemForm, boolean b) {
+        super(addItemForm, b);
+        initComponents();
+        this.addItemForm=addItemForm;               //to update itemcategoriesCombo in AddItemForm
         try {
             getAllItemCategories();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -170,14 +185,23 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
                 boolean addCategory = addItemCategory();
                 if (addCategory) {
                     JOptionPane.showMessageDialog(this, "New category type added successfully");
+                    
+                    if(addItemForm!=null){
+                        addItemForm.updateItemCategoriesCombo(categoryTextField.getText());
+                        this.dispose();
+                    }
+                    
                     getAllItemCategories();
-                }else if(!addCategory && !isCategoryEmpty){
+                    
+                    
+                    
+                } else if (!addCategory && !isCategoryEmpty) {
                     JOptionPane.showMessageDialog(this, "Failed to new category");
                 }
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Unable to new category due to "+ ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to new category due to " + ex.getMessage());
             ex.printStackTrace();
         }
     }//GEN-LAST:event_categoryAddButtonActionPerformed
@@ -236,40 +260,30 @@ public class AddItemCategoryForm extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    
-    
-    
-    
     //---------------------------------------constuctor calls-----------------------------
-    
     private void getAllItemCategories() throws ClassNotFoundException, SQLException {
         ArrayList<ItemCategory> allCategories = ItemCategoryController.getAllItemCategories();
-        DefaultTableModel dtm=(DefaultTableModel) categoryTable.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) categoryTable.getModel();
         dtm.setRowCount(0);
-        
-        for (ItemCategory itemCategory : allCategories) {
-            dtm.addRow(new Object[]{itemCategory.getItemCode(),itemCategory.getCategory()});
-        }
-        
-    }
-    
-    //----------------------------------------------------------------------------------------------
-    
-    
-    //-----------------------------------add to database controller calls------------------------------
 
+        for (ItemCategory itemCategory : allCategories) {
+            dtm.addRow(new Object[]{itemCategory.getItemCode(), itemCategory.getCategory()});
+        }
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //-----------------------------------add to database controller calls------------------------------
     private boolean addItemCategory() throws ClassNotFoundException, SQLException {
         String itemCode = itemCodeTextField.getText();
         String category = categoryTextField.getText();
 
         if (category.isEmpty()) {
             JOptionPane.showMessageDialog(this, "category type can't be empty");
-            isCategoryEmpty=true;              //isBrandEmpty->true when brandTextField is empty
+            isCategoryEmpty = true;              //isBrandEmpty->true when brandTextField is empty
             return false;
-        }else{
-            isCategoryEmpty=false;         ////isBrandEmpty->false when brandTextField is not empty
+        } else {
+            isCategoryEmpty = false;         ////isBrandEmpty->false when brandTextField is not empty
         }
 
         return ItemCategoryController.addItemCategory(new ItemCategory(itemCode, category));

@@ -11,6 +11,7 @@ import com.d2s2.spade.controllers.item.ItemController;
 import com.d2s2.spade.controllers.item.KiyathController;
 import com.d2s2.spade.controllers.item.PlanerBladeController;
 import com.d2s2.spade.controllers.item.RouterCutterController;
+import com.d2s2.spade.controllers.item.SilverSoleController;
 import com.d2s2.spade.controllers.item.TipController;
 import com.d2s2.spade.controllers.item.WheelController;
 import com.d2s2.spade.models.Brand;
@@ -20,6 +21,7 @@ import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
 import com.d2s2.spade.models.PlanerBlade;
 import com.d2s2.spade.models.RouterCutter;
+import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
 import java.sql.SQLException;
@@ -41,6 +43,8 @@ public class AddItemForm extends javax.swing.JDialog {
     Item item;
     private ArrayList<Brand> allBrands;
     private ArrayList<ItemCategory> allCategories;
+    private AddItemCategoryForm addItemCategoryForm;
+    private AddBrandForm brandForm;
 
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -85,7 +89,6 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        codeTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -159,6 +162,8 @@ public class AddItemForm extends javax.swing.JDialog {
         itemCategoryAddButton = new javax.swing.JButton();
         brandAddButton = new javax.swing.JButton();
         supplierAddButton = new javax.swing.JButton();
+        codeTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -167,8 +172,6 @@ public class AddItemForm extends javax.swing.JDialog {
         jLabel6.setText("Add Item Form");
 
         jLabel5.setText("Code");
-
-        codeTextField.setEnabled(false);
 
         jLabel1.setText("Item Category");
 
@@ -182,7 +185,7 @@ public class AddItemForm extends javax.swing.JDialog {
 
         salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
 
-        subIdTextField.setEnabled(false);
+        subIdTextField.setEditable(false);
 
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001" }));
 
@@ -205,7 +208,14 @@ public class AddItemForm extends javax.swing.JDialog {
             }
         });
 
+        itemCategoryIdTextField.setEditable(false);
+        itemCategoryIdTextField.setBackground(new java.awt.Color(255, 255, 255));
+
+        supplierIdTextField.setEditable(false);
+        supplierIdTextField.setBackground(new java.awt.Color(255, 255, 255));
         supplierIdTextField.setText("S-0001");
+
+        itemDetailsTab.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jLabel9.setText("Size");
 
@@ -251,7 +261,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(kiyathAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Kiyath", jPanel2);
@@ -292,7 +302,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(routerCutterAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Router Cutters", jPanel3);
@@ -345,7 +355,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(planerBladeAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Planer Blades", jPanel4);
@@ -402,7 +412,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(addCutterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Cutters", jPanel5);
@@ -464,7 +474,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(tipAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Tips", jPanel6);
@@ -527,7 +537,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(wheelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -561,7 +571,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Plux", jPanel8);
@@ -569,6 +579,11 @@ public class AddItemForm extends javax.swing.JDialog {
         jLabel26.setText("Type");
 
         jButton8.setText("ADD Silver Sole");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jLabel27.setText("Price");
 
@@ -606,7 +621,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Silver Sole", jPanel9);
@@ -643,12 +658,20 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         itemDetailsTab.addTab("Other", jPanel10);
 
+        brandTextField.setEditable(false);
+        brandTextField.setBackground(new java.awt.Color(255, 255, 255));
+
         itemCategoryAddButton.setText("Add");
+        itemCategoryAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCategoryAddButtonActionPerformed(evt);
+            }
+        });
 
         brandAddButton.setText("Add");
         brandAddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -659,6 +682,13 @@ public class AddItemForm extends javax.swing.JDialog {
 
         supplierAddButton.setText("Add");
 
+        codeTextField.setEditable(false);
+        codeTextField.setBackground(new java.awt.Color(255, 255, 255));
+        codeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        codeTextField.setForeground(new java.awt.Color(51, 51, 255));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/d2s2/spade/view/images/scanner_add.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -666,7 +696,9 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(itemDetailsTab)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(itemDetailsTab)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -699,18 +731,20 @@ public class AddItemForm extends javax.swing.JDialog {
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(itemCategoryCombo, 0, 130, Short.MAX_VALUE)
-                                    .addComponent(codeTextField))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(itemCategoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(codeTextField))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(itemCategoryAddButton)
                             .addComponent(brandAddButton)
-                            .addComponent(supplierAddButton))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(supplierAddButton)
+                            .addComponent(itemCategoryAddButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -718,39 +752,48 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel6)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemCategoryCombo)
-                    .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemCategoryAddButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(brandAddButton))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(supplierCombo)
-                        .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(supplierAddButton))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(subIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(salesTypeCombo)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemCategoryCombo)
+                            .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemCategoryAddButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(brandAddButton))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(supplierCombo)
+                                .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supplierAddButton))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(salesTypeCombo)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(itemDetailsTab, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -764,6 +807,20 @@ public class AddItemForm extends javax.swing.JDialog {
 
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
         int selectedIndex = itemCategoryCombo.getSelectedIndex();
+        try {
+            int indexOfTab=itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
+            if(indexOfTab!=-1){
+                itemDetailsTab.setSelectedIndex(indexOfTab);
+            }else{
+                itemDetailsTab.setSelectedIndex(itemDetailsTab.indexOfTab("Other"));
+            }
+            itemDetailsTab.setEnabled(false);
+            
+            
+        } catch (Exception e) {
+        }
+        
+        
         if (selectedIndex != -1) {
             itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
 
@@ -816,7 +873,11 @@ public class AddItemForm extends javax.swing.JDialog {
     }//GEN-LAST:event_brandComboActionPerformed
 
     private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
-        // TODO add your handling code here:
+
+        if(brandForm==null){
+            brandForm=new AddBrandForm(this, true);       
+        }
+        brandForm.setVisible(true);
     }//GEN-LAST:event_brandAddButtonActionPerformed
 
     private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
@@ -933,6 +994,34 @@ public class AddItemForm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_wheelAddButtonActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addSilverSole = addSilverSole();
+                if (addSilverSole) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void itemCategoryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoryAddButtonActionPerformed
+
+        
+        if(addItemCategoryForm==null){
+            addItemCategoryForm=new AddItemCategoryForm(this, true); 
+        }       
+        addItemCategoryForm.setVisible(true);
+    }//GEN-LAST:event_itemCategoryAddButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1020,6 +1109,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
@@ -1097,8 +1187,53 @@ public class AddItemForm extends javax.swing.JDialog {
 
 
     }
-    //---------------------------------------------------------------------------------------------------------------
 
+    private void generateId() throws ClassNotFoundException, SQLException {
+        item = new Item();
+
+        String supplierId = supplierIdTextField.getText();
+        String brandId = brandTextField.getText();
+        String itemCode = itemCategoryIdTextField.getText();
+
+        item.setSupplierId(supplierId);
+        item.setBrandId(brandId);
+        item.setItemCode(itemCode);
+
+        String lastId = ItemController.getLastSubId(item);          //SB-0001
+
+        lastId = lastId.substring(3);             //0001
+        int newIdVal = Integer.parseInt(lastId) + 1;
+
+        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
+        numberFormat.setGroupingUsed(false);
+        numberFormat.setMinimumIntegerDigits(4);
+        String newId = "SB-" + numberFormat.format(newIdVal);
+        subIdTextField.setText(newId);
+    }
+
+    private void setCode() {
+
+        try {
+            String itemCode = itemCategoryIdTextField.getText();
+            String brandId = brandTextField.getText();
+            String supplierId = supplierIdTextField.getText();
+            String subId = subIdTextField.getText();
+
+            itemCode = itemCode.substring(2);
+            brandId = brandId.substring(2);
+            supplierId = supplierId.substring(2);
+            subId = subId.substring(3);
+
+            codeTextField.setText(itemCode + ":" + brandId + ":" + supplierId + ":" + subId);
+        } catch (Exception e) {
+            codeTextField.setText("invalid");
+//            jPanel1.setEnabled(false);
+        }
+
+
+    }
+
+    //---------------------------------------------------------------------------------------------------------------
     //---------------------------------controller calls to add to db-------------------------------
     private boolean addKiyath() throws ClassNotFoundException, SQLException {
         item = new Kiyath();
@@ -1186,49 +1321,36 @@ public class AddItemForm extends javax.swing.JDialog {
 
     }
 
+    private boolean addSilverSole() throws ClassNotFoundException, SQLException {
+        item = new SilverSole();
+        setItemDetails();
+
+        SilverSole silverSole = (SilverSole) item;
+
+        //get from view
+        silverSole.setType("type");
+        silverSole.setPrice(3.00);
+
+        return SilverSoleController.addItem(silverSole);
+
+    }
     //-----------------------------------------------------------------------------------------------
-    private void generateId() throws ClassNotFoundException, SQLException {
-        item = new Item();
 
-        String supplierId = supplierIdTextField.getText();
-        String brandId = brandTextField.getText();
-        String itemCode = itemCategoryIdTextField.getText();
-
-        item.setSupplierId(supplierId);
-        item.setBrandId(brandId);
-        item.setItemCode(itemCode);
-
-        String lastId = ItemController.getLastSubId(item);          //SB-0001
-
-        lastId = lastId.substring(3);             //0001
-        int newIdVal = Integer.parseInt(lastId) + 1;
-
-        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
-        numberFormat.setGroupingUsed(false);
-        numberFormat.setMinimumIntegerDigits(4);
-        String newId = "SB-" + numberFormat.format(newIdVal);
-        subIdTextField.setText(newId);
+    void updateItemCategoriesCombo(String itemCategory) {
+        try {
+            getAllItemCategories();
+            itemCategoryCombo.setSelectedItem(itemCategory);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void setCode() {
-
+    void updateBrandCombo(String brand) {
         try {
-            String itemCode = itemCategoryIdTextField.getText();
-            String brandId = brandTextField.getText();
-            String supplierId = supplierIdTextField.getText();
-            String subId = subIdTextField.getText();
-
-            itemCode = itemCode.substring(2);
-            brandId = brandId.substring(2);
-            supplierId = supplierId.substring(2);
-            subId = subId.substring(3);
-
-            codeTextField.setText(itemCode + ":" + brandId + ":" + supplierId + ":" + subId);
-        } catch (Exception e) {
-            codeTextField.setText("invalid");
-//            jPanel1.setEnabled(false);
+            getAllBrands();
+            brandCombo.setSelectedItem(brand);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }
 }

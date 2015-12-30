@@ -24,16 +24,30 @@ public class AddBrandForm extends javax.swing.JDialog {
      */
     
     boolean isBrandEmpty=false;
+    private final AddItemForm addItemForm;
     
     public AddBrandForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.addItemForm=null;
+        try {
+            getAllBrandTypes();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddBrandForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    AddBrandForm(AddItemForm addItemForm, boolean b) {
+        super(addItemForm, b);
+        initComponents();
+        this.addItemForm=addItemForm;
         
         try {
             getAllBrandTypes();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddBrandForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     /**
@@ -196,6 +210,12 @@ public class AddBrandForm extends javax.swing.JDialog {
                 boolean addBrand = addBrand();
                 if (addBrand) {
                     JOptionPane.showMessageDialog(this, "New Brand type added successfully");
+                    
+                    if(addItemForm!=null){
+                        this.addItemForm.updateBrandCombo(brandTextField.getText());
+                        this.dispose();
+                    }
+                    
                     getAllBrandTypes();
                 }else if(!addBrand && !isBrandEmpty){           
                     JOptionPane.showMessageDialog(this, "Failed to new brand type");
