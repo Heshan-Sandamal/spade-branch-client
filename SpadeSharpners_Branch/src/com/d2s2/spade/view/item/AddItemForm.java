@@ -5,15 +5,27 @@
 package com.d2s2.spade.view.item;
 
 import com.d2s2.spade.controllers.item.BrandController;
+import com.d2s2.spade.controllers.item.CutterController;
 import com.d2s2.spade.controllers.item.ItemCategoryController;
+import com.d2s2.spade.controllers.item.KiyathController;
+import com.d2s2.spade.controllers.item.PlanerBladeController;
+import com.d2s2.spade.controllers.item.RouterCutterController;
+import com.d2s2.spade.controllers.item.TipController;
+import com.d2s2.spade.controllers.item.WheelController;
 import com.d2s2.spade.models.Brand;
+import com.d2s2.spade.models.Cutter;
 import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
+import com.d2s2.spade.models.PlanerBlade;
+import com.d2s2.spade.models.RouterCutter;
+import com.d2s2.spade.models.Tip;
+import com.d2s2.spade.models.Wheel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,7 +39,7 @@ public class AddItemForm extends javax.swing.JDialog {
     Item item;
     private ArrayList<Brand> allBrands;
     private ArrayList<ItemCategory> allCategories;
-
+    
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -41,7 +53,7 @@ public class AddItemForm extends javax.swing.JDialog {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
 
     /**
@@ -74,17 +86,17 @@ public class AddItemForm extends javax.swing.JDialog {
         jComboBox5 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        kiyathAddButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jComboBox7 = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
+        routerCutterAddButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jComboBox8 = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
         jComboBox9 = new javax.swing.JComboBox();
-        jButton3 = new javax.swing.JButton();
+        planerBladeAddButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jComboBox10 = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
@@ -92,7 +104,7 @@ public class AddItemForm extends javax.swing.JDialog {
         jTextField6 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        addCutterButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jComboBox11 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
@@ -100,7 +112,7 @@ public class AddItemForm extends javax.swing.JDialog {
         jTextField8 = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jComboBox12 = new javax.swing.JComboBox();
-        jButton5 = new javax.swing.JButton();
+        tipAddButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -110,7 +122,7 @@ public class AddItemForm extends javax.swing.JDialog {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        wheelAddButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
@@ -177,10 +189,10 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel10.setText("No: of tips");
 
-        jButton1.setText("ADD Kiyath");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        kiyathAddButton.setText("ADD Kiyath");
+        kiyathAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                kiyathAddButtonActionPerformed(evt);
             }
         });
 
@@ -191,7 +203,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(kiyathAddButton)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -214,7 +226,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kiyathAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
@@ -224,7 +236,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton2.setText("ADD Router Cutter");
+        routerCutterAddButton.setText("ADD Router Cutter");
+        routerCutterAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routerCutterAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -235,7 +252,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(routerCutterAddButton))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -250,7 +267,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(routerCutterAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
@@ -264,7 +281,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton3.setText("ADD Planer Blade");
+        planerBladeAddButton.setText("ADD Planer Blade");
+        planerBladeAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planerBladeAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -275,7 +297,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3))
+                        .addComponent(planerBladeAddButton))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -298,7 +320,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(planerBladeAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -312,7 +334,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel17.setText("Thickness");
 
-        jButton4.setText("ADD Cutter");
+        addCutterButton.setText("ADD Cutter");
+        addCutterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCutterButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -321,7 +348,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
+                    .addComponent(addCutterButton)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -350,7 +377,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addCutterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -366,7 +393,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jComboBox12.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton5.setText("ADD Tip");
+        tipAddButton.setText("ADD Tip");
+        tipAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -375,7 +407,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton5)
+                    .addComponent(tipAddButton)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -407,7 +439,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tipAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -423,7 +455,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel24.setText("Hole");
 
-        jButton6.setText("ADD Wheel");
+        wheelAddButton.setText("ADD Wheel");
+        wheelAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wheelAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -432,7 +469,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton6)
+                    .addComponent(wheelAddButton)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -467,7 +504,7 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wheelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -701,32 +738,130 @@ public class AddItemForm extends javax.swing.JDialog {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
-
+    
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
         int selectedIndex = itemCategoryCombo.getSelectedIndex();
         if (selectedIndex != -1) {
             itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
         }
     }//GEN-LAST:event_itemCategoryComboItemStateChanged
-
+    
     private void brandComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandComboItemStateChanged
         int selectedIndex = brandCombo.getSelectedIndex();
         if (selectedIndex != -1) {
             brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
         }
     }//GEN-LAST:event_brandComboItemStateChanged
-
+    
     private void brandComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandComboActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_brandComboActionPerformed
-
+    
     private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_brandAddButtonActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addKiyath = addKiyath();
+                if (addKiyath) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_kiyathAddButtonActionPerformed
+    
+    private void routerCutterAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routerCutterAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addRouterCutter = addRouterCutter();
+                if (addRouterCutter) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_routerCutterAddButtonActionPerformed
+    
+    private void planerBladeAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planerBladeAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addPlanerBlade = addPlanerBlade();
+                if (addPlanerBlade) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_planerBladeAddButtonActionPerformed
+    
+    private void addCutterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCutterButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addCutter = addCutter();
+                if (addCutter) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_addCutterButtonActionPerformed
+    
+    private void tipAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addTip = addTip();
+                if (addTip) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_tipAddButtonActionPerformed
+    
+    private void wheelAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addwheel = addWheel();
+                if (addwheel) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_wheelAddButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -770,6 +905,7 @@ public class AddItemForm extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addCutterButton;
     private javax.swing.JButton brandAddButton;
     private javax.swing.JComboBox brandCombo;
     private javax.swing.JTextField brandTextField;
@@ -777,12 +913,6 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JButton itemCategoryAddButton;
     private javax.swing.JComboBox itemCategoryCombo;
     private javax.swing.JTextField itemCategoryIdTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -841,22 +971,27 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton kiyathAddButton;
+    private javax.swing.JButton planerBladeAddButton;
+    private javax.swing.JButton routerCutterAddButton;
     private javax.swing.JComboBox salesTypeCombo;
     private javax.swing.JTextField subIdTextField;
     private javax.swing.JButton supplierAddButton;
     private javax.swing.JComboBox supplierCombo;
     private javax.swing.JTextField supplierIdTextField;
+    private javax.swing.JButton tipAddButton;
+    private javax.swing.JButton wheelAddButton;
     // End of variables declaration//GEN-END:variables
 
     private void setItemDetails() {
-
+        
         String code = codeTextField.getText();
         String supplierId = supplierIdTextField.getText();
         String brandId = brandTextField.getText();
         String itemCode = itemCategoryIdTextField.getText();
         String subId = subIdTextField.getText();
         String salesType = salesTypeCombo.getSelectedItem().toString();
-
+        
         item.setCode(code);
         item.setBrandId(brandId);
         item.setItemCode(itemCode);
@@ -865,25 +1000,17 @@ public class AddItemForm extends javax.swing.JDialog {
         item.setSupplierId(supplierId);
     }
 
-    private void addKiyath() {
-        item = new Kiyath();
-
-
-
-    }
-
-    
     //----------------------------------Constructor calls---------------------------------------------------
-    
     private void getAllBrands() throws ClassNotFoundException, SQLException {
         allBrands = BrandController.getAllBrands();
         brandCombo.removeAllItems();
         for (Brand brand : allBrands) {
             brandCombo.addItem(brand.getBrand());
         }
-
-
+        
+        
     }
+    
     private void getAllItemCategories() throws ClassNotFoundException, SQLException {
         allCategories = ItemCategoryController.getAllItemCategories();
         itemCategoryCombo.removeAllItems();
@@ -891,9 +1018,99 @@ public class AddItemForm extends javax.swing.JDialog {
             itemCategoryCombo.addItem(itemCategory.getCategory());
         }
         
+        
+        
+    }
+    //---------------------------------------------------------------------------------------------------------------
 
+    //---------------------------------controller calls to add to db-------------------------------
+    private boolean addKiyath() throws ClassNotFoundException, SQLException {
+        item = new Kiyath();
+        setItemDetails();
+        Kiyath kiyath = (Kiyath) item;
 
+        //get details from the view
+        kiyath.setSize("large");
+        kiyath.setNoOfTips(10);
+        
+        return KiyathController.addItem(kiyath);
+        
     }
     
-    //---------------------------------------------------------------------------------------------------------------
+    private boolean addRouterCutter() throws ClassNotFoundException, SQLException {
+        item = new RouterCutter();
+        setItemDetails();
+        
+        RouterCutter routerCutter = (RouterCutter) item;
+
+        //get details from view
+        routerCutter.setSize("large");
+        
+        return RouterCutterController.addItem(routerCutter);
+    }
+    
+    private boolean addPlanerBlade() throws ClassNotFoundException, SQLException {
+        
+        item = new PlanerBlade();
+        setItemDetails();
+        
+        PlanerBlade planerBlade = (PlanerBlade) item;
+
+        //get details from view
+        planerBlade.setSize("large");
+        planerBlade.setType("ss");
+        
+        return PlanerBladeController.addItem(planerBlade);
+        
+    }
+    
+    
+    private boolean addCutter() throws ClassNotFoundException, SQLException {
+        
+        item = new Cutter();
+        setItemDetails();
+        
+        Cutter cutter = (Cutter) item;
+
+        //get details from view
+        cutter.setNoOfTips(10);
+        cutter.setSize("large");
+        cutter.setThickness("10");
+        
+        return CutterController.addItem(cutter);
+        
+    }
+    
+    private boolean addTip() throws ClassNotFoundException, SQLException {
+        item = new Tip();
+        setItemDetails();
+        
+        Tip tip = (Tip) item;
+
+        //get details from view
+        tip.setSize("large");
+        tip.setCountry("sri lanka");
+        tip.setPrice(100.00);
+        
+        return TipController.addItem(tip);
+    }
+    
+    private boolean addWheel() throws ClassNotFoundException, SQLException {
+        item = new Wheel();
+        setItemDetails();
+        
+        Wheel wheel = (Wheel) item;
+
+        //get details from view
+        wheel.setSize("large");
+        wheel.setCountry("omd");
+        wheel.setDiameter(100.00);
+        wheel.setHole(20.00);
+        
+        return WheelController.addItem(wheel);
+        
+    }
+
+    //-----------------------------------------------------------------------------------------------
+    
 }
