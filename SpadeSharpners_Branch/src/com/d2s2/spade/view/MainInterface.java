@@ -7,16 +7,18 @@ package com.d2s2.spade.view;
 import com.d2s2.spade.view.customer.AddCustomerForm;
 import com.d2s2.spade.view.customer.CustomerPaymentForm;
 import com.d2s2.spade.view.item.AddItemForm;
+import com.d2s2.spade.view.item.ViewItemForm;
 
 /**
  *
  * @author Heshan Sandamal
  */
 public class MainInterface extends javax.swing.JFrame {
-
+    
     private AddCustomerForm addCustomerForm;
     private AddItemForm addItemForm;
     private CustomerPaymentForm customerPayment;
+    private ViewItemForm viewItemForm;
 
     /**
      * Creates new form MainInterface
@@ -41,6 +43,7 @@ public class MainInterface extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +75,13 @@ public class MainInterface extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("View Item");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,6 +89,7 @@ public class MainInterface extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(126, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -95,9 +106,11 @@ public class MainInterface extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addComponent(jButton4)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -109,26 +122,34 @@ public class MainInterface extends javax.swing.JFrame {
         }
         addCustomerForm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        
         if (addItemForm == null) {
             addItemForm = new AddItemForm(this, true);
         }
         addItemForm.setVisible(true);
-
-
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (customerPayment == null) {
             customerPayment = new CustomerPaymentForm(this, true);
         }
         customerPayment.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+    
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (viewItemForm == null) {
+            viewItemForm = new ViewItemForm(this, true);
+        }
+        viewItemForm.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,5 +190,6 @@ public class MainInterface extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
 }
