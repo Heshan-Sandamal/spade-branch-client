@@ -255,6 +255,7 @@
       </Properties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="itemCategoryComboItemStateChanged"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="itemCategoryComboKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="itemCategoryIdTextField">

@@ -24,12 +24,16 @@ import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
+import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -71,6 +75,18 @@ public class AddItemForm extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
             }
         }
+        
+//        final JTextField editorComponent = (JTextField) itemCategoryCombo.getEditor().getEditorComponent(); 
+//        editorComponent.addKeyListener(new KeyAdapter() {
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                itemCategoryCombo.showPopup();
+//                itemCategoryCombo.selectWithKeyChar(e.getKeyChar());               
+//            }
+//        
+//        });
+        
 
 
 
@@ -205,6 +221,11 @@ public class AddItemForm extends javax.swing.JDialog {
         itemCategoryCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 itemCategoryComboItemStateChanged(evt);
+            }
+        });
+        itemCategoryCombo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemCategoryComboKeyReleased(evt);
             }
         });
 
@@ -1021,6 +1042,10 @@ public class AddItemForm extends javax.swing.JDialog {
         }       
         addItemCategoryForm.setVisible(true);
     }//GEN-LAST:event_itemCategoryAddButtonActionPerformed
+
+    private void itemCategoryComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemCategoryComboKeyReleased
+        
+    }//GEN-LAST:event_itemCategoryComboKeyReleased
 
     /**
      * @param args the command line arguments
