@@ -8,6 +8,7 @@ import com.d2s2.spade.view.customer.AddCustomerForm;
 import com.d2s2.spade.view.customer.CustomerPaymentForm;
 import com.d2s2.spade.view.item.AddItemForm;
 import com.d2s2.spade.view.item.ViewItemForm;
+import com.d2s2.spade.view.supplier.AddSupplierForm;
 
 /**
  *
@@ -19,6 +20,7 @@ public class MainInterface extends javax.swing.JFrame {
     private AddItemForm addItemForm;
     private CustomerPaymentForm customerPayment;
     private ViewItemForm viewItemForm;
+    private AddSupplierForm addSupplierForm;
 
     /**
      * Creates new form MainInterface
@@ -41,7 +43,7 @@ public class MainInterface extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        addSupplierButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
@@ -61,10 +63,10 @@ public class MainInterface extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Add Supplier");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        addSupplierButton.setText("Add Supplier");
+        addSupplierButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                addSupplierButtonActionPerformed(evt);
             }
         });
 
@@ -93,7 +95,7 @@ public class MainInterface extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(addSupplierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jButton4))
                 .addGap(151, 151, 151))
         );
@@ -105,7 +107,7 @@ public class MainInterface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(addSupplierButton)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -133,8 +135,12 @@ public class MainInterface extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
     
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void addSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierButtonActionPerformed
+        if (addSupplierForm == null) {
+            addSupplierForm = new AddSupplierForm();
+        }
+        addSupplierForm.setVisible(true);
+    }//GEN-LAST:event_addSupplierButtonActionPerformed
     
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (customerPayment == null) {
@@ -186,9 +192,9 @@ public class MainInterface extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addSupplierButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
