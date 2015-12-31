@@ -51,5 +51,19 @@ public class ItemCategoryController {
         
         return categoryList;
     }
+
+    public static boolean updateItemCategory(ItemCategory itemCategory) throws ClassNotFoundException, SQLException{
+        
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        //String sql=DBQueryGenerator.insertQuery(ItemCategory.class.getSimpleName(), 2);
+        String sql="UPDATE "+ItemCategory.class.getSimpleName()+" SET "+ItemCategory.CATEGORY+"=? WHERE "+ItemCategory.ITEMCODE+"=?";
+        
+        String itemCode=itemCategory.getItemCode();
+        String category=itemCategory.getCategory();
+        
+        Object[] ob=new Object[]{category,itemCode};
+        
+        return DBHandler.setData(connection, sql,ob)>0 ? true:false;
+    }
     
 }

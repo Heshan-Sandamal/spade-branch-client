@@ -18,37 +18,37 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Heshan Sandamal
  */
-public class AddBrandForm extends javax.swing.JDialog {
+public class UpdateBrandForm extends javax.swing.JDialog {
 
     /**
      * Creates new form AddBrandForm
      */
-    
-    boolean isBrandEmpty=false;
+    boolean isBrandEmpty = false;
     private final AddItemForm addItemForm;
-    
-    public AddBrandForm(java.awt.Frame parent, boolean modal) {
+    private DefaultTableModel dtm;
+
+    public UpdateBrandForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.addItemForm=null;
+        this.addItemForm = null;
         try {
             getAllBrandTypes();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddBrandForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateBrandForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    AddBrandForm(AddItemForm addItemForm, boolean b) {
+    UpdateBrandForm(AddItemForm addItemForm, boolean b) {
         super(addItemForm, b);
         initComponents();
-        this.addItemForm=addItemForm;
-        
+        this.addItemForm = addItemForm;
+
         try {
             getAllBrandTypes();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddBrandForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateBrandForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -108,19 +108,24 @@ public class AddBrandForm extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        brandTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                brandTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(brandTable);
 
         jScrollPane3.setViewportView(jScrollPane2);
 
         jLabel3.setText("Existing Brands:");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Add New Brand"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Update Existing Brand"));
 
         jLabel1.setText("Brand ID:");
 
         brandIdTextField.setEditable(false);
 
-        brandAddButton.setText("Add Brand");
+        brandAddButton.setText("Update Brand");
         brandAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 brandAddButtonActionPerformed(evt);
@@ -163,44 +168,42 @@ public class AddBrandForm extends javax.swing.JDialog {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("<html>View & Add <br> Brands</html>");
+        jLabel4.setText("Update Brand Types");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGap(46, 46, 46)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,28 +211,37 @@ public class AddBrandForm extends javax.swing.JDialog {
 
     private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this brand??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this brand??");
             if (showConfirmDialog == 0) {
-                boolean addBrand = addBrand();
+                boolean addBrand = updateBrand();
                 if (addBrand) {
-                    JOptionPane.showMessageDialog(this, "New Brand type added successfully");
-                    
-                    if(addItemForm!=null){
+                    JOptionPane.showMessageDialog(this, "New Brand type updatd successfully");
+
+                    if (addItemForm != null) {
                         this.addItemForm.updateBrandCombo(brandTextField.getText());
                         this.dispose();
                     }
-                    
+
                     getAllBrandTypes();
-                }else if(!addBrand && !isBrandEmpty){           
-                    JOptionPane.showMessageDialog(this, "Failed to new brand type");
+                } else if (!addBrand && !isBrandEmpty) {
+                    JOptionPane.showMessageDialog(this, "Failed to update brand type");
                 }
             }
 
 
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Unable to new brand type due to "+ ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to update brand type due to " + ex.getMessage());
         }
     }//GEN-LAST:event_brandAddButtonActionPerformed
+
+    private void brandTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_brandTableMouseClicked
+        int selectedRow = brandTable.getSelectedRow();
+        dtm = (DefaultTableModel) brandTable.getModel();
+        if (selectedRow != -1) {
+            brandIdTextField.setText(brandTable.getValueAt(brandTable.getSelectedRow(), 0).toString());
+            brandTextField.setText(brandTable.getValueAt(brandTable.getSelectedRow(), 1).toString());
+        }         // TODO add your handling code here:
+    }//GEN-LAST:event_brandTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -248,20 +260,20 @@ public class AddBrandForm extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBrandForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddBrandForm dialog = new AddBrandForm(new javax.swing.JFrame(), true);
+                UpdateBrandForm dialog = new UpdateBrandForm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -289,59 +301,36 @@ public class AddBrandForm extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     //--------------------------------------add data to database-----------------------------------
-    
-    private boolean addBrand() throws ClassNotFoundException, SQLException {
+    private boolean updateBrand() throws ClassNotFoundException, SQLException {
         String brandId = brandIdTextField.getText();
         String brand = brandTextField.getText();
 
-        if (brand.isEmpty()) {
+        if (brand.isEmpty() || brandId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Brand type can't be empty");
-            isBrandEmpty=true;              //isBrandEmpty->true when brandTextField is empty
+            isBrandEmpty = true;              //isBrandEmpty->true when brandTextField is empty
             return false;
-        }else{
-            isBrandEmpty=false;         ////isBrandEmpty->false when brandTextField is not empty
+        } else {
+            isBrandEmpty = false;         ////isBrandEmpty->false when brandTextField is not empty
         }
 
-        return BrandController.addBrandCategory(new Brand(brandId, brand));
+        return BrandController.updateBrandCategory(new Brand(brandId, brand));
 
 
     }
 
     //-----------------------------------------------------------------------------------------------------
-    
     //-------------------------------constructor calls--------------------------------------------
-    
     private void getAllBrandTypes() throws ClassNotFoundException, SQLException {
         ArrayList<Brand> allBrands = BrandController.getAllBrands();
-        DefaultTableModel dtm=(DefaultTableModel) brandTable.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) brandTable.getModel();
         dtm.setRowCount(0);
         for (Brand brand : allBrands) {
-            dtm.addRow(new Object[]{brand.getBrandId(),brand.getBrand()});
+            dtm.addRow(new Object[]{brand.getBrandId(), brand.getBrand()});
         }
-        
-        int size = allBrands.size();
-        if (size != 0) {
-            generateId(allBrands.get(size - 1).getBrandId());
-        } else {
-            brandIdTextField.setText("B-001");
-            brandTextField.setText("");
-        }
-    }
-    
-    
-     private void generateId(String lastId) {
-        //SB-0001
 
-        lastId = lastId.substring(2);             //0001
-        int newIdVal = Integer.parseInt(lastId) + 1;
 
-        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
-        numberFormat.setGroupingUsed(false);
-        numberFormat.setMinimumIntegerDigits(3);
-        String newId = "B-" + numberFormat.format(newIdVal);
-        brandIdTextField.setText(newId);
-        brandTextField.setText("");
     }
-    
+
     //-------------------------------------------------------------------------------------------------
+    
 }

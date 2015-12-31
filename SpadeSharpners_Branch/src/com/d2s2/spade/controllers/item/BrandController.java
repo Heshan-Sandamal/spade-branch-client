@@ -53,6 +53,19 @@ public class BrandController {
         return brandList;
         
     }
+
+    public static boolean updateBrandCategory(Brand brand)throws ClassNotFoundException, SQLException{
+        
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String sql="UPDATE "+Brand.class.getSimpleName()+" SET "+Brand.BRAND+"=? WHERE "+Brand.BRANDID+"=?";
+        
+        String brandId=brand.getBrandId();
+        String brandName=brand.getBrand();
+        
+        Object[] ob=new Object[]{brandName,brandId};
+        
+        return DBHandler.setData(connection, sql,ob)>0 ? true:false;
+    }
     
     
     
