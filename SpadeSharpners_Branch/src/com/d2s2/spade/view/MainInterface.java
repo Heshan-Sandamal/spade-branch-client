@@ -5,21 +5,31 @@
 package com.d2s2.spade.view;
 
 import com.d2s2.spade.view.customer.AddCustomerForm;
+import com.d2s2.spade.view.customer.CustomerPaymentForm;
 import com.d2s2.spade.view.item.AddItemForm;
+import com.d2s2.spade.view.item.ViewItemForm;
+import com.d2s2.spade.view.supplier.AddSupplierForm;
 
 /**
  *
  * @author Heshan Sandamal
  */
 public class MainInterface extends javax.swing.JFrame {
+    
     private AddCustomerForm addCustomerForm;
     private AddItemForm addItemForm;
+    private CustomerPaymentForm customerPayment;
+    private ViewItemForm viewItemForm;
+    private AddSupplierForm addSupplierForm;
 
     /**
      * Creates new form MainInterface
      */
     public MainInterface() {
         initComponents();
+        
+        
+        
     }
 
     /**
@@ -33,6 +43,9 @@ public class MainInterface extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        addSupplierButton = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +63,27 @@ public class MainInterface extends javax.swing.JFrame {
             }
         });
 
+        addSupplierButton.setText("Add Supplier");
+        addSupplierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSupplierButtonActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Customer Payment");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("View Item");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -57,9 +91,13 @@ public class MainInterface extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(126, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(142, 142, 142))
+                    .addComponent(jButton5)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addSupplierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton4))
+                .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -68,28 +106,56 @@ public class MainInterface extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(addSupplierButton)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            if(addCustomerForm==null){
-                addCustomerForm=new AddCustomerForm(this, true);
-            }
-            addCustomerForm.setVisible(true);
+        if (addCustomerForm == null) {
+            addCustomerForm = new AddCustomerForm(this, true);
+        }
+        addCustomerForm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            
-        if(addItemForm==null){
-            addItemForm=new AddItemForm(this, true);
+        
+        if (addItemForm == null) {
+            addItemForm = new AddItemForm(this, true);
         }
         addItemForm.setVisible(true);
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void addSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierButtonActionPerformed
+        if (addSupplierForm == null) {
+            addSupplierForm = new AddSupplierForm();
+        }
+        addSupplierForm.setVisible(true);
+    }//GEN-LAST:event_addSupplierButtonActionPerformed
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (customerPayment == null) {
+            customerPayment = new CustomerPaymentForm(this, true);
+        }
+        customerPayment.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+    
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (viewItemForm == null) {
+            viewItemForm = new ViewItemForm(this, true);
+        }
+        viewItemForm.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,7 +192,10 @@ public class MainInterface extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addSupplierButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
 }

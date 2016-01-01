@@ -4,8 +4,36 @@
  */
 package com.d2s2.spade.view.item;
 
+import com.d2s2.spade.controllers.item.BrandController;
+import com.d2s2.spade.controllers.item.CutterController;
+import com.d2s2.spade.controllers.item.ItemCategoryController;
+import com.d2s2.spade.controllers.item.ItemController;
+import com.d2s2.spade.controllers.item.KiyathController;
+import com.d2s2.spade.controllers.item.PlanerBladeController;
+import com.d2s2.spade.controllers.item.RouterCutterController;
+import com.d2s2.spade.controllers.item.SilverSoleController;
+import com.d2s2.spade.controllers.item.TipController;
+import com.d2s2.spade.controllers.item.WheelController;
+import com.d2s2.spade.models.Brand;
+import com.d2s2.spade.models.Cutter;
 import com.d2s2.spade.models.Item;
+import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
+import com.d2s2.spade.models.PlanerBlade;
+import com.d2s2.spade.models.RouterCutter;
+import com.d2s2.spade.models.SilverSole;
+import com.d2s2.spade.models.Tip;
+import com.d2s2.spade.models.Wheel;
+import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,11 +44,54 @@ public class AddItemForm extends javax.swing.JDialog {
     /**
      * Creates new form AddItemForm
      */
-    
     Item item;
+    private ArrayList<Brand> allBrands;
+    private ArrayList<ItemCategory> allCategories;
+    private AddItemCategoryForm addItemCategoryForm;
+    private AddBrandForm brandForm;
+
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        try {
+            getAllBrands();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            getAllItemCategories();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            generateId();
+        } catch (ClassNotFoundException | SQLException ex) {
+
+            if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                subIdTextField.setText("SB-0001");
+            } else {
+                JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+            }
+        }
+        
+//        final JTextField editorComponent = (JTextField) itemCategoryCombo.getEditor().getEditorComponent(); 
+//        editorComponent.addKeyListener(new KeyAdapter() {
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                itemCategoryCombo.showPopup();
+//                itemCategoryCombo.selectWithKeyChar(e.getKeyChar());               
+//            }
+//        
+//        });
+        
+
+
+
+
+
     }
 
     /**
@@ -34,7 +105,6 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        codeTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -47,23 +117,23 @@ public class AddItemForm extends javax.swing.JDialog {
         itemCategoryCombo = new javax.swing.JComboBox();
         itemCategoryIdTextField = new javax.swing.JTextField();
         supplierIdTextField = new javax.swing.JTextField();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        itemDetailsTab = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        kiyathAddButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jComboBox7 = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
+        routerCutterAddButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jComboBox8 = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
         jComboBox9 = new javax.swing.JComboBox();
-        jButton3 = new javax.swing.JButton();
+        planerBladeAddButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jComboBox10 = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
@@ -71,7 +141,7 @@ public class AddItemForm extends javax.swing.JDialog {
         jTextField6 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        addCutterButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jComboBox11 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
@@ -79,7 +149,7 @@ public class AddItemForm extends javax.swing.JDialog {
         jTextField8 = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jComboBox12 = new javax.swing.JComboBox();
-        jButton5 = new javax.swing.JButton();
+        tipAddButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -89,7 +159,7 @@ public class AddItemForm extends javax.swing.JDialog {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        wheelAddButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
@@ -108,6 +178,8 @@ public class AddItemForm extends javax.swing.JDialog {
         itemCategoryAddButton = new javax.swing.JButton();
         brandAddButton = new javax.swing.JButton();
         supplierAddButton = new javax.swing.JButton();
+        codeTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -127,13 +199,44 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel4.setText("Sale/Non-Sale");
 
-        salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
 
-        supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        subIdTextField.setEditable(false);
+
+        supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001" }));
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        brandCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                brandComboItemStateChanged(evt);
+            }
+        });
+        brandCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brandComboActionPerformed(evt);
+            }
+        });
 
         itemCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemCategoryCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                itemCategoryComboItemStateChanged(evt);
+            }
+        });
+        itemCategoryCombo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemCategoryComboKeyReleased(evt);
+            }
+        });
+
+        itemCategoryIdTextField.setEditable(false);
+        itemCategoryIdTextField.setBackground(new java.awt.Color(255, 255, 255));
+
+        supplierIdTextField.setEditable(false);
+        supplierIdTextField.setBackground(new java.awt.Color(255, 255, 255));
+        supplierIdTextField.setText("S-0001");
+
+        itemDetailsTab.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jLabel9.setText("Size");
 
@@ -141,7 +244,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel10.setText("No: of tips");
 
-        jButton1.setText("ADD Kiyath");
+        kiyathAddButton.setText("ADD Kiyath");
+        kiyathAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kiyathAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -150,7 +258,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(kiyathAddButton)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -173,17 +281,22 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addComponent(kiyathAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Kiyath", jPanel2);
+        itemDetailsTab.addTab("Kiyath", jPanel2);
 
         jLabel12.setText("Size");
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton2.setText("ADD Router Cutter");
+        routerCutterAddButton.setText("ADD Router Cutter");
+        routerCutterAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                routerCutterAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -194,7 +307,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(routerCutterAddButton))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -209,11 +322,11 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addComponent(routerCutterAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Router Cutters", jPanel3);
+        itemDetailsTab.addTab("Router Cutters", jPanel3);
 
         jLabel13.setText("Size");
 
@@ -223,7 +336,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton3.setText("ADD Planer Blade");
+        planerBladeAddButton.setText("ADD Planer Blade");
+        planerBladeAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planerBladeAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -234,7 +352,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3))
+                        .addComponent(planerBladeAddButton))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -257,11 +375,11 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addComponent(planerBladeAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Planer Blades", jPanel4);
+        itemDetailsTab.addTab("Planer Blades", jPanel4);
 
         jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -271,7 +389,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel17.setText("Thickness");
 
-        jButton4.setText("ADD Cutter");
+        addCutterButton.setText("ADD Cutter");
+        addCutterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCutterButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -280,7 +403,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
+                    .addComponent(addCutterButton)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -309,11 +432,11 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(addCutterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cutters", jPanel5);
+        itemDetailsTab.addTab("Cutters", jPanel5);
 
         jComboBox11.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -325,7 +448,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jComboBox12.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton5.setText("ADD Tip");
+        tipAddButton.setText("ADD Tip");
+        tipAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -334,7 +462,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton5)
+                    .addComponent(tipAddButton)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -366,11 +494,11 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(tipAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Tips", jPanel6);
+        itemDetailsTab.addTab("Tips", jPanel6);
 
         jLabel21.setText("Size");
 
@@ -382,7 +510,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel24.setText("Hole");
 
-        jButton6.setText("ADD Wheel");
+        wheelAddButton.setText("ADD Wheel");
+        wheelAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wheelAddButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -391,7 +524,7 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton6)
+                    .addComponent(wheelAddButton)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -425,12 +558,12 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(wheelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Wheels", jPanel7);
+        itemDetailsTab.addTab("Wheels", jPanel7);
 
         jLabel25.setText("Description");
 
@@ -459,14 +592,19 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Plux", jPanel8);
+        itemDetailsTab.addTab("Plux", jPanel8);
 
         jLabel26.setText("Type");
 
         jButton8.setText("ADD Silver Sole");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jLabel27.setText("Price");
 
@@ -504,10 +642,10 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Silver Sole", jPanel9);
+        itemDetailsTab.addTab("Silver Sole", jPanel9);
 
         jLabel28.setText("Description");
 
@@ -541,16 +679,36 @@ public class AddItemForm extends javax.swing.JDialog {
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Other", jPanel10);
+        itemDetailsTab.addTab("Other", jPanel10);
+
+        brandTextField.setEditable(false);
+        brandTextField.setBackground(new java.awt.Color(255, 255, 255));
 
         itemCategoryAddButton.setText("Add");
+        itemCategoryAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCategoryAddButtonActionPerformed(evt);
+            }
+        });
 
         brandAddButton.setText("Add");
+        brandAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brandAddButtonActionPerformed(evt);
+            }
+        });
 
         supplierAddButton.setText("Add");
+
+        codeTextField.setEditable(false);
+        codeTextField.setBackground(new java.awt.Color(255, 255, 255));
+        codeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        codeTextField.setForeground(new java.awt.Color(51, 51, 255));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/d2s2/spade/view/images/scanner_add.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -559,7 +717,9 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(itemDetailsTab)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -600,11 +760,12 @@ public class AddItemForm extends javax.swing.JDialog {
                                     .addComponent(codeTextField))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(itemCategoryAddButton)
                             .addComponent(brandAddButton)
-                            .addComponent(supplierAddButton))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(supplierAddButton)
+                            .addComponent(itemCategoryAddButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -612,40 +773,49 @@ public class AddItemForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel6)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemCategoryCombo)
-                    .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemCategoryAddButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(brandAddButton))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(supplierCombo)
-                        .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(supplierAddButton))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(subIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(salesTypeCombo)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemCategoryCombo)
+                            .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemCategoryAddButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(brandAddButton))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(supplierCombo)
+                                .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supplierAddButton))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(salesTypeCombo)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(itemDetailsTab, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
@@ -655,6 +825,227 @@ public class AddItemForm extends javax.swing.JDialog {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
+        int selectedIndex = itemCategoryCombo.getSelectedIndex();
+        try {
+            int indexOfTab=itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
+            if(indexOfTab!=-1){
+                itemDetailsTab.setSelectedIndex(indexOfTab);
+            }else{
+                itemDetailsTab.setSelectedIndex(itemDetailsTab.indexOfTab("Other"));
+            }
+            itemDetailsTab.setEnabled(false);
+            
+            
+        } catch (Exception e) {
+        }
+        
+        
+        if (selectedIndex != -1) {
+            itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
+
+            try {
+                generateId();
+            } catch (ClassNotFoundException | SQLException ex) {
+
+                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                    subIdTextField.setText("SB-0001");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+                }
+            }
+
+
+            setCode();
+
+
+
+        }
+    }//GEN-LAST:event_itemCategoryComboItemStateChanged
+
+    private void brandComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandComboItemStateChanged
+        int selectedIndex = brandCombo.getSelectedIndex();
+        if (selectedIndex != -1) {
+            brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
+
+
+            try {
+                generateId();
+            } catch (ClassNotFoundException | SQLException ex) {
+
+                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                    subIdTextField.setText("SB-0001");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+                }
+            }
+
+            //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
+            if (!itemCategoryIdTextField.getText().isEmpty()) {
+                setCode();
+            }
+
+        }
+    }//GEN-LAST:event_brandComboItemStateChanged
+
+    private void brandComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brandComboActionPerformed
+
+    private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
+
+        if(brandForm==null){
+            brandForm=new AddBrandForm(this, true);       
+        }
+        brandForm.setVisible(true);
+    }//GEN-LAST:event_brandAddButtonActionPerformed
+
+    private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addKiyath = addKiyath();
+                if (addKiyath) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_kiyathAddButtonActionPerformed
+
+    private void routerCutterAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routerCutterAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addRouterCutter = addRouterCutter();
+                if (addRouterCutter) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_routerCutterAddButtonActionPerformed
+
+    private void planerBladeAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planerBladeAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addPlanerBlade = addPlanerBlade();
+                if (addPlanerBlade) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_planerBladeAddButtonActionPerformed
+
+    private void addCutterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCutterButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addCutter = addCutter();
+                if (addCutter) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_addCutterButtonActionPerformed
+
+    private void tipAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addTip = addTip();
+                if (addTip) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_tipAddButtonActionPerformed
+
+    private void wheelAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelAddButtonActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addwheel = addWheel();
+                if (addwheel) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_wheelAddButtonActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (showConfirmDialog == 0) {
+                boolean addSilverSole = addSilverSole();
+                if (addSilverSole) {
+                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    generateId();
+                    setCode();
+
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void itemCategoryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoryAddButtonActionPerformed
+
+        
+        if(addItemCategoryForm==null){
+            addItemCategoryForm=new AddItemCategoryForm(this, true); 
+        }       
+        addItemCategoryForm.setVisible(true);
+    }//GEN-LAST:event_itemCategoryAddButtonActionPerformed
+
+    private void itemCategoryComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemCategoryComboKeyReleased
+        
+    }//GEN-LAST:event_itemCategoryComboKeyReleased
 
     /**
      * @param args the command line arguments
@@ -698,6 +1089,7 @@ public class AddItemForm extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addCutterButton;
     private javax.swing.JButton brandAddButton;
     private javax.swing.JComboBox brandCombo;
     private javax.swing.JTextField brandTextField;
@@ -705,12 +1097,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JButton itemCategoryAddButton;
     private javax.swing.JComboBox itemCategoryCombo;
     private javax.swing.JTextField itemCategoryIdTextField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JTabbedPane itemDetailsTab;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -747,6 +1134,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
@@ -758,7 +1146,6 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
@@ -769,43 +1156,226 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton kiyathAddButton;
+    private javax.swing.JButton planerBladeAddButton;
+    private javax.swing.JButton routerCutterAddButton;
     private javax.swing.JComboBox salesTypeCombo;
     private javax.swing.JTextField subIdTextField;
     private javax.swing.JButton supplierAddButton;
     private javax.swing.JComboBox supplierCombo;
     private javax.swing.JTextField supplierIdTextField;
+    private javax.swing.JButton tipAddButton;
+    private javax.swing.JButton wheelAddButton;
     // End of variables declaration//GEN-END:variables
 
-    
-      private void setItemDetails(){
-        
-        String code=codeTextField.getText();
-        String supplierId=supplierIdTextField.getText();
-        String brandId=brandTextField.getText();
-        String itemCode=itemCategoryIdTextField.getText();
-        String subId=subIdTextField.getText();
-        String salesType=salesTypeCombo.getSelectedItem().toString();
-        
+    private void setItemDetails() {
+
+        String code = codeTextField.getText();
+        String supplierId = supplierIdTextField.getText();
+        String brandId = brandTextField.getText();
+        String itemCode = itemCategoryIdTextField.getText();
+        String subId = subIdTextField.getText();
+        String salesType = salesTypeCombo.getSelectedItem().toString();
+
+        if (salesType.equals("Sale")) {
+            salesType = "sl";
+        } else {
+            salesType = "nsl";
+        }
+
         item.setCode(code);
         item.setBrandId(brandId);
         item.setItemCode(itemCode);
         item.setSubId(subId);
-        item.setType(salesType);
+        item.setSaleType(salesType);
         item.setSupplierId(supplierId);
     }
-    
-    
-    private void addKiyath(){
-        item=new Kiyath();
-        
-        
-        
+
+    //----------------------------------Constructor calls---------------------------------------------------
+    private void getAllBrands() throws ClassNotFoundException, SQLException {
+        allBrands = BrandController.getAllBrands();
+        brandCombo.removeAllItems();
+        for (Brand brand : allBrands) {
+            brandCombo.addItem(brand.getBrand());
+        }
+
+
     }
-    
+
+    private void getAllItemCategories() throws ClassNotFoundException, SQLException {
+        allCategories = ItemCategoryController.getAllItemCategories();
+        itemCategoryCombo.removeAllItems();
+        for (ItemCategory itemCategory : allCategories) {
+            itemCategoryCombo.addItem(itemCategory.getCategory());
+        }
 
 
 
+    }
+
+    private void generateId() throws ClassNotFoundException, SQLException {
+        item = new Item();
+
+        String supplierId = supplierIdTextField.getText();
+        String brandId = brandTextField.getText();
+        String itemCode = itemCategoryIdTextField.getText();
+
+        item.setSupplierId(supplierId);
+        item.setBrandId(brandId);
+        item.setItemCode(itemCode);
+
+        String lastId = ItemController.getLastSubId(item);          //SB-0001
+
+        lastId = lastId.substring(3);             //0001
+        int newIdVal = Integer.parseInt(lastId) + 1;
+
+        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
+        numberFormat.setGroupingUsed(false);
+        numberFormat.setMinimumIntegerDigits(4);
+        String newId = "SB-" + numberFormat.format(newIdVal);
+        subIdTextField.setText(newId);
+    }
+
+    private void setCode() {
+
+        try {
+            String itemCode = itemCategoryIdTextField.getText();
+            String brandId = brandTextField.getText();
+            String supplierId = supplierIdTextField.getText();
+            String subId = subIdTextField.getText();
+
+            itemCode = itemCode.substring(2);
+            brandId = brandId.substring(2);
+            supplierId = supplierId.substring(2);
+            subId = subId.substring(3);
+
+            codeTextField.setText(itemCode + ":" + brandId + ":" + supplierId + ":" + subId);
+        } catch (Exception e) {
+            codeTextField.setText("invalid");
+//            jPanel1.setEnabled(false);
+        }
 
 
+    }
 
+    //---------------------------------------------------------------------------------------------------------------
+    //---------------------------------controller calls to add to db-------------------------------
+    private boolean addKiyath() throws ClassNotFoundException, SQLException {
+        item = new Kiyath();
+        setItemDetails();
+        Kiyath kiyath = (Kiyath) item;
+
+        //get details from the view
+        kiyath.setSize("large");
+        kiyath.setNoOfTips(10);
+
+        return KiyathController.addItem(kiyath);
+
+    }
+
+    private boolean addRouterCutter() throws ClassNotFoundException, SQLException {
+        item = new RouterCutter();
+        setItemDetails();
+
+        RouterCutter routerCutter = (RouterCutter) item;
+
+        //get details from view
+        routerCutter.setSize("large");
+
+        return RouterCutterController.addItem(routerCutter);
+    }
+
+    private boolean addPlanerBlade() throws ClassNotFoundException, SQLException {
+
+        item = new PlanerBlade();
+        setItemDetails();
+
+        PlanerBlade planerBlade = (PlanerBlade) item;
+
+        //get details from view
+        planerBlade.setSize("large");
+        planerBlade.setType("ss");
+
+        return PlanerBladeController.addItem(planerBlade);
+
+    }
+
+    private boolean addCutter() throws ClassNotFoundException, SQLException {
+
+        item = new Cutter();
+        setItemDetails();
+
+        Cutter cutter = (Cutter) item;
+
+        //get details from view
+        cutter.setNoOfTips(10);
+        cutter.setSize("large");
+        cutter.setThickness("10");
+
+        return CutterController.addItem(cutter);
+
+    }
+
+    private boolean addTip() throws ClassNotFoundException, SQLException {
+        item = new Tip();
+        setItemDetails();
+
+        Tip tip = (Tip) item;
+
+        //get details from view
+        tip.setSize("large");
+        tip.setCountry("sri lanka");
+        tip.setPrice(100.00);
+
+        return TipController.addItem(tip);
+    }
+
+    private boolean addWheel() throws ClassNotFoundException, SQLException {
+        item = new Wheel();
+        setItemDetails();
+
+        Wheel wheel = (Wheel) item;
+
+        //get details from view
+        wheel.setSize("large");
+        wheel.setCountry("omd");
+        wheel.setDiameter(100.00);
+        wheel.setHole(20.00);
+
+        return WheelController.addItem(wheel);
+
+    }
+
+    private boolean addSilverSole() throws ClassNotFoundException, SQLException {
+        item = new SilverSole();
+        setItemDetails();
+
+        SilverSole silverSole = (SilverSole) item;
+
+        //get from view
+        silverSole.setType("type");
+        silverSole.setPrice(3.00);
+
+        return SilverSoleController.addItem(silverSole);
+
+    }
+    //-----------------------------------------------------------------------------------------------
+
+    void updateItemCategoriesCombo(String itemCategory) {
+        try {
+            getAllItemCategories();
+            itemCategoryCombo.setSelectedItem(itemCategory);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void updateBrandCombo(String brand) {
+        try {
+            getAllBrands();
+            brandCombo.setSelectedItem(brand);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -55,6 +55,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
         PhoneText = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         CustomerId = new javax.swing.JTextField();
+        AddPhoneTextfield = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,6 +100,13 @@ public class AddCustomerForm extends javax.swing.JDialog {
             }
         });
 
+        AddPhoneTextfield.setText("Add Another Phone");
+        AddPhoneTextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddPhoneTextfieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,10 +115,6 @@ public class AddCustomerForm extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addCustomerButton)
                 .addGap(62, 62, 62))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(195, 195, 195)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,6 +134,15 @@ public class AddCustomerForm extends javax.swing.JDialog {
                         .addGap(37, 37, 37)
                         .addComponent(CustomerId, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(AddPhoneTextfield)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +163,9 @@ public class AddCustomerForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(AddPhoneTextfield)
+                .addGap(48, 48, 48)
                 .addComponent(addCustomerButton)
                 .addGap(52, 52, 52))
         );
@@ -194,6 +209,12 @@ public class AddCustomerForm extends javax.swing.JDialog {
         this.id = CustomerId.getText();
     }//GEN-LAST:event_CustomerIdActionPerformed
 
+    private void AddPhoneTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPhoneTextfieldActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_AddPhoneTextfieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -236,6 +257,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddPhoneTextfield;
     private javax.swing.JTextField AddressText;
     private javax.swing.JTextField CustomerId;
     private javax.swing.JTextField NameText;

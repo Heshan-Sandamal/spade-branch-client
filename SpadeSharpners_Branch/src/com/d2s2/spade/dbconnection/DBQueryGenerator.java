@@ -4,7 +4,6 @@
  */
 package com.d2s2.spade.dbconnection;
 
-import com.d2s2.spade.models.Customer;
 
 /**
  *
@@ -27,6 +26,9 @@ public class DBQueryGenerator {
         return sql+")";
     }
     
+    public static String selectAllQuery(String tableName){
+        return "SELECT * FROM "+tableName;
+    }
     
     
     

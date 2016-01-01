@@ -14,8 +14,16 @@ public class Item {
     private String subId;
     private String brandId;
     private String supplierId;
-    private String type; //sl for sale and nsl for non-sale
+    private String saleType; //sl for sale and nsl for non-sale
 
+    public static final String CODE="code";
+    public static final String ITEMCODE="itemCode";
+    public static final String SUBID="subId";
+    public static final String BRANDID="brandId";
+    public static final String SUPPLIERID="supplierId";
+    public static final String TYPE="saleType";
+    
+    
     /**
      * @return the code
      */
@@ -86,19 +94,18 @@ public class Item {
         this.supplierId = supplierId;
     }
 
-    /**
-     * @return the type
-     */
-    public String getType() {
-        return type;
+    public String getSaleType() {
+        return saleType;
+    }
+
+    public void setSaleType(String saleType) {
+        this.saleType = saleType;
     }
 
     /**
-     * @param type the type to set
+     * @return the type
      */
-    public void setType(String type) {
-        this.type = type;
-    }
+    
     
     
     

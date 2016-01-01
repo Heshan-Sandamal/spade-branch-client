@@ -25,7 +25,7 @@ CREATE TABLE CustPayment(
 	amount double,
 	discount double,
 	date date,
-	PRIMARY KEY(customerId),
+	PRIMARY KEY(paymentId),
 	FOREIGN KEY F1(customerId) REFERENCES Customer(customerId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE SupPayment(
 	type varchar(3),				cash:csh, cheque:chq
 	amount double,
 	date date,
-	PRIMARY KEY(supplierId),
+	PRIMARY KEY(paymentId),
 	FOREIGN KEY F1(supplierId) REFERENCES Supplier(supplierId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -106,9 +106,18 @@ CREATE TABLE SupDebt(
 
 
 
+---------------------------------------------Item------------------------------------------------------
 
+CREATE TABLE ItemCategory(
+	itemCode varchar(8),				
+	category varchar(25),				
+	PRIMARY KEY(itemCode)
+);
 
-
+CREATE TABLE Brand(
+	brandId varchar(5) PRIMARY KEY,
+	brand varchar(20)
+);
 
 
 
