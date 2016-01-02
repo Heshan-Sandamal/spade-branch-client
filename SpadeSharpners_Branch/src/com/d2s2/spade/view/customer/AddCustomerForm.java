@@ -7,9 +7,15 @@ package com.d2s2.spade.view.customer;
 import com.d2s2.spade.controllers.CustomerController;
 import com.d2s2.spade.models.Customer;
 import com.d2s2.spade.models.CustomerTelephone;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.PopupMenu;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.Popup;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -23,17 +29,28 @@ public class AddCustomerForm extends javax.swing.JDialog {
     String address;
     String phoneNo;
     String id;
+    private JTextField tfield;
+    //private Container phncont;
+    private int count;
+    private String nameTField;
+    private ArrayList<JTextField> extratextbox;
+    private int extranoY;
 
     /**
      * Creates new form AddCustomerForm
      */
     public AddCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
         initComponents();
         name = null;
         address = null;
         phoneNo = null;
         id = null;
+        nameTField = "extrano";
+        count = 0;
+        extranoY = 40;
+        extratextbox = new ArrayList<JTextField>();
     }
 
     /**
@@ -55,7 +72,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
         PhoneText = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         CustomerId = new javax.swing.JTextField();
-        AddPhoneTextfield = new javax.swing.JButton();
+        AddanotherPhoneButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,10 +117,10 @@ public class AddCustomerForm extends javax.swing.JDialog {
             }
         });
 
-        AddPhoneTextfield.setText("Add Another Phone");
-        AddPhoneTextfield.addActionListener(new java.awt.event.ActionListener() {
+        AddanotherPhoneButton.setText("+");
+        AddanotherPhoneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddPhoneTextfieldActionPerformed(evt);
+                AddanotherPhoneButtonActionPerformed(evt);
             }
         });
 
@@ -111,10 +128,6 @@ public class AddCustomerForm extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addCustomerButton)
-                .addGap(62, 62, 62))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,7 +136,11 @@ public class AddCustomerForm extends javax.swing.JDialog {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(AddanotherPhoneButton)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -132,17 +149,16 @@ public class AddCustomerForm extends javax.swing.JDialog {
                                 .addComponent(jLabel5))
                             .addComponent(AddressText, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
-                        .addComponent(CustomerId, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(CustomerId, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(195, 195, 195)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(222, 222, 222)
-                        .addComponent(AddPhoneTextfield)))
+                .addGap(195, 195, 195)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addCustomerButton)
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,12 +178,11 @@ public class AddCustomerForm extends javax.swing.JDialog {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(AddPhoneTextfield)
-                .addGap(48, 48, 48)
+                    .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddanotherPhoneButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(addCustomerButton)
-                .addGap(52, 52, 52))
+                .addGap(70, 70, 70))
         );
 
         pack();
@@ -209,11 +224,27 @@ public class AddCustomerForm extends javax.swing.JDialog {
         this.id = CustomerId.getText();
     }//GEN-LAST:event_CustomerIdActionPerformed
 
-    private void AddPhoneTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPhoneTextfieldActionPerformed
+    private void AddanotherPhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddanotherPhoneButtonActionPerformed
         // TODO add your handling code here:
+        tfield = new JTextField();
+        //phncont = new Container();
+        tfield.setName(nameTField+count);
+        //phncont.setName(nameTField+count);
         
+        extratextbox.add(tfield);
+        if (count>=1){
+            extranoY+=40;
+        }
+        count++;
+        tfield.setBounds(PhoneText.getX(), PhoneText.getY()+extranoY, PhoneText.getWidth(), PhoneText.getHeight());
+        add(tfield);
+        revalidate();
+        repaint();
+        //repaint(PhoneText.getX(), PhoneText.getY()+extranoY, PhoneText.getWidth(), PhoneText.getHeight());
+        pack();
         
-    }//GEN-LAST:event_AddPhoneTextfieldActionPerformed
+        System.out.println(nameTField+count);
+    }//GEN-LAST:event_AddanotherPhoneButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,7 +274,8 @@ public class AddCustomerForm extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        
+       /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AddCustomerForm dialog = new AddCustomerForm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -252,12 +284,13 @@ public class AddCustomerForm extends javax.swing.JDialog {
                         System.exit(0);
                     }
                 });
+                
                 dialog.setVisible(true);
             }
-        });
+        }); */
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddPhoneTextfield;
+    private javax.swing.JButton AddanotherPhoneButton;
     private javax.swing.JTextField AddressText;
     private javax.swing.JTextField CustomerId;
     private javax.swing.JTextField NameText;
@@ -298,8 +331,10 @@ public class AddCustomerForm extends javax.swing.JDialog {
     private boolean addCustomerToDB() throws ClassNotFoundException, SQLException {
         //fetch details from view
         ArrayList<CustomerTelephone> lt=new ArrayList<>();
-        lt.add(new CustomerTelephone("C-0002","02154"));
-        lt.add(new CustomerTelephone("C-0002","022254"));
+        lt.add(new CustomerTelephone(CustomerId.getText(), PhoneText.getText()));
+        for(int i=0;i<count;i++){
+            lt.add(new CustomerTelephone(CustomerId.getText(), extratextbox.get(i).getText()));
+        }
         Customer customer=new Customer(CustomerId.getText(),NameText.getText(),AddressText.getText(), lt);
         
         return CustomerController.addCustomer(customer);
@@ -309,23 +344,5 @@ public class AddCustomerForm extends javax.swing.JDialog {
     
     //----------------------------------------------------------------------------------------
     
-   /* private void formchange(){
-        CustomerId.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                this.id=CustomerId.getText(); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
-    }*/
+   
 }

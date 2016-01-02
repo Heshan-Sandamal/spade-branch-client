@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/E:/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
-=======
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBHandler.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/Supplier.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/AddSupplierForm.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/Customer.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/CustomerTelephone.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/SupplierTelephone.java</file>
->>>>>>> aeb1dd09cee1c98ba22d2366fcc2fd2f5f2ae177
+            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/MainInterface.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/AddCustomerForm.java</file>
         </group>
     </open-files>
 </project-private>
