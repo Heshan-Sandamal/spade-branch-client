@@ -5,9 +5,16 @@
  */
 package com.d2s2.spade.view.customer;
 
+import com.d2s2.spade.controllers.CustomerController;
+import com.d2s2.spade.models.Customer;
 import java.awt.ScrollPane;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -25,10 +32,12 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private DefaultTableModel defaulttablemodel;
     private JTable customerTable;
     private JScrollPane scrollpane;
+    private ArrayList<Customer> customerList;
     
     public ViewCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        customerList = new ArrayList<>();
         
         /* creating customer table with specified properties*/
         customerTable = new JTable() {
@@ -50,7 +59,15 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         scrollpane = new JScrollPane();
         scrollpane.setBounds(45, 60, 500, 400);
         
-        TableInit();
+        try {
+            TableInit();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS "+ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to SQL "+ex.getMessage());
+        }
         
         
     }
@@ -156,21 +173,35 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /* Initializing table with data and headings */
-    private void TableInit()
+    private void TableInit() throws ClassNotFoundException,SQLException
     {
         defaulttablemodel = new DefaultTableModel(0,0);
         String[] tableHeaders = new String[] {"CustomerID","Name","Balance"};
         defaulttablemodel.setColumnIdentifiers(tableHeaders);
         customerTable.setModel(defaulttablemodel);
-
+        
+        customerList = CustomerController.viewCustomers();
+        
         /* customer table data */
-        for (int i=0; i<50; i++){
+        for (int i=0; i<customerList.size();i++){
+            Vector<Object> customerData = new Vector<Object>();
+            customerData.add(customerList.get(i).getCustomerId());
+            customerData.add(customerList.get(i).getName());
+            customerData.add("Balance"+i);
+            
+            defaulttablemodel.addRow(customerData);
+        }
+        
+        
+        /*for (int i=0; i<50; i++){
             Vector<Object> data = new Vector<Object>();
             data.add("000"+i);
             data.add("Customer"+i);
             data.add("Balance"+i);
             defaulttablemodel.addRow(data);
-        }
+        }*/
+        
+        
 
         scrollpane.setViewportView(customerTable);
         add(scrollpane);

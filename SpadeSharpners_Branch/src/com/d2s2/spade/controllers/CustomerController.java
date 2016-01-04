@@ -10,6 +10,7 @@ import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Customer;
 import com.d2s2.spade.models.CustomerTelephone;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  * @author Heshan Sandamal
  */
 public class CustomerController {
+    
     
     //add customer to database
     public static boolean addCustomer(Customer customer) throws ClassNotFoundException, SQLException{
@@ -65,6 +67,30 @@ public class CustomerController {
             connection.setAutoCommit(true);     //enabling auto commit
         }
          
+    }
+    
+    /**
+     * method to get details of all customers without the phone number
+     * @return
+     */
+    public static ArrayList<Customer> viewCustomers() throws ClassNotFoundException,SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.selectAllQuery(Customer.class.getSimpleName());
+        ResultSet resultSet = DBHandler.getData(connection, sql);
+        
+        ArrayList<Customer>  customerList = new ArrayList<Customer>();
+        
+        while(resultSet.next()){
+            String customerId = resultSet.getString(Customer.CUSTOMERID);
+            String name = resultSet.getString(Customer.NAME);
+            String address = resultSet.getString(Customer.ADDRESS);
+            
+            customerList.add(new Customer(customerId, name, address));
+            
+        }
+        
+        
+        return customerList;
     }
     
 }

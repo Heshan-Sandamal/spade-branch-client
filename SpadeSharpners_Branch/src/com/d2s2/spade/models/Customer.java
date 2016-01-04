@@ -19,6 +19,11 @@ public class Customer {
     private String name;
     private String address;
     private ArrayList<CustomerTelephone> telNoList;     //to get the customer telephone numbers with customer object
+    
+    /* Creating string fields for access database columns */
+    public static final String CUSTOMERID = "customerId";
+    public static final String NAME = "name";
+    public static final String ADDRESS ="address";
 
     
     public Customer(String customerId, String name, String address, ArrayList<CustomerTelephone> telNoList) {
@@ -28,7 +33,12 @@ public class Customer {
         this.telNoList = telNoList;
     }
 
-    
+    public Customer(String customerId,String name, String address){
+        this.customerId=customerId;
+        this.name=name;
+        this.address = address;
+        
+    }
    
     
     /**
