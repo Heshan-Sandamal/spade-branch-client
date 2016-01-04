@@ -253,7 +253,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                     
             }
             viewsinglecustomer = new ViewSingleCustomer(this, true, selectedCustomer);
-            //viewsinglecustomer.setVisible(true);
+            viewsinglecustomer.setVisible(true);
             selectedRow = -1;
     }
 
