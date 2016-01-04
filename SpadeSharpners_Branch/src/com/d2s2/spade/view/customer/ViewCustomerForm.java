@@ -5,6 +5,14 @@
  */
 package com.d2s2.spade.view.customer;
 
+import java.awt.ScrollPane;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author Tharindu Diluksha
@@ -14,9 +22,37 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     /**
      * Creates new form ViewCustomerForm
      */
+    private DefaultTableModel defaulttablemodel;
+    private JTable customerTable;
+    private JScrollPane scrollpane;
+    
     public ViewCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        /* creating customer table with specified properties*/
+        customerTable = new JTable() {
+        @Override
+        public boolean isCellEditable(int row, int column) {                
+                return false;               
+        };};
+        
+        customerTable.setCellSelectionEnabled(false);
+        customerTable.setSelectionMode(0);
+        customerTable.setRowSelectionAllowed(true);
+        customerTable.setDragEnabled(false);
+        customerTable.getTableHeader().setReorderingAllowed(false);
+        customerTable.getTableHeader().setResizingAllowed(false);
+        customerTable.setBounds(45, 60, 500, 700);
+        /* end of customizing table properties*/
+        
+        
+        scrollpane = new JScrollPane();
+        scrollpane.setBounds(45, 60, 500, 400);
+        
+        TableInit();
+        
+        
     }
 
     /**
@@ -28,17 +64,43 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        updateButton = new javax.swing.JButton();
+        viewButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setText("  Customers");
+
+        updateButton.setText("Update");
+
+        viewButton.setText("View");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 586, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(updateButton)
+                .addGap(62, 62, 62))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(233, 233, 233)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(266, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewButton)
+                    .addComponent(updateButton))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -73,6 +135,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 ViewCustomerForm dialog = new ViewCustomerForm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -87,5 +150,36 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton updateButton;
+    private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
+
+    /* Initializing table with data and headings */
+    private void TableInit()
+    {
+        defaulttablemodel = new DefaultTableModel(0,0);
+        String[] tableHeaders = new String[] {"CustomerID","Name","Balance"};
+        defaulttablemodel.setColumnIdentifiers(tableHeaders);
+        customerTable.setModel(defaulttablemodel);
+
+        /* customer table data */
+        for (int i=0; i<50; i++){
+            Vector<Object> data = new Vector<Object>();
+            data.add("000"+i);
+            data.add("Customer"+i);
+            data.add("Balance"+i);
+            defaulttablemodel.addRow(data);
+        }
+
+        scrollpane.setViewportView(customerTable);
+        add(scrollpane);
+
+
+
+    }
+
+
+
+
 }
