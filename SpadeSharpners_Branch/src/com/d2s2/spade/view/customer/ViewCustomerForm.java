@@ -7,6 +7,7 @@ package com.d2s2.spade.view.customer;
 
 import com.d2s2.spade.controllers.CustomerController;
 import com.d2s2.spade.models.Customer;
+import java.awt.Frame;
 import java.awt.ScrollPane;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +35,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private JTable customerTable;
     private JScrollPane scrollpane;
     private ArrayList<Customer> customerList;
+    private ViewSingleCustomer viewsinglecustomer;
     
     public ViewCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -84,6 +87,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -92,6 +96,13 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         updateButton.setText("Update");
 
         viewButton.setText("View");
+        viewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,9 +111,11 @@ public class ViewCustomerForm extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(viewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(41, 41, 41)
                 .addComponent(updateButton)
-                .addGap(62, 62, 62))
+                .addGap(42, 42, 42)
+                .addComponent(deleteButton)
+                .addGap(85, 85, 85))
             .addGroup(layout.createSequentialGroup()
                 .addGap(233, 233, 233)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,12 +129,26 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewButton)
-                    .addComponent(updateButton))
+                    .addComponent(updateButton)
+                    .addComponent(deleteButton))
                 .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            showCustomer();
+        }
+        
+        catch (ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(this, "Select a customer");
+        }
+        
+        
+    }//GEN-LAST:event_viewButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,6 +194,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton updateButton;
     private javax.swing.JButton viewButton;
@@ -208,6 +236,25 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
 
 
+    }
+    
+    private void showCustomer() throws ArrayIndexOutOfBoundsException {
+        int selectedRow = customerTable.getSelectedRow();
+            String selectedId = customerTable.getValueAt(selectedRow, 0).toString();
+            System.out.println(selectedId);
+            Customer selectedCustomer = null;
+            for (int i=0;i<customerList.size();i++){
+                if(customerList.get(i).getCustomerId()==selectedId){
+                    selectedCustomer = customerList.get(i);
+                }
+                else {
+                    //selectedCustomer
+                }
+                    
+            }
+            viewsinglecustomer = new ViewSingleCustomer(this, true, selectedCustomer);
+            //viewsinglecustomer.setVisible(true);
+            selectedRow = -1;
     }
 
 

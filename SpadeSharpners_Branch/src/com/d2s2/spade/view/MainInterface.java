@@ -171,9 +171,10 @@ public class MainInterface extends javax.swing.JFrame {
 
     private void viewCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomerButtonActionPerformed
         // TODO add your handling code here:
-        if (viewCustomerForm == null){
+       /* if (viewCustomerForm == null){
             viewCustomerForm = new ViewCustomerForm(this, rootPaneCheckingEnabled);
-        }
+        }*/
+        viewCustomerForm = new ViewCustomerForm(this, rootPaneCheckingEnabled);
         viewCustomerForm.setVisible(true);
     }//GEN-LAST:event_viewCustomerButtonActionPerformed
 

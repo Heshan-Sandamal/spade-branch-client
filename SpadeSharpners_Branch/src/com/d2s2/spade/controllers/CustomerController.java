@@ -93,4 +93,19 @@ public class CustomerController {
         return customerList;
     }
     
+    public static ArrayList<String> viewCustomerPhone(String tableName, String customerId) throws ClassNotFoundException,SQLException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.selectwhereQuery(tableName,"customerId" ,customerId);
+        ResultSet resultSet = DBHandler.getData(connection, sql);
+        
+        ArrayList<String> telephoneNoList = new ArrayList<>();
+        
+        while(resultSet.next()){
+            String teleNo = resultSet.getString("telNo");
+            telephoneNoList.add(teleNo);
+        }
+        
+        return telephoneNoList;
+    }
+    
 }
