@@ -5,18 +5,70 @@
  */
 package com.d2s2.spade.view.customer;
 
+import com.d2s2.spade.controllers.CustomerController;
+import com.d2s2.spade.models.Customer;
+import com.d2s2.spade.models.CustomerTelephone;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author tdiluksha
  */
 public class ViewSingleCustomer extends javax.swing.JDialog {
-
+    
+    private Customer customer;
+    private ArrayList<String> telephoneNo;
+    private JScrollPane scrollpane;
+    private JTable phonenumberTable;
+    private DefaultTableModel defaulttablemodel;
     /**
      * Creates new form ViewSingleCustomer
      */
-    public ViewSingleCustomer(java.awt.Frame parent, boolean modal) {
+    public ViewSingleCustomer(java.awt.Dialog parent, boolean modal, Customer customer) {
         super(parent, modal);
         initComponents();
+        this.customer = customer;
+        this.IDTextfield.setText(this.customer.getCustomerId());
+        this.NameTextField.setText(this.customer.getName());
+        this.AddressTextField.setText(this.customer.getAddress());
+        
+        /* creating customer table with specified properties*/
+        phonenumberTable = new JTable() {
+        @Override
+        public boolean isCellEditable(int row, int column) {                
+                return false;               
+        };};
+        
+        scrollpane = new JScrollPane();
+        scrollpane.setBounds(150, 160, 100, 100);
+        
+        
+        
+        
+        try {
+            showPhoneNo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS "+ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to SQL "+ex.getMessage());
+        }
+    }
+    
+    public ViewSingleCustomer(java.awt.Frame parent, boolean modal, Customer customer) {
+    
+        super(parent, modal);
+        initComponents();
+    
     }
 
     /**
@@ -29,25 +81,19 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        IDTextfield = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        NameTextField = new javax.swing.JTextField();
+        AddressTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("CustomerID");
 
-        jTextField1.setText("jTextField1");
-
         jLabel2.setText("Name");
 
-        jTextField2.setText("jTextField2");
-
         jLabel3.setText("Address");
-
-        jTextField3.setText("jTextField3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,20 +101,21 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(IDTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,13 +123,13 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IDTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(236, Short.MAX_VALUE))
         );
 
@@ -117,7 +164,7 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ViewSingleCustomer dialog = new ViewSingleCustomer(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -128,15 +175,49 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
                 });
                 dialog.setVisible(true);
             }
-        });
+        });*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AddressTextField;
+    private javax.swing.JTextField IDTextfield;
+    private javax.swing.JTextField NameTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+
+    private void showPhoneNo() throws ClassNotFoundException, SQLException {
+        
+        defaulttablemodel = new DefaultTableModel(0,0);
+        String[] tableHeaders = new String[] {"Telephone Numbers"};
+        defaulttablemodel.setColumnIdentifiers(tableHeaders);
+        phonenumberTable.setModel(defaulttablemodel);
+        
+        telephoneNo = CustomerController.viewCustomerPhone("CustomerTelephone", customer.getCustomerId());
+        
+        /* customer table data */
+        for (int i=0; i<telephoneNo.size();i++){
+            Vector<Object> telno = new Vector<Object>();
+            telno.add(telephoneNo.get(i));
+            
+            defaulttablemodel.addRow(telno);
+        }
+        
+        
+        /*for (int i=0; i<50; i++){
+            Vector<Object> data = new Vector<Object>();
+            data.add("000"+i);
+            data.add("Customer"+i);
+            data.add("Balance"+i);
+            defaulttablemodel.addRow(data);
+        }*/
+        
+        
+
+        scrollpane.setViewportView(phonenumberTable);
+        add(scrollpane);
+        
+    }
+
 }
