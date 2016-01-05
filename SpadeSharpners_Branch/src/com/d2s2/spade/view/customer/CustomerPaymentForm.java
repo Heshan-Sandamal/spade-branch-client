@@ -91,6 +91,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Payment ID:");
 
@@ -131,19 +136,13 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             }
         });
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel11.setText("cheque No:");
-
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel12.setText("Bank:");
 
         jLabel13.setText("issue Date:");
 
         jLabel14.setText("exp Date:");
-
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel15.setText("status:");
 
@@ -252,9 +251,8 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
                                                         .addComponent(jComboBox2, 0, 138, Short.MAX_VALUE)
                                                         .addComponent(jTextField2)
                                                         .addComponent(jTextField3)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                            .addComponent(jSpinner1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                                                            .addComponent(jSpinner2, javax.swing.GroupLayout.Alignment.LEADING)))
+                                                        .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                                        .addComponent(jSpinner2))
                                                     .addComponent(jXDatePicker3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(3, 3, 3)))
                                         .addGap(0, 0, Short.MAX_VALUE))
@@ -341,6 +339,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

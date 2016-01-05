@@ -84,13 +84,27 @@ public class CustomerController {
             String customerId = resultSet.getString(Customer.CUSTOMERID);
             String name = resultSet.getString(Customer.NAME);
             String address = resultSet.getString(Customer.ADDRESS);
-            
             customerList.add(new Customer(customerId, name, address));
             
         }
         
         
         return customerList;
+    }
+    
+    public static ArrayList<Customer> viewCustomersBasicInfo() throws SQLException, ClassNotFoundException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.selectAllQuery(Customer.class.getSimpleName());
+        ResultSet resultSet = DBHandler.getData(connection, sql);
+        
+        ArrayList<Customer>  customerListBasic = new ArrayList<>();
+        
+        while(resultSet.next()){
+            String customerId = resultSet.getString(Customer.CUSTOMERID);
+            String name = resultSet.getString(Customer.NAME);
+            customerListBasic.add(new Customer(customerId, name,null));
+        }
+        return customerListBasic;
     }
     
     public static ArrayList<String> viewCustomerPhone(String tableName, String customerId) throws ClassNotFoundException,SQLException{
