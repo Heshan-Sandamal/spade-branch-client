@@ -11,6 +11,7 @@ import com.d2s2.spade.models.Item;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,6 +43,30 @@ public class ItemController {
         ResultSet resultSet = DBHandler.getData(connection, sql,ob);
         resultSet.next();
         return resultSet.getString(Item.SUBID);
+    }
+    
+    
+    public static ArrayList<Item> getAllItems()throws ClassNotFoundException, SQLException{
+        
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectAllQuery(Item.class.getSimpleName());
+        ResultSet resultSet=DBHandler.getData(connection, sql);
+        
+        ArrayList<Item> itemList=new ArrayList<>();
+        
+        while(resultSet.next()){
+            
+            String code=resultSet.getString(Item.CODE);
+            String brandId=resultSet.getString(Item.BRANDID);
+            String supplierId=resultSet.getString(Item.SUPPLIERID);
+            String subId=resultSet.getString(Item.SUBID);
+            String itemCode=resultSet.getString(Item.ITEMCODE);
+            String salesType=resultSet.getString(Item.TYPE);
+            
+            itemList.add(new Item(code,itemCode,subId,brandId,supplierId,salesType));     
+        }
+        
+        return itemList;
     }
     
 }

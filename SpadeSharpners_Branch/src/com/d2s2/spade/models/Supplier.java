@@ -10,6 +10,21 @@ public class Supplier {
     String name; 
     String address;
     String email;
+    
+    public static final String SUPPLIERID="supplierId";
+    public static final String NAME="supplierId";
+    public static final String ADDRESS="supplierId";
+    public static final String EMAIL="email";
+
+    public Supplier(String supplierId, String name) {
+        this.supplierId=supplierId;
+        this.name=name;
+    }
+
+    public Supplier() {
+        
+    }
+    
 
     public String getSupplierId() {
         return supplierId;

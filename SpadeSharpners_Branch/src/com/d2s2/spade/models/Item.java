@@ -22,6 +22,19 @@ public class Item {
     public static final String BRANDID="brandId";
     public static final String SUPPLIERID="supplierId";
     public static final String TYPE="saleType";
+
+    public Item(String code, String itemCode, String subId, String brandId, String supplierId, String salesType) {
+        this.code=code;
+        this.itemCode=itemCode;
+        this.subId=subId;
+        this.brandId=brandId;
+        this.supplierId=supplierId;
+        this.saleType=salesType;
+    }
+
+    public Item() {
+        
+    }
     
     
     /**

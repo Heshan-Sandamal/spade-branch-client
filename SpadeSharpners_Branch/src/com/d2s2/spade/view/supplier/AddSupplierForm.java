@@ -256,6 +256,7 @@ public class AddSupplierForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addToTableButtonActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+
         Supplier supplier = new Supplier();
         supplier.setName(NameField.getText());
         supplier.setSupplierId(IdField.getText());

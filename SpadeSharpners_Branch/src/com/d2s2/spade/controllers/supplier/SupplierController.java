@@ -10,8 +10,10 @@ import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.CustomerTelephone;
+import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.SupplierTelephone;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -48,6 +50,27 @@ public class SupplierController {
         return DBHandler.setData(connection, sqlSupplierTelephone,ob)>0 ? true:false;//build insert query
         
         
+    }
+
+    public static ArrayList<Supplier> getAllSuppliers() throws ClassNotFoundException, SQLException {
+         
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectAllQuery(Supplier.class.getSimpleName());
+        ResultSet resultSet=DBHandler.getData(connection, sql);
+        
+        ArrayList<Supplier> supplierList=new ArrayList<>();
+        
+        while(resultSet.next()){
+            
+            String supplierId=resultSet.getString(Supplier.SUPPLIERID);
+            String name=resultSet.getString(Supplier.NAME);
+            
+            supplierList.add(new Supplier(supplierId,name));
+            
+            //itemList.add(new Item(code,itemCode,subId,brandId,supplierId,salesType));     
+        }
+        
+        return supplierList;
     }
 
     
