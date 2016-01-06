@@ -248,8 +248,6 @@ public class ViewCustomerForm extends javax.swing.JDialog {
             
             defaulttablemodel.addRow(customerData);
         }
-        
-        
         /*for (int i=0; i<50; i++){
             Vector<Object> data = new Vector<Object>();
             data.add("000"+i);
@@ -257,14 +255,8 @@ public class ViewCustomerForm extends javax.swing.JDialog {
             data.add("Balance"+i);
             defaulttablemodel.addRow(data);
         }*/
-        
-        
-
         scrollpane.setViewportView(customerTable);
         add(scrollpane);
-
-
-
     }
     
     private void showCustomer() throws ArrayIndexOutOfBoundsException,IndexOutOfBoundsException {
