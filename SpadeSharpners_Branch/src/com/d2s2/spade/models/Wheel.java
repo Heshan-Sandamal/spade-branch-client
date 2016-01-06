@@ -8,12 +8,30 @@ package com.d2s2.spade.models;
  *
  * @author Heshan Sandamal
  */
-public class Wheel extends Item{
+public class Wheel extends Item {
+
     private String size;
     private String country;
     private double diameter;
     private double hole;
+    
+    public static final String SIZE = "size";
+    public static final String COUNTRY = "country";
+    public static final String DIAMETER = "diameter";
+    public static final String HOLE = "hole";
 
+    public Wheel(String size, String country, double diamter, double hole) {
+        this.size=size;
+        this.country=country;
+        this.diameter=diamter;
+        this.hole=hole;
+    }
+
+    public Wheel() {
+    }
+
+    
+    
     /**
      * @return the size
      */

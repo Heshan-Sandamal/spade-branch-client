@@ -5,14 +5,18 @@
 package com.d2s2.spade.view.item;
 
 import com.d2s2.spade.controllers.item.BrandController;
+import com.d2s2.spade.controllers.item.CutterController;
 import com.d2s2.spade.controllers.item.ItemCategoryController;
 import com.d2s2.spade.controllers.item.ItemController;
 import com.d2s2.spade.controllers.item.KiyathController;
 import com.d2s2.spade.controllers.item.PlanerBladeController;
 import com.d2s2.spade.controllers.item.RouterCutterController;
 import com.d2s2.spade.controllers.item.SilverSoleController;
+import com.d2s2.spade.controllers.item.TipController;
+import com.d2s2.spade.controllers.item.WheelController;
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Brand;
+import com.d2s2.spade.models.Cutter;
 import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
@@ -20,6 +24,8 @@ import com.d2s2.spade.models.PlanerBlade;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Supplier;
+import com.d2s2.spade.models.Tip;
+import com.d2s2.spade.models.Wheel;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -747,8 +753,16 @@ public class ViewItemForm extends javax.swing.JDialog {
                 setRouterCutterDetails(code);
             } else if (category.equals("Silver Sole")) {
                 setSilverSoleDetails(code);
-            }else if(category.equals("Planer Blade")){
+            } else if (category.equals("Planer Blade")) {
                 setPlanerBladeDetails(code);
+            } else if (category.equals("Tip")) {
+                setTipDetails(code);
+            } else if (category.equals("Cutter")) {
+                setCutterDetails(code);
+            } else if (category.equals("Wheel")) {
+                setWheelDetails(code);
+            } else if (category.equals("Plux")) {
+                setPluxDetails(code);
             }
 
         }
@@ -780,5 +794,35 @@ public class ViewItemForm extends javax.swing.JDialog {
         dtmForItemDetailTable.setRowCount(0);
         dtmForItemDetailTable.addRow(new Object[]{"Type : ", detailsOfItem.getType()});
         dtmForItemDetailTable.addRow(new Object[]{"size : ", detailsOfItem.getSize()});
+    }
+
+    private void setTipDetails(String code) throws ClassNotFoundException, SQLException {
+        Tip detailsOfItem = TipController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Size : ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"country : ", detailsOfItem.getCountry()});
+        dtmForItemDetailTable.addRow(new Object[]{"price : ", detailsOfItem.getPrice()});
+    }
+
+    private void setCutterDetails(String code) throws ClassNotFoundException, SQLException {
+        Cutter detailsOfItem = CutterController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Size : ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"No of tips : ", detailsOfItem.getNoOfTips()});
+        dtmForItemDetailTable.addRow(new Object[]{"Thickness : ", detailsOfItem.getThickness()});
+
+    }
+
+    private void setWheelDetails(String code) throws ClassNotFoundException, SQLException {
+        Wheel detailsOfItem = WheelController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"SIze : ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"Country : ", detailsOfItem.getCountry()});
+        dtmForItemDetailTable.addRow(new Object[]{"Diameter : ", detailsOfItem.getDiameter()});
+        dtmForItemDetailTable.addRow(new Object[]{"Hole : ", detailsOfItem.getHole()});
+    }
+
+    private void setPluxDetails(String code) {
+        dtmForItemDetailTable.setRowCount(0);
     }
 }

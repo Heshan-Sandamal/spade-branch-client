@@ -10,6 +10,7 @@ import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.Tip;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -50,5 +51,15 @@ public class TipController {
         }
 
 
+    }
+
+   
+
+    public static Tip getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectwhereQuery(Tip.class.getSimpleName(), Tip.CODE, code);
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        return new Tip(data.getString(Tip.SIZE),data.getString(Tip.COUNTRY),data.getDouble(Tip.PRICE));
     }
 }

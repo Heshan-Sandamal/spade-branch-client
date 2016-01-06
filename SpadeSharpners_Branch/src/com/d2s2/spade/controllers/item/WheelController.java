@@ -10,6 +10,7 @@ import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -50,5 +51,13 @@ public class WheelController {
         }
 
 
+    }
+
+    public static Wheel getDetailsOfItem(String code)throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectwhereQuery(Wheel.class.getSimpleName(), Wheel.CODE, code);
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        return new Wheel(data.getString(Wheel.SIZE),data.getString(Wheel.COUNTRY),data.getDouble(Wheel.DIAMETER),data.getDouble(Wheel.HOLE));
     }
 }

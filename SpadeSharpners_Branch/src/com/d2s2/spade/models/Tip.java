@@ -13,6 +13,22 @@ public class Tip extends Item{
     private String country;
     private double price;
 
+    public static final String SIZE="size";
+    public static final String COUNTRY="country";
+    public static final String PRICE="price";
+
+    public Tip(String size, String country, double price) {
+        this.size=size;
+        this.country=country;
+        this.price=price;
+    }
+
+    public Tip() {
+    }
+    
+    
+    
+    
     /**
      * @return the size
      */
