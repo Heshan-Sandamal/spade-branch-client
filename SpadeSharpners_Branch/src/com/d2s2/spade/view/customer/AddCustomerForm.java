@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.event.DocumentEvent;
@@ -35,6 +36,8 @@ public class AddCustomerForm extends javax.swing.JDialog {
     private String nameTField;
     private ArrayList<JTextField> extratextbox;
     private int extranoY;
+    private JScrollPane phoneScrolPane;
+    private javax.swing.JButton removeExtraPhoneButton;
 
     /**
      * Creates new form AddCustomerForm
@@ -226,24 +229,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
 
     private void AddanotherPhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddanotherPhoneButtonActionPerformed
         // TODO add your handling code here:
-        tfield = new JTextField();
-        //phncont = new Container();
-        tfield.setName(nameTField+count);
-        //phncont.setName(nameTField+count);
-        
-        extratextbox.add(tfield);
-        if (count>=1){
-            extranoY+=40;
-        }
-        count++;
-        tfield.setBounds(PhoneText.getX(), PhoneText.getY()+extranoY, PhoneText.getWidth(), PhoneText.getHeight());
-        add(tfield);
-        revalidate();
-        repaint();
-        //repaint(PhoneText.getX(), PhoneText.getY()+extranoY, PhoneText.getWidth(), PhoneText.getHeight());
-        pack();
-        
-        System.out.println(nameTField+count);
+        addPhoneTextBox();
     }//GEN-LAST:event_AddanotherPhoneButtonActionPerformed
 
     /**
@@ -340,9 +326,30 @@ public class AddCustomerForm extends javax.swing.JDialog {
         return CustomerController.addCustomer(customer);
     }
     
-    
-    
-    //----------------------------------------------------------------------------------------
+    private void addPhoneTextBox(){
+        tfield = new JTextField();
+        tfield.setName(nameTField+count);
+        
+        extratextbox.add(tfield);
+        if (count>=1){
+            extranoY+=40;
+        }
+        
+        if (count>=3){
+            AddanotherPhoneButton.setEnabled(false);
+        }
+        
+        count++;
+        tfield.setBounds(PhoneText.getX(), PhoneText.getY()+extranoY, PhoneText.getWidth(), PhoneText.getHeight());
+        add(tfield);
+        
+        revalidate();
+        repaint();
+        pack();
+        
+        System.out.println(nameTField+count);
+        
+    }
     
    
 }
