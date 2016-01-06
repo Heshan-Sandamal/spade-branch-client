@@ -9,8 +9,10 @@ import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.SupplierTelephone;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,7 +52,7 @@ public class AddSupplierForm extends javax.swing.JFrame {
         NameField = new javax.swing.JTextField();
         AddressField = new javax.swing.JTextField();
         EmailField = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        createSupplierButton = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -80,10 +82,10 @@ public class AddSupplierForm extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Create Supplier");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        createSupplierButton.setText("Create Supplier");
+        createSupplierButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                createSupplierButtonActionPerformed(evt);
             }
         });
 
@@ -183,7 +185,7 @@ public class AddSupplierForm extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jToggleButton1)
+                        .addComponent(createSupplierButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jToggleButton2)
                         .addGap(29, 29, 29))))
@@ -232,7 +234,7 @@ public class AddSupplierForm extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1)
+                    .addComponent(createSupplierButton)
                     .addComponent(jToggleButton2))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -255,35 +257,22 @@ public class AddSupplierForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_addToTableButtonActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-
-        Supplier supplier = new Supplier();
-        supplier.setName(NameField.getText());
-        supplier.setSupplierId(IdField.getText());
-        supplier.setAddress(AddressField.getText());
-        supplier.setEmail(EmailField.getText());
+    private void createSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSupplierButtonActionPerformed
         try {
-            boolean added = SupplierController.addSupplier(supplier);
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Class not found");
-        } catch (SQLException ex) {
-            System.out.println("SQL Exception");
-        }
-        for (int count = 0; count < model.getRowCount(); count++){
-            SupplierTelephone supplierTelephone = new SupplierTelephone();
-            supplierTelephone.setSupplierId(IdField.getText());
-            supplierTelephone.setContactName((String) model.getValueAt(count,0));
-            supplierTelephone.setTelNo((String) model.getValueAt(count,1));
-            try {
-                SupplierController.addSupplierTelephone(supplierTelephone);
-            } catch (ClassNotFoundException ex) {
-                System.out.println("Class not found");
-            } catch (SQLException ex) {
-                System.out.println("SQL Exception"+ex);
+            boolean addSupplierToDB = addSupplierToDB();
+            if(addSupplierToDB){
+                JOptionPane.showMessageDialog(this, "Added Successfully");
+            }else{
+                JOptionPane.showMessageDialog(this, "Faild to add.");
             }
+            this.dispose();
             
+        } 
+        catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to add due to "+ex.getMessage());
         }
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+        
+    }//GEN-LAST:event_createSupplierButtonActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // TODO add your handling code here:
@@ -336,6 +325,7 @@ public class AddSupplierForm extends javax.swing.JFrame {
     private javax.swing.JTextField NameField;
     private javax.swing.JButton addToTableButton;
     private javax.swing.JTextField contactNameField;
+    private javax.swing.JToggleButton createSupplierButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -345,7 +335,6 @@ public class AddSupplierForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private org.jdesktop.swingx.JXTable jXTable2;
     private javax.swing.JTextField telephoneNumberField;
@@ -353,5 +342,32 @@ public class AddSupplierForm extends javax.swing.JFrame {
     private Object row[]  = new Object[2];
     private DefaultTableModel model = new DefaultTableModel();
     
+
+public  boolean addSupplierToDB() throws ClassNotFoundException, SQLException{
+    ArrayList<SupplierTelephone> supplierTelephoneList =new ArrayList<SupplierTelephone>();
+        Supplier supplier = new Supplier();
+        supplier.setName(NameField.getText());
+        supplier.setSupplierId(IdField.getText());
+        supplier.setAddress(AddressField.getText());
+        supplier.setEmail(EmailField.getText());
+        boolean added = false;
+        for (int count = 0; count < model.getRowCount(); count++){
+            SupplierTelephone supplierTelephone = new SupplierTelephone();
+            supplierTelephone.setSupplierId(IdField.getText());
+            supplierTelephone.setContactName((String) model.getValueAt(count,0));
+            supplierTelephone.setTelNo((String) model.getValueAt(count,1));
+            supplierTelephoneList.add(supplierTelephone);
+            
+        }
+        try {
+            added = SupplierController.addSupplier(supplier,supplierTelephoneList);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Class not found");
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception"+ ex);
+        }
+        return added;
+        
+}
 }
 

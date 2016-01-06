@@ -22,35 +22,57 @@ import java.util.ArrayList;
  * @author Dimuth Tharaka
  */
 public class SupplierController {
-    public static boolean addSupplier(Supplier supplier) throws ClassNotFoundException, SQLException{
+    public static boolean addSupplier(Supplier supplier,ArrayList<SupplierTelephone> supplierTelephoneList) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();       //get connection from singleton dbConnection class
         
         String supplierId=supplier.getSupplierId();
         String name=supplier.getName();
         String address=supplier.getAddress();
         String email = supplier.getEmail();
+        ArrayList<SupplierTelephone> telList = supplierTelephoneList;
         
-
-        String sqlSupplier=DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 4);   
-        Object[] ob=new Object[]{supplierId, name, address, email};
-        return DBHandler.setData(connection, sqlSupplier,ob)>0 ? true:false;//build insert query
+        try{
+            connection.setAutoCommit(false);  
+            String sqlSupplier=DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 4);
+            int setData = DBHandler.setData(connection, sqlSupplier,new Object[]{supplierId,name,address,email});
             
-    }  
-    public static boolean addSupplierTelephone(SupplierTelephone supplierTelephone) throws ClassNotFoundException, SQLException{
-        Connection connection=DBConnection.getDBConnection().getConnection();       //get connection from singleton dbConnection class
-        
-        String supplierId=supplierTelephone.getSupplierId();
-        String Contactname=supplierTelephone.getContactName();
-        String telephoneNumber=supplierTelephone.getTelNo();
-       
-        
+            if(setData>0){              //check customer data is added
+                
+                for (SupplierTelephone supplierTelephone : telList) {
+                    
+                    
+                    String sqlTelephone=DBQueryGenerator.insertQuery(SupplierTelephone.class.getSimpleName(), 3);       //use this way to get db table name.because model name is same as db table name
+                    
+                    //add data using prepared statements.refer handler class
+                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{supplierTelephone.getSupplierId(),
+                        supplierTelephone.getContactName(),supplierTelephone.getTelNo()});
+                    
+                    if(addedTel<=0){            //check customer telephone data is added
+                        connection.rollback();      //if error then rool back
+                        return false;
+                    }
+                }
+                
+            }else{
+                connection.rollback();      //if error then rool back
+                return false;
+            }
+            
+            connection.commit();        //when no error commit 
+            return true;
+            
+        } catch (Exception e) {
+            connection.rollback();      //if error then rool back
+            throw e;
+        }finally{
+            connection.setAutoCommit(true);     //enabling auto commit
+        }
+        }
 
-        String sqlSupplierTelephone=DBQueryGenerator.insertQuery(SupplierTelephone.class.getSimpleName(), 3);   
-        Object[] ob=new Object[]{supplierId, Contactname, telephoneNumber};
-        return DBHandler.setData(connection, sqlSupplierTelephone,ob)>0 ? true:false;//build insert query
         
-        
-    }
+            
+     
+
 
     public static ArrayList<Supplier> getAllSuppliers() throws ClassNotFoundException, SQLException {
          
