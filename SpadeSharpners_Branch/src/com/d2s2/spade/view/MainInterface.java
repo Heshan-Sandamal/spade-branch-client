@@ -151,6 +151,7 @@ public class MainInterface extends javax.swing.JFrame {
         if (addSupplierForm == null) {
             addSupplierForm = new AddSupplierForm();
         }
+        
         addSupplierForm.setVisible(true);
     }//GEN-LAST:event_addSupplierButtonActionPerformed
     

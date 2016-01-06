@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Java%20Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
-            <file>file:/E:/Java%20Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/MainInterface.java</file>
-            <file>file:/E:/Java%20Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
+            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
+            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/AddSupplierForm.java</file>
+            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/AddCustomerForm.java</file>
+            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/supplier/SupplierController.java</file>
         </group>
     </open-files>
 </project-private>
