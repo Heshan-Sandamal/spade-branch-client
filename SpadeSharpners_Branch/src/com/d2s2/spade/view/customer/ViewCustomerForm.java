@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.JXTable;
 
 
 /**
@@ -32,7 +33,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
      * Creates new form ViewCustomerForm
      */
     private DefaultTableModel defaulttablemodel;
-    private JTable customerTable;
+    private JXTable customerTable;
     private JScrollPane scrollpane;
     private ArrayList<Customer> customerList;
     private ViewSingleCustomer viewsinglecustomer;
@@ -43,7 +44,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         customerList = new ArrayList<>();
         
         /* creating customer table with specified properties*/
-        customerTable = new JTable() {
+        customerTable = new JXTable() {
         @Override
         public boolean isCellEditable(int row, int column) {                
                 return false;               
@@ -55,12 +56,12 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         customerTable.setDragEnabled(false);
         customerTable.getTableHeader().setReorderingAllowed(false);
         customerTable.getTableHeader().setResizingAllowed(false);
-        customerTable.setBounds(45, 60, 500, 700);
+        customerTable.setBounds(45, 100, 500, 700);
         /* end of customizing table properties*/
         
         
         scrollpane = new JScrollPane();
-        scrollpane.setBounds(45, 60, 500, 400);
+        scrollpane.setBounds(45, 100, 500, 350);
         
         try {
             TableInit();
@@ -88,6 +89,9 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         updateButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        searchByCombo = new javax.swing.JComboBox<>();
+        searchTextBox = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,6 +108,10 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
         deleteButton.setText("Delete");
 
+        searchByCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel2.setText("Search By");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,17 +124,32 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                 .addGap(42, 42, 42)
                 .addComponent(deleteButton)
                 .addGap(85, 85, 85))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(233, 233, 233)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(266, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)))
+                .addComponent(searchTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(searchByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewButton)
                     .addComponent(updateButton)
@@ -144,6 +167,9 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         }
         
         catch (ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(this, "Select a customer");
+        }
+        catch (IndexOutOfBoundsException ex){
             JOptionPane.showMessageDialog(this, "Select a customer");
         }
         
@@ -196,6 +222,9 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> searchByCombo;
+    private javax.swing.JTextField searchTextBox;
     private javax.swing.JButton updateButton;
     private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
@@ -238,7 +267,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
     }
     
-    private void showCustomer() throws ArrayIndexOutOfBoundsException {
+    private void showCustomer() throws ArrayIndexOutOfBoundsException,IndexOutOfBoundsException {
         int selectedRow = customerTable.getSelectedRow();
             String selectedId = customerTable.getValueAt(selectedRow, 0).toString();
             System.out.println(selectedId);
