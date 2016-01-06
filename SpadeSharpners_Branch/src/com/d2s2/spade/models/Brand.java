@@ -54,4 +54,16 @@ public class Brand {
     public void setBrand(String brand) {
         this.brand = brand;
     }
+    
+    
+    @Override
+    public boolean equals(Object obj) {
+        String brandId = (String) obj;
+        if (this.getBrandId().equals(brandId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }

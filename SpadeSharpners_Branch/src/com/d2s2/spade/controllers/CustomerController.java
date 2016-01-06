@@ -87,8 +87,6 @@ public class CustomerController {
             customerList.add(new Customer(customerId, name, address));
             
         }
-        
-        
         return customerList;
     }
     
