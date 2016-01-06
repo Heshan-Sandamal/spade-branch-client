@@ -331,7 +331,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        itemDetailsTab.addTab("Router Cutters", jPanel3);
+        itemDetailsTab.addTab("Router Cutter", jPanel3);
 
         jLabel13.setText("Size");
 
@@ -384,7 +384,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        itemDetailsTab.addTab("Planer Blades", jPanel4);
+        itemDetailsTab.addTab("Planer Blade", jPanel4);
 
         jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -441,7 +441,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        itemDetailsTab.addTab("Cutters", jPanel5);
+        itemDetailsTab.addTab("Cutter", jPanel5);
 
         jComboBox11.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -503,7 +503,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        itemDetailsTab.addTab("Tips", jPanel6);
+        itemDetailsTab.addTab("Tip", jPanel6);
 
         jLabel21.setText("Size");
 
@@ -568,7 +568,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        itemDetailsTab.addTab("Wheels", jPanel7);
+        itemDetailsTab.addTab("Wheel", jPanel7);
 
         jLabel25.setText("Description");
 

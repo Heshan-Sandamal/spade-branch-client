@@ -14,6 +14,19 @@ public class PlanerBlade extends Item{
  private String size;
 
     
+ public static final String TYPE="type";
+ public static final String SIZE="size";
+
+    public PlanerBlade(String type, String size) {
+        this.type=type;
+        this.size=size;
+    }
+
+    public PlanerBlade() {
+    }
+ 
+    
+    
     /**
      * @return the type
      */

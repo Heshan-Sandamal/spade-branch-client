@@ -378,8 +378,8 @@
         <Container class="javax.swing.JPanel" name="jPanel3">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Router Cutters">
-                <Property name="tabTitle" type="java.lang.String" value="Router Cutters"/>
+              <JTabbedPaneConstraints tabName="Router Cutter">
+                <Property name="tabTitle" type="java.lang.String" value="Router Cutter"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -450,8 +450,8 @@
         <Container class="javax.swing.JPanel" name="jPanel4">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Planer Blades">
-                <Property name="tabTitle" type="java.lang.String" value="Planer Blades"/>
+              <JTabbedPaneConstraints tabName="Planer Blade">
+                <Property name="tabTitle" type="java.lang.String" value="Planer Blade"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -549,8 +549,8 @@
         <Container class="javax.swing.JPanel" name="jPanel5">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Cutters">
-                <Property name="tabTitle" type="java.lang.String" value="Cutters"/>
+              <JTabbedPaneConstraints tabName="Cutter">
+                <Property name="tabTitle" type="java.lang.String" value="Cutter"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -650,8 +650,8 @@
         <Container class="javax.swing.JPanel" name="jPanel6">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Tips">
-                <Property name="tabTitle" type="java.lang.String" value="Tips"/>
+              <JTabbedPaneConstraints tabName="Tip">
+                <Property name="tabTitle" type="java.lang.String" value="Tip"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -766,8 +766,8 @@
         <Container class="javax.swing.JPanel" name="jPanel7">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Wheels">
-                <Property name="tabTitle" type="java.lang.String" value="Wheels"/>
+              <JTabbedPaneConstraints tabName="Wheel">
+                <Property name="tabTitle" type="java.lang.String" value="Wheel"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>

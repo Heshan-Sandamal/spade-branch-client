@@ -9,6 +9,7 @@ import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Kiyath;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -50,5 +51,13 @@ public class KiyathController {
         }
 
 
+    }
+
+    public static Kiyath getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectwhereQuery(Kiyath.class.getSimpleName(), Kiyath.CODE, code);
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        return new Kiyath(data.getString(Kiyath.SIZE),data.getInt(Kiyath.NOOFTIPS));
     }
 }

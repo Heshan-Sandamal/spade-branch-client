@@ -7,9 +7,11 @@ package com.d2s2.spade.controllers.item;
 import com.d2s2.spade.dbconnection.DBConnection;
 import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
+import com.d2s2.spade.models.Kiyath;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -19,7 +21,7 @@ import java.sql.SQLException;
 public class SilverSoleController {
     public static boolean addItem(SilverSole silverSole) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.insertQuery(SilverSole.class.getSimpleName(), 2);
+        String sql = DBQueryGenerator.insertQuery(SilverSole.class.getSimpleName(), 3);
 
 
         try {
@@ -50,5 +52,13 @@ public class SilverSoleController {
         }
 
 
+    }
+
+    public static SilverSole getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectwhereQuery(SilverSole.class.getSimpleName(), Kiyath.CODE, code);
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        return new SilverSole(data.getString(SilverSole.TYPE),data.getDouble(SilverSole.PRICE));
     }
 }

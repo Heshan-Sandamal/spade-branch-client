@@ -2,21 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/AddSupplierForm.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/AddCustomerForm.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/supplier/SupplierController.java</file>
-=======
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/AddCustomerForm.java</file>
->>>>>>> 8d0f7f484a0a415f62b7ed1fcca6de3d00382de6
+            <file>file:/E:/Java%20Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
+            <file>file:/E:/Java%20Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/MainInterface.java</file>
+            <file>file:/E:/Java%20Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
         </group>
->>>>>>> c72bdfa563dde9ccd0349a6c2122522e2ee29486
     </open-files>
 </project-private>

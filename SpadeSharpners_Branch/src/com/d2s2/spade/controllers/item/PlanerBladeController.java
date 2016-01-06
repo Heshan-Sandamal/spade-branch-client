@@ -9,6 +9,7 @@ import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.PlanerBlade;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -50,6 +51,14 @@ public class PlanerBladeController {
         }
 
 
+    }
+
+    public static PlanerBlade getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectwhereQuery(PlanerBlade.class.getSimpleName(), PlanerBlade.CODE, code);
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        return new PlanerBlade(data.getString(PlanerBlade.TYPE),data.getString(PlanerBlade.SIZE));
     }
 
 }

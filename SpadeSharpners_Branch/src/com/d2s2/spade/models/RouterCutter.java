@@ -13,6 +13,14 @@ public class RouterCutter extends Item{
     
     public static final String SIZE="size";
 
+    public RouterCutter(String size) {
+        this.size=size;
+    }
+
+    public RouterCutter() {
+        
+    }
+
     /**
      * @return the size
      */
