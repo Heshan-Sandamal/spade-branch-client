@@ -203,7 +203,7 @@ public class AddItemForm extends javax.swing.JDialog {
 
         subIdTextField.setEditable(false);
 
-        supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001" }));
+        supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001", "S-0002" }));
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         brandCombo.addItemListener(new java.awt.event.ItemListener() {
@@ -234,7 +234,12 @@ public class AddItemForm extends javax.swing.JDialog {
 
         supplierIdTextField.setEditable(false);
         supplierIdTextField.setBackground(new java.awt.Color(255, 255, 255));
-        supplierIdTextField.setText("S-0001");
+        supplierIdTextField.setText("S-0003");
+        supplierIdTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierIdTextFieldActionPerformed(evt);
+            }
+        });
 
         itemDetailsTab.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -1046,6 +1051,10 @@ public class AddItemForm extends javax.swing.JDialog {
     private void itemCategoryComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemCategoryComboKeyReleased
         
     }//GEN-LAST:event_itemCategoryComboKeyReleased
+
+    private void supplierIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIdTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierIdTextFieldActionPerformed
 
     /**
      * @param args the command line arguments

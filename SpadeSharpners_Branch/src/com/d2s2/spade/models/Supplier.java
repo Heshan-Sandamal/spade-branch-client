@@ -1,4 +1,3 @@
-
 package com.d2s2.spade.models;
 
 /**
@@ -6,25 +5,23 @@ package com.d2s2.spade.models;
  * @author Dimuth Tharaka
  */
 public class Supplier {
+
     String supplierId;
-    String name; 
+    String name;
     String address;
     String email;
-    
-    public static final String SUPPLIERID="supplierId";
-    public static final String NAME="supplierId";
-    public static final String ADDRESS="supplierId";
-    public static final String EMAIL="email";
+    public static final String SUPPLIERID = "supplierId";
+    public static final String NAME = "name";
+    public static final String ADDRESS = "supplierId";
+    public static final String EMAIL = "email";
 
     public Supplier(String supplierId, String name) {
-        this.supplierId=supplierId;
-        this.name=name;
+        this.supplierId = supplierId;
+        this.name = name;
     }
 
     public Supplier() {
-        
     }
-    
 
     public String getSupplierId() {
         return supplierId;
@@ -57,6 +54,15 @@ public class Supplier {
     public void setEmail(String email) {
         this.email = email;
     }
-	
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        String supplierId = (String) obj;
+        if (this.getSupplierId().equals(supplierId)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
