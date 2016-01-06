@@ -34,4 +34,16 @@ public class DBQueryGenerator {
         return "SELECT * FROM "+tableName+" WHERE " +beforeequal+"= '"+afterequal+"'" ;
     }
     
+    public static String selectLimitedColumnswhereQuery(String[] columns,String tableName, String beforeequal, String afterequal ){
+        
+        String a="SELECT ";
+        for (int i = 0; i < columns.length; i++) {
+            a+=columns[i];
+            if(i!=columns.length-1){
+                a+=",";
+            }
+        }
+        return a+" FROM "+tableName+" WHERE " +beforeequal+"= '"+afterequal+"'" ;
+    }
+    
 }

@@ -55,7 +55,7 @@ public class RouterCutterController {
 
     public static RouterCutter getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectwhereQuery(RouterCutter.class.getSimpleName(), RouterCutter.CODE, code);
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{RouterCutter.SIZE},RouterCutter.class.getSimpleName(), RouterCutter.CODE, code);
         ResultSet data = DBHandler.getData(connection, sql);
         data.next();
         return new RouterCutter(data.getString(RouterCutter.SIZE));
