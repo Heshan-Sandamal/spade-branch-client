@@ -34,10 +34,9 @@ public class AddCustomerForm extends javax.swing.JDialog {
     //private Container phncont;
     private int count;
     private String nameTField;
-    private ArrayList<JTextField> extratextbox;
+    private ArrayList<JTextField> extratextboxArray;
     private int extranoY;
     private JScrollPane phoneScrolPane;
-    private javax.swing.JButton removeExtraPhoneButton;
 
     /**
      * Creates new form AddCustomerForm
@@ -53,7 +52,9 @@ public class AddCustomerForm extends javax.swing.JDialog {
         nameTField = "extrano";
         count = 0;
         extranoY = 40;
-        extratextbox = new ArrayList<JTextField>();
+        extratextboxArray = new ArrayList<JTextField>();
+        removeExtraPhoneTextboxButton.setEnabled(false);
+        removeExtraPhoneTextboxButton.setVisible(false);
     }
 
     /**
@@ -76,6 +77,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         CustomerId = new javax.swing.JTextField();
         AddanotherPhoneButton = new javax.swing.JButton();
+        removeExtraPhoneTextboxButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -127,6 +129,13 @@ public class AddCustomerForm extends javax.swing.JDialog {
             }
         });
 
+        removeExtraPhoneTextboxButton.setText("-");
+        removeExtraPhoneTextboxButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeExtraPhoneTextboxButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,6 +152,8 @@ public class AddCustomerForm extends javax.swing.JDialog {
                         .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(AddanotherPhoneButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(removeExtraPhoneTextboxButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -182,7 +193,8 @@ public class AddCustomerForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddanotherPhoneButton))
+                    .addComponent(AddanotherPhoneButton)
+                    .addComponent(removeExtraPhoneTextboxButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(addCustomerButton)
                 .addGap(70, 70, 70))
@@ -231,6 +243,11 @@ public class AddCustomerForm extends javax.swing.JDialog {
         // TODO add your handling code here:
         addPhoneTextBox();
     }//GEN-LAST:event_AddanotherPhoneButtonActionPerformed
+
+    private void removeExtraPhoneTextboxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeExtraPhoneTextboxButtonActionPerformed
+        // TODO add your handling code here:
+        removeExtraPhno();
+    }//GEN-LAST:event_removeExtraPhoneTextboxButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,6 +304,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton removeExtraPhoneTextboxButton;
     // End of variables declaration//GEN-END:variables
 
     
@@ -319,7 +337,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
         ArrayList<CustomerTelephone> lt=new ArrayList<>();
         lt.add(new CustomerTelephone(CustomerId.getText(), PhoneText.getText()));
         for(int i=0;i<count;i++){
-            lt.add(new CustomerTelephone(CustomerId.getText(), extratextbox.get(i).getText()));
+            lt.add(new CustomerTelephone(CustomerId.getText(), extratextboxArray.get(i).getText()));
         }
         Customer customer=new Customer(CustomerId.getText(),NameText.getText(),AddressText.getText(), lt);
         
@@ -330,7 +348,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
         tfield = new JTextField();
         tfield.setName(nameTField+count);
         
-        extratextbox.add(tfield);
+        extratextboxArray.add(tfield);
         if (count>=1){
             extranoY+=40;
         }
@@ -346,9 +364,32 @@ public class AddCustomerForm extends javax.swing.JDialog {
         revalidate();
         repaint();
         pack();
-        
+        removeExtraPhoneTextboxButton.setVisible(true);
+        removeExtraPhoneTextboxButton.setEnabled(true);
         System.out.println(nameTField+count);
         
+    }
+    
+    private void removeExtraPhno(){
+        
+        count--;
+        if (count==0){
+            removeExtraPhoneTextboxButton.setVisible(false);
+            removeExtraPhoneTextboxButton.setEnabled(false); 
+            extranoY+=40;
+        }
+        
+        extratextboxArray.get(count).setVisible(false);
+        extratextboxArray.get(count).setEnabled(false);
+        
+        remove(extratextboxArray.get(count));
+        extratextboxArray.remove(extratextboxArray.size()-1);
+        
+        extranoY-=40;
+        
+        if (count<4){
+            AddanotherPhoneButton.setEnabled(true);
+        }
     }
     
    

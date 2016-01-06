@@ -36,6 +36,8 @@
                       <Component id="PhoneText" min="-2" pref="114" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="AddanotherPhoneButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="removeExtraPhoneTextboxButton" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -87,6 +89,7 @@
                   <Component id="jLabel4" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="PhoneText" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="AddanotherPhoneButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="removeExtraPhoneTextboxButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="87" max="32767" attributes="0"/>
               <Component id="addCustomerButton" min="-2" max="-2" attributes="0"/>
@@ -155,6 +158,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddanotherPhoneButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="removeExtraPhoneTextboxButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeExtraPhoneTextboxButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

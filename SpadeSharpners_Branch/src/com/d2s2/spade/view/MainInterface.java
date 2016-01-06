@@ -139,9 +139,10 @@ public class MainInterface extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        if (addItemForm == null) {
+        /*if (addItemForm == null) {
             addItemForm = new AddItemForm(this, true);
-        }
+        }*/
+        addItemForm = new AddItemForm(this, true);
         addItemForm.setVisible(true);
         
         
