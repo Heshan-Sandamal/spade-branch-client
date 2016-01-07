@@ -21,8 +21,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.JXTable;
-
 
 /**
  *
@@ -39,23 +40,24 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private ArrayList<Customer> customerList;
     private ViewSingleCustomer viewsinglecustomer;
     private String[] tableHeaders;
-    
+    private TableRowSorter<TableModel> sorter;
+
     public ViewCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         customerList = new ArrayList<>();
-        tableHeaders = new String[] {"CustomerID","Name","Balance"};
-        
-        searchByCombobox.addItem("CustomerID");
-        searchByCombobox.addItem("Name");
-        searchByCombobox.addItem("Balance");
-        searchByCombobox.addActionListener(searchByCombobox);//
+        tableHeaders = new String[]{"CustomerID", "Name", "Balance"};
+
+      
+        //searchByCombobox.addActionListener(searchByCombobox);//
         /* creating customer table with specified properties*/
         customerTable = new JXTable() {
-        @Override
-        public boolean isCellEditable(int row, int column) {                
-                return false;               
-        };};
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        ;
+        };
         
         customerTable.setCellSelectionEnabled(false);
         customerTable.setSelectionMode(0);
@@ -65,22 +67,31 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         customerTable.getTableHeader().setResizingAllowed(false);
         customerTable.setBounds(45, 100, 500, 700);
         /* end of customizing table properties*/
-        
-        
+
+
         scrollpane = new JScrollPane();
         scrollpane.setBounds(45, 100, 500, 350);
-        
+
         try {
             TableInit();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS " + ex.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to SQL "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to view due to SQL " + ex.getMessage());
         }
         
         
+        setTableSorter();
+        
+        searchByCombobox.addItem("CustomerID");
+        searchByCombobox.addItem("Name");
+        searchByCombobox.addItem("Balance");
+
+        
+
+
     }
 
     /**
@@ -96,7 +107,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         updateButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        searchByCombobox = new javax.swing.JComboBox<>();
+        searchByCombobox = new javax.swing.JComboBox<String>();
         searchTextBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
@@ -115,9 +126,20 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
         deleteButton.setText("Delete");
 
+        searchByCombobox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                searchByComboboxItemStateChanged(evt);
+            }
+        });
         searchByCombobox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchByComboboxActionPerformed(evt);
+            }
+        });
+
+        searchTextBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchTextBoxKeyReleased(evt);
             }
         });
 
@@ -136,17 +158,15 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                 .addComponent(deleteButton)
                 .addGap(85, 85, 85))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(233, 233, 233)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchByCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)))
+                        .addGap(18, 18, 18)
+                        .addComponent(searchByCombobox, 0, 112, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94))
         );
@@ -175,21 +195,27 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             showCustomer();
-        }
-        
-        catch (ArrayIndexOutOfBoundsException ex){
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Select a customer");
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Select a customer");
         }
-        catch (IndexOutOfBoundsException ex){
-            JOptionPane.showMessageDialog(this, "Select a customer");
-        }
-        
-        
+
+
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void searchByComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByComboboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchByComboboxActionPerformed
+
+    private void searchTextBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextBoxKeyReleased
+        filterTableInkeywordSearch();        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTextBoxKeyReleased
+
+    private void searchByComboboxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_searchByComboboxItemStateChanged
+searchTextBox.setText(""); 
+sorter.setRowFilter(null);// TODO add your handling code here:
+    }//GEN-LAST:event_searchByComboboxItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -233,7 +259,6 @@ public class ViewCustomerForm extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
@@ -245,21 +270,20 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /* Initializing table with data and headings */
-    private void TableInit() throws ClassNotFoundException,SQLException
-    {
-        defaulttablemodel = new DefaultTableModel(0,0);
-        
+    private void TableInit() throws ClassNotFoundException, SQLException {
+        defaulttablemodel = new DefaultTableModel(0, 0);
+
         defaulttablemodel.setColumnIdentifiers(tableHeaders);
         customerTable.setModel(defaulttablemodel);
-        
+
         customerList = CustomerController.viewCustomers();
-        
-        
+
+
         for (Customer cl : customerList) {
-            defaulttablemodel.addRow(new Object[]{cl.getCustomerId(),cl.getName(),cl.getAddress()});
+            defaulttablemodel.addRow(new Object[]{cl.getCustomerId(), cl.getName(), cl.getAddress()});
         }
-        
-        
+
+
         /* customer table data */
 //        for (int i=0; i<customerList.size();i++){
 //            Vector<Object> customerData = new Vector<Object>();
@@ -270,36 +294,51 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 //            defaulttablemodel.addRow(customerData);
 //        }
         /*for (int i=0; i<50; i++){
-            Vector<Object> data = new Vector<Object>();
-            data.add("000"+i);
-            data.add("Customer"+i);
-            data.add("Balance"+i);
-            defaulttablemodel.addRow(data);
-        }*/
+         Vector<Object> data = new Vector<Object>();
+         data.add("000"+i);
+         data.add("Customer"+i);
+         data.add("Balance"+i);
+         defaulttablemodel.addRow(data);
+         }*/
         scrollpane.setViewportView(customerTable);
         add(scrollpane);
     }
-    
-    private void showCustomer() throws ArrayIndexOutOfBoundsException,IndexOutOfBoundsException {
+
+    private void showCustomer() throws ArrayIndexOutOfBoundsException, IndexOutOfBoundsException {
         int selectedRow = customerTable.getSelectedRow();
-            String selectedId = customerTable.getValueAt(selectedRow, 0).toString();
-            System.out.println(selectedId);
-            Customer selectedCustomer = null;
-            for (int i=0;i<customerList.size();i++){
-                if(customerList.get(i).getCustomerId()==selectedId){
-                    selectedCustomer = customerList.get(i);
-                }
-                else {
-                    //selectedCustomer
-                }
-                    
+        String selectedId = customerTable.getValueAt(selectedRow, 0).toString();
+        System.out.println(selectedId);
+        Customer selectedCustomer = null;
+        for (int i = 0; i < customerList.size(); i++) {
+            if (customerList.get(i).getCustomerId() == selectedId) {
+                selectedCustomer = customerList.get(i);
+            } else {
+                //selectedCustomer
             }
-            viewsinglecustomer = new ViewSingleCustomer(this, true, selectedCustomer);
-            viewsinglecustomer.setVisible(true);
-            selectedRow = -1;
+
+        }
+        viewsinglecustomer = new ViewSingleCustomer(this, true, selectedCustomer);
+        viewsinglecustomer.setVisible(true);
+        selectedRow = -1;
     }
 
+    private void setTableSorter() {
+        sorter = new TableRowSorter<>(customerTable.getModel());
+        customerTable.setRowSorter(sorter);
+    }
 
+    private void filterTableInkeywordSearch() {
+        String text = searchTextBox.getText();
 
+        if (text.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            if (searchByCombobox.getSelectedItem().equals("CustomerID")) {
+                sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text, new int[]{0}));
+            } else if (searchByCombobox.getSelectedItem().equals("Name")) {
+                sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text, new int[]{1}));
+            }
 
+        }
+    }
 }
