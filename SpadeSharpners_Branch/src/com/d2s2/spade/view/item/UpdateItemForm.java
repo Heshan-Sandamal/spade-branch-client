@@ -28,6 +28,7 @@ import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -262,6 +263,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
         codeTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codeTextFieldActionPerformed(evt);
+            }
+        });
+        codeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                codeTextFieldKeyReleased(evt);
             }
         });
 
@@ -1049,6 +1055,13 @@ public class UpdateItemForm extends javax.swing.JDialog {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_supplierComboItemStateChanged
 
+    private void codeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeTextFieldKeyReleased
+
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+            disableSelectedTab();
+        };
+    }//GEN-LAST:event_codeTextFieldKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1341,7 +1354,6 @@ public class UpdateItemForm extends javax.swing.JDialog {
     }
 
     //-------------------------------------------------------------------------------------------------------------------------
-    
     private void getItemDetails() throws ClassNotFoundException, SQLException {
         String code = codeTextField.getText();
         String[] splitCode = code.split(":");
@@ -1421,11 +1433,9 @@ public class UpdateItemForm extends javax.swing.JDialog {
             component.setEnabled(true);
         }
     }
-    
-    
-    public void setCodeToGetDetails(String code) throws ClassNotFoundException, SQLException{
+
+    public void setCodeToGetDetails(String code) throws ClassNotFoundException, SQLException {
         codeTextField.setText(code);
         getItemDetails();
     }
-    
 }
