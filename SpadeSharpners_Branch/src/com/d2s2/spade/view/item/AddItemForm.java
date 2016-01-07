@@ -52,6 +52,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private AddItemCategoryForm addItemCategoryForm;
     private AddBrandForm brandForm;
     private ArrayList<Supplier> allSuppliers;
+    private int times;
 
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -922,13 +923,21 @@ public class AddItemForm extends javax.swing.JDialog {
 
     private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
-            if (showConfirmDialog == 0) {
+            //int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            if (true) {
                 boolean addKiyath = addKiyath();
                 if (addKiyath) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                    //JOptionPane.showMessageDialog(this, "New item added successfully");
                     generateId();
                     setCode();
+                    times++;
+                    if(times<9000){
+                        kiyathAddButton.doClick();
+                    }else{
+                        JOptionPane.showMessageDialog(this, "ok");
+                    }
+                    
+                    
 
                 }
             }

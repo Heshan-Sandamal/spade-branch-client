@@ -113,6 +113,9 @@
       </Layout>
       <SubComponents>
         <Component class="org.jdesktop.swingx.JXSearchField" name="idSearchField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="idSearchFieldKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="IDrequestLabel">
           <Properties>
