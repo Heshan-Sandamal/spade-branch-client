@@ -243,4 +243,3 @@ public class MainInterface extends javax.swing.JFrame {
     private javax.swing.JButton viewCustomerButton;
     // End of variables declaration//GEN-END:variables
 }
-
