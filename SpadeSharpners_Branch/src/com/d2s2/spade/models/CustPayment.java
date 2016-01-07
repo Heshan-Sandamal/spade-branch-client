@@ -26,7 +26,6 @@ public class CustPayment {
     public static final String AMOUNT="amount";
     public static final String DATE= "date";
     
-    
     public String getPaymentId() {
         return paymentId;
     }
