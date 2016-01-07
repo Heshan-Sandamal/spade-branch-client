@@ -217,7 +217,7 @@ public class ViewSupplier extends javax.swing.JDialog {
 
     private void mouseClickHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClickHandler
         
-        System.out.println("Action");
+        
     }//GEN-LAST:event_mouseClickHandler
 
     private void supplierDetailsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierDetailsTableMouseClicked
