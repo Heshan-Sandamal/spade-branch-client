@@ -13,6 +13,8 @@ public class Tip extends Item{
     private String country;
     private double price;
 
+    public static final String TIP="Tip";
+    
     public static final String SIZE="size";
     public static final String COUNTRY="country";
     public static final String PRICE="price";

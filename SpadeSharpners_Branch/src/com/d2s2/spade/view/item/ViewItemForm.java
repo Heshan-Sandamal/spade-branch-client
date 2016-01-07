@@ -21,6 +21,7 @@ import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
 import com.d2s2.spade.models.PlanerBlade;
+import com.d2s2.spade.models.Plux;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Supplier;
@@ -778,19 +779,19 @@ public class ViewItemForm extends javax.swing.JDialog {
 
             if (category.equals(Kiyath.class.getSimpleName())) {
                 setKiyathDetails(code);
-            } else if (category.equals("Router Cutter")) {
+            } else if (category.equals(RouterCutter.ROUTERCUTTER)) {
                 setRouterCutterDetails(code);
-            } else if (category.equals("Silver Sole")) {
+            } else if (category.equals(SilverSole.SILVERSOLE)) {
                 setSilverSoleDetails(code);
-            } else if (category.equals("Planer Blade")) {
+            } else if (category.equals(PlanerBlade.PLANERBLADE)) {
                 setPlanerBladeDetails(code);
-            } else if (category.equals("Tip")) {
+            } else if (category.equals(Tip.TIP)) {
                 setTipDetails(code);
-            } else if (category.equals("Cutter")) {
+            } else if (category.equals(Cutter.CUTTER)) {
                 setCutterDetails(code);
-            } else if (category.equals("Wheel")) {
+            } else if (category.equals(Wheel.WHEEL)) {
                 setWheelDetails(code);
-            } else if (category.equals("Plux")) {
+            } else if (category.equals(Plux.PLUX)) {
                 setPluxDetails(code);
             }
 

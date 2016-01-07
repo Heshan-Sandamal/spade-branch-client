@@ -15,6 +15,8 @@ public class Wheel extends Item {
     private double diameter;
     private double hole;
     
+    public static final String WHEEL = "Wheel";
+    
     public static final String SIZE = "size";
     public static final String COUNTRY = "country";
     public static final String DIAMETER = "diameter";

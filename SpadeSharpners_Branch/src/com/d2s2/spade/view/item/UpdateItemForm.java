@@ -20,6 +20,7 @@ import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
 import com.d2s2.spade.models.PlanerBlade;
+import com.d2s2.spade.models.Plux;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Tip;
@@ -61,7 +62,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
             Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+
 
 
 
@@ -263,7 +264,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(412, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +306,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(routerCutterAddButton))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(437, 437, 437))
@@ -350,7 +351,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(planerBladeAddButton))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -410,7 +411,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                             .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(412, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,7 +473,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                             .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(412, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -533,7 +534,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                             .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(412, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,7 +578,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(356, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,7 +624,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(454, Short.MAX_VALUE))
+                .addContainerGap(456, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -664,7 +665,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(356, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -694,9 +695,9 @@ public class UpdateItemForm extends javax.swing.JDialog {
                     .addComponent(itemDetailsTab)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(salesTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(446, 446, 446)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -717,9 +718,9 @@ public class UpdateItemForm extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -754,9 +755,10 @@ public class UpdateItemForm extends javax.swing.JDialog {
                                         .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(codeTextField))))
                         .addGap(97, 97, 97)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -769,7 +771,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -798,7 +800,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(65, 65, 65)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
@@ -842,7 +844,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
             brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
 
 
-           
+
             //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
             if (!itemCategoryIdTextField.getText().isEmpty()) {
                 setCode();
@@ -938,7 +940,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 boolean addTip = addTip();
                 if (addTip) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                   // generateId();
+                    // generateId();
                     setCode();
 
                 }
@@ -957,7 +959,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 boolean addwheel = addWheel();
                 if (addwheel) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                  //  generateId();
+                    //  generateId();
                     setCode();
 
                 }
@@ -976,7 +978,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 boolean addSilverSole = addSilverSole();
                 if (addSilverSole) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                   // generateId();
+                    // generateId();
                     setCode();
 
                 }
@@ -996,10 +998,10 @@ public class UpdateItemForm extends javax.swing.JDialog {
     }//GEN-LAST:event_supplierIdTextFieldActionPerformed
 
     private void codeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeTextFieldActionPerformed
-        try { 
+        try {
             getItemDetails();
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Unable to load details due to "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to load details due to " + ex.getMessage());
         }
     }//GEN-LAST:event_codeTextFieldActionPerformed
 
@@ -1166,8 +1168,6 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
 
     }
-
-    
 
     private void setCode() {
 
@@ -1338,18 +1338,38 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         brandCombo.setSelectedItem(br.getBrand());
                     }
                 }
-                
-                
+
+
                 //set supplier
 //                for (Suppleir sp : ) {
 //                    
 //                }
-                
+
                 subIdTextField.setText(subId);
                 
-                
-                
-                
+                String category=itemCategoryCombo.getSelectedItem().toString();
+
+
+                if (category.equals(Kiyath.class.getSimpleName())) {
+                    Kiyath detailsOfItem = KiyathController.getDetailsOfItem(code);
+                } else if (category.equals(RouterCutter.ROUTERCUTTER)) {
+                    RouterCutter detailsOfItem = RouterCutterController.getDetailsOfItem(code);
+                } else if (category.equals(SilverSole.SILVERSOLE)) {
+                    SilverSole detailsOfItem = SilverSoleController.getDetailsOfItem(code);
+                } else if (category.equals(PlanerBlade.PLANERBLADE)) {
+                    PlanerBlade detailsOfItem = PlanerBladeController.getDetailsOfItem(code);
+                } else if (category.equals(Tip.TIP)) {
+                    Tip detailsOfItem = TipController.getDetailsOfItem(code);
+                } else if (category.equals(Cutter.CUTTER)) {
+                    Cutter detailsOfItem = CutterController.getDetailsOfItem(code);
+                } else if (category.equals(Wheel.WHEEL)) {
+                    Wheel detailsOfItem = WheelController.getDetailsOfItem(code);
+                } else if (category.equals(Plux.PLUX)) {
+                   
+                }
+
+
+
 
 
 

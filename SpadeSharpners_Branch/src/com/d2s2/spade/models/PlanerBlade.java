@@ -14,6 +14,7 @@ public class PlanerBlade extends Item{
  private String size;
 
     
+ public static final String PLANERBLADE="Planer Blade";
  public static final String TYPE="type";
  public static final String SIZE="size";
 

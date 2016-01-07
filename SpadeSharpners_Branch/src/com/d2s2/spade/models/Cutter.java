@@ -14,6 +14,7 @@ public class Cutter extends Item{
     private int noOfTips;
     private String thickness;
     
+    public static final String CUTTER="Cutter";
     public static final String SIZE="size";
     public static final String NOOFTIPS="noOfTips";
     public static final String THICKNESS="thickness";
