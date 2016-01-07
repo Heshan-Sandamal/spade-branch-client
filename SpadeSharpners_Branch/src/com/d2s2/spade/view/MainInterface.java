@@ -9,7 +9,7 @@ import com.d2s2.spade.view.supplier.AddSupplierForm;
 import com.d2s2.spade.view.customer.ViewCustomerForm;
 import com.d2s2.spade.view.item.UpdateItemForm;
 import java.awt.event.ActionEvent;
-
+import com.d2s2.spade.view.supplier.ViewSupplier;
 /**
  *
  * @author Heshan Sandamal
@@ -23,7 +23,7 @@ public class MainInterface extends javax.swing.JFrame {
     private AddSupplierForm addSupplierForm;
     private ViewCustomerForm viewCustomerForm;
     private UpdateItemForm updateItemForm;
-
+    private ViewSupplier viewSupplier;
     /**
      * Creates new form MainInterface
      */
@@ -50,6 +50,7 @@ public class MainInterface extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         viewCustomerButton = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        viewSupplierButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,21 +103,29 @@ public class MainInterface extends javax.swing.JFrame {
             }
         });
 
+        viewSupplierButton.setText("View Supplier");
+        viewSupplierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSupplierButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(126, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(viewCustomerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addSupplierButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(viewSupplierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
@@ -136,7 +145,9 @@ public class MainInterface extends javax.swing.JFrame {
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(viewSupplierButton)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -199,6 +210,14 @@ public class MainInterface extends javax.swing.JFrame {
         updateItemForm.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void viewSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSupplierButtonActionPerformed
+        if (viewSupplier == null) {
+            viewSupplier = new ViewSupplier(this, true);
+        }
+        
+        viewSupplier.setVisible(true);
+    }//GEN-LAST:event_viewSupplierButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -241,5 +260,6 @@ public class MainInterface extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton viewCustomerButton;
+    private javax.swing.JButton viewSupplierButton;
     // End of variables declaration//GEN-END:variables
 }
