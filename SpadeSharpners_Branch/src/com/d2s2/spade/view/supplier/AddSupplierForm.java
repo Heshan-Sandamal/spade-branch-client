@@ -10,27 +10,29 @@ import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.SupplierTelephone;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Dimuth Tharaka
  */
-public class AddSupplierForm extends javax.swing.JFrame {
+public class AddSupplierForm extends javax.swing.JDialog {
 
     /**
-     * Creates new form AddSupplierForm
+     * Creates new form addSupplierDialog
      */
-    public AddSupplierForm() {
+    
+
+    public AddSupplierForm(java.awt.Frame parent, boolean modal) {
+       super(parent, modal);
         
         initComponents();
         Object[] columns={"Contact Name","Telephone number"};
-        
         model.setColumnIdentifiers(columns);
         setModel(model);
+        
         
     }
 
@@ -43,14 +45,6 @@ public class AddSupplierForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        IdField = new javax.swing.JTextField();
-        NameField = new javax.swing.JTextField();
-        AddressField = new javax.swing.JTextField();
         EmailField = new javax.swing.JTextField();
         createSupplierButton = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
@@ -61,26 +55,17 @@ public class AddSupplierForm extends javax.swing.JFrame {
         addToTableButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jXTable2 = new org.jdesktop.swingx.JXTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        IdField = new javax.swing.JTextField();
+        NameField = new javax.swing.JTextField();
+        AddressField = new javax.swing.JTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Add New Supplier");
-
-        jLabel2.setText("Supplier ID");
-
-        jLabel3.setText("Name");
-
-        jLabel4.setText("Address");
-
-        jLabel5.setText("Email");
-
-        IdField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IdFieldActionPerformed(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         createSupplierButton.setText("Create Supplier");
         createSupplierButton.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +151,23 @@ public class AddSupplierForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Add New Supplier");
+
+        jLabel2.setText("Supplier ID");
+
+        jLabel3.setText("Name");
+
+        jLabel4.setText("Address");
+
+        jLabel5.setText("Email");
+
+        IdField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IdFieldActionPerformed(evt);
+            }
+        });
+
         jToggleButton2.setText("cancel");
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +209,7 @@ public class AddSupplierForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(127, 127, 127)
                         .addComponent(jLabel1)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,27 +238,12 @@ public class AddSupplierForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createSupplierButton)
                     .addComponent(jToggleButton2))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void IdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_IdFieldActionPerformed
-
-    private void contactNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contactNameFieldActionPerformed
-
-    private void addToTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToTableButtonActionPerformed
-        row[0]=contactNameField.getText();
-        row[1]=telephoneNumberField.getText();
-        model.addRow(row);
-        
-    }//GEN-LAST:event_addToTableButtonActionPerformed
-
+    
     private void createSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSupplierButtonActionPerformed
         try {
             boolean addSupplierToDB = addSupplierToDB();
@@ -266,13 +253,29 @@ public class AddSupplierForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Faild to add.");
             }
             this.dispose();
-            
-        } 
+
+        }
         catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Unable to add due to "+ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_createSupplierButtonActionPerformed
+
+    private void contactNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactNameFieldActionPerformed
+
+    private void addToTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToTableButtonActionPerformed
+        row[0]=contactNameField.getText();
+        row[1]=telephoneNumberField.getText();
+        
+        model.addRow(row);
+
+    }//GEN-LAST:event_addToTableButtonActionPerformed
+
+    private void IdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IdFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IdFieldActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // TODO add your handling code here:
@@ -304,18 +307,21 @@ public class AddSupplierForm extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AddSupplierForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+                AddSupplierForm dialog = new AddSupplierForm(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
-        
-    }
-    private void setModel(DefaultTableModel model){
-        jXTable2.setModel(model);
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -369,5 +375,9 @@ public  boolean addSupplierToDB() throws ClassNotFoundException, SQLException{
         return added;
         
 }
+ private void setModel(DefaultTableModel model){
+        jXTable2.setModel(model);
+
+    }
 }
 

@@ -149,7 +149,7 @@ public class MainInterface extends javax.swing.JFrame {
     
     private void addSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierButtonActionPerformed
         if (addSupplierForm == null) {
-            addSupplierForm = new AddSupplierForm();
+            addSupplierForm = new AddSupplierForm(this,true);
         }
         
         addSupplierForm.setVisible(true);
