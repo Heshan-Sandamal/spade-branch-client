@@ -6,7 +6,8 @@
 package com.d2s2.spade.models;
 
 import java.sql.Date;
-
+import com.d2s2.spade.models.paymentType;
+        
 /**
  *
  * @author Sineth
