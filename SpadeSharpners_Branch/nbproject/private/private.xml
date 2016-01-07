@@ -2,6 +2,9 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
+        <group/>
+=======
         <group>
 <<<<<<< HEAD
             <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBHandler.java</file>
@@ -21,5 +24,6 @@
             <file>file:/E:/Spade%20Project/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/ViewCustomerForm.java</file>
 >>>>>>> 2d49c92df833c26375bea1efa3d23516536f49cb
         </group>
+>>>>>>> 7c4909cfffd9a9e3d9854568117ef3c6ddb253e4
     </open-files>
 </project-private>

@@ -30,8 +30,8 @@ public class DBQueryGenerator {
         return "SELECT * FROM "+tableName;
     }
     
-    public static String selectwhereQuery(String tableName, String beforeequal, String afterequal ){
-        return "SELECT * FROM "+tableName+" WHERE " +beforeequal+"= '"+afterequal+"'" ;
+    public static String selectwhereQuery(String tableName, String columnName){
+        return "SELECT * FROM "+tableName+" WHERE " +columnName+"= ?" ;
     }
     
     public static String selectLimitedColumnswhereQuery(String[] columns,String tableName, String beforeequal, String afterequal ){

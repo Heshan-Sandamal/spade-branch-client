@@ -45,7 +45,9 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         AddressTextField.setEditable(false);
         saveButton.setEnabled(false);
         saveButton.setVisible(false);
-        
+        addNewPhonTextbox.setEnabled(false);
+        addNewPhonTextbox.setVisible(false);
+        addNewPhoneLable.setVisible(false);
         /* creating customer table with specified properties*/
         phonenumberTable = new JTable() /*{
         @Override
@@ -55,7 +57,7 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         phonenumberTable.setEnabled(false);
         
         scrollpane = new JScrollPane();
-        scrollpane.setBounds(150, 160, 100, 100);
+        scrollpane.setBounds(150, 200, 100, 100);
         
         
         
@@ -96,6 +98,8 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        addNewPhoneLable = new javax.swing.JLabel();
+        addNewPhonTextbox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -121,6 +125,8 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
             }
         });
 
+        addNewPhoneLable.setText("Add New Phone");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,6 +134,11 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addNewPhoneLable)
+                        .addGap(27, 27, 27)
+                        .addComponent(addNewPhonTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -164,13 +175,17 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(AddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addNewPhoneLable)
+                    .addComponent(addNewPhonTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(updateButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveButton)
                 .addGap(10, 10, 10)
                 .addComponent(deleteButton)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
@@ -178,19 +193,7 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        IDTextfield.setEditable(false);
-        NameTextField.setEditable(true);
-        AddressTextField.setEditable(true);
-        saveButton.setEnabled(true);
-        saveButton.setVisible(true);
-        deleteButton.setEnabled(false);
-        deleteButton.setVisible(false);
-        updateButton.setEnabled(false);
-        updateButton.setVisible(false);
-        phonenumberTable.setEnabled(true);
-        defaulttablemodel.addTableModelListener(phonenumberTable);
-        
-        
+        enableUpdate();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -247,6 +250,8 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
     private javax.swing.JTextField AddressTextField;
     private javax.swing.JTextField IDTextfield;
     private javax.swing.JTextField NameTextField;
+    private javax.swing.JTextField addNewPhonTextbox;
+    private javax.swing.JLabel addNewPhoneLable;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -286,6 +291,23 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         scrollpane.setViewportView(phonenumberTable);
         add(scrollpane);
         
+    }
+    
+    private void enableUpdate(){
+        IDTextfield.setEditable(false);
+        NameTextField.setEditable(true);
+        AddressTextField.setEditable(true);
+        saveButton.setEnabled(true);
+        saveButton.setVisible(true);
+        deleteButton.setEnabled(false);
+        deleteButton.setVisible(false);
+        updateButton.setEnabled(false);
+        updateButton.setVisible(false);
+        phonenumberTable.setEnabled(true);
+        defaulttablemodel.addTableModelListener(phonenumberTable);
+        addNewPhonTextbox.setEnabled(true);
+        addNewPhonTextbox.setVisible(true);
+        addNewPhoneLable.setVisible(true);
     }
 
 }
