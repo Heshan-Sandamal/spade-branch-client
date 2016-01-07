@@ -1,3 +1,8 @@
 /SpadeSharpners_Branch/dist/
 /SpadeSharpners_Branch/build/
 /nbproject/private/private.xml
+/SpadeSharpners_Branch/nbproject/private/*
+/SpadeSharpners_Branch/nbproject/build-impl.xml
+/SpadeSharpners_Branch/nbproject/genfiles.properties
+!/SpadeSharpners_Branch/nbproject/project.properties
+!/SpadeSharpners_Branch/nbproject/project.xml
