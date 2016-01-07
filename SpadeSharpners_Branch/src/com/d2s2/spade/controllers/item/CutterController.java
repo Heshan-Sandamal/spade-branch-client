@@ -54,8 +54,8 @@ public class CutterController {
 
     public static Cutter getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectwhereQuery(Cutter.class.getSimpleName(), Cutter.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql=DBQueryGenerator.selectwhereQuery(Cutter.class.getSimpleName(), Cutter.CODE); 
+        ResultSet data = DBHandler.getData(connection, sql,new Object[]{code});
         data.next();
         return new Cutter(data.getString(Cutter.SIZE),data.getInt(Cutter.NOOFTIPS),data.getString(Cutter.THICKNESS));
     }

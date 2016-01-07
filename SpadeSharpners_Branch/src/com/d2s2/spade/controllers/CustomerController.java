@@ -38,6 +38,8 @@ public class CustomerController {
             if (setData > 0) {              //check customer data is added
 
                 for (CustomerTelephone customerTelephone : telList) {
+                    
+                   // CustomerTelephoneController.addCustomerTelephone(customerTelephone)
 
                     String sqlTelephone = DBQueryGenerator.insertQuery(CustomerTelephone.class.getSimpleName(), 2);       //use this way to get db table name.because model name is same as db table name
 
@@ -118,13 +120,9 @@ public class CustomerController {
         return telephoneNoList;
     }
 
-    /*public static double getCustomerDebt(String customerID) throws ClassNotFoundException, SQLException {
-        Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectwhereQuery(CustDebt.class.getSimpleName(), CustDebt.CUSTOMERID, customerID);
-        ResultSet resultSet = DBHandler.getData(connection, sql);
-        resultSet.next();
-        return resultSet.getInt(CustDebt.AMOUNT);
-    }*/
+    
+    
+    
     public static String getLastPaymentId() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
         String sql = "SELECT paymentId FROM custpayment ORDER BY paymentId DESC LIMIT 1";
