@@ -11,7 +11,16 @@ package com.d2s2.spade.models;
 public class RouterCutter extends Item{
     private String size;
     
+    public static final String ROUTERCUTTER="Router Cutter";
     public static final String SIZE="size";
+
+    public RouterCutter(String size) {
+        this.size=size;
+    }
+
+    public RouterCutter() {
+        
+    }
 
     /**
      * @return the size

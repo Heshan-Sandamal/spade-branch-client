@@ -9,5 +9,5 @@ package com.d2s2.spade.models;
  * @author Heshan Sandamal
  */
 public class Plux extends Item{
-    
+    public static final String PLUX="Plux";
 }

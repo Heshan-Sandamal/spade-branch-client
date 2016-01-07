@@ -5,13 +5,28 @@
 package com.d2s2.spade.view.item;
 
 import com.d2s2.spade.controllers.item.BrandController;
+import com.d2s2.spade.controllers.item.CutterController;
 import com.d2s2.spade.controllers.item.ItemCategoryController;
 import com.d2s2.spade.controllers.item.ItemController;
+import com.d2s2.spade.controllers.item.KiyathController;
+import com.d2s2.spade.controllers.item.PlanerBladeController;
+import com.d2s2.spade.controllers.item.RouterCutterController;
+import com.d2s2.spade.controllers.item.SilverSoleController;
+import com.d2s2.spade.controllers.item.TipController;
+import com.d2s2.spade.controllers.item.WheelController;
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Brand;
+import com.d2s2.spade.models.Cutter;
 import com.d2s2.spade.models.Item;
 import com.d2s2.spade.models.ItemCategory;
+import com.d2s2.spade.models.Kiyath;
+import com.d2s2.spade.models.PlanerBlade;
+import com.d2s2.spade.models.Plux;
+import com.d2s2.spade.models.RouterCutter;
+import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Supplier;
+import com.d2s2.spade.models.Tip;
+import com.d2s2.spade.models.Wheel;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -21,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -38,12 +54,16 @@ public class ViewItemForm extends javax.swing.JDialog {
      * Creates new form ViewItemForm
      */
     private TableRowSorter<TableModel> sorter;
+    private final DefaultTableModel dtmForItemDetailTable;
+    private UpdateItemForm updateItemDetail;
 
     public ViewItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
+
+        dtmForItemDetailTable = (DefaultTableModel) itemDetailTable.getModel();
 
         try {
             getAllItemDetails();
@@ -53,8 +73,6 @@ public class ViewItemForm extends javax.swing.JDialog {
 
 
         setTableSorter();
-
-        setSortKeys();
 
         setCancelActionToSearchTextField();
 
@@ -97,12 +115,13 @@ public class ViewItemForm extends javax.swing.JDialog {
         supplierCheckBox = new javax.swing.JCheckBox();
         searchAdvanceButton = new javax.swing.JButton();
         keywordSerachRadioButton = new javax.swing.JRadioButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jXTable1 = new org.jdesktop.swingx.JXTable();
+        detailPanel = new javax.swing.JScrollPane();
+        itemDetailTable = new org.jdesktop.swingx.JXTable();
         jLabel1 = new javax.swing.JLabel();
         keywordSearchPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         searchTextField = new org.jdesktop.swingx.JXSearchField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,7 +161,26 @@ public class ViewItemForm extends javax.swing.JDialog {
                 "Code", "Category", "Brand", "Supplier", "Supplier Name", "Description"
             }
         ));
+        itemTable.setEditable(false);
         itemTable.setShowGrid(true);
+        itemTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itemTableMouseClicked(evt);
+            }
+        });
+        itemTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                itemTablePropertyChange(evt);
+            }
+        });
+        itemTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                itemTableKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemTableKeyReleased(evt);
+            }
+        });
         itemPane.setViewportView(itemTable);
 
         advanceSearchPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Sort By"));
@@ -233,15 +271,14 @@ public class ViewItemForm extends javax.swing.JDialog {
         advanceSearchPanelLayout.setVerticalGroup(
             advanceSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(advanceSearchPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(advanceSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(advanceSearchPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(advanceSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(itemCategoryCheckBox)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, advanceSearchPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(advanceSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, advanceSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,9 +310,9 @@ public class ViewItemForm extends javax.swing.JDialog {
             }
         });
 
-        jScrollPane5.setBorder(javax.swing.BorderFactory.createTitledBorder("Item Detail Table"));
+        detailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Item Detail Table"));
 
-        jXTable1.setModel(new javax.swing.table.DefaultTableModel(
+        itemDetailTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -283,10 +320,20 @@ public class ViewItemForm extends javax.swing.JDialog {
                 {null, null}
             },
             new String [] {
-                "Title 1", "Title 2"
+                "Property", "value"
             }
         ));
-        jScrollPane5.setViewportView(jXTable1);
+        itemDetailTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itemDetailTableMouseClicked(evt);
+            }
+        });
+        itemDetailTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                itemDetailTableKeyPressed(evt);
+            }
+        });
+        detailPanel.setViewportView(itemDetailTable);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("View Item & Batch Details");
@@ -333,6 +380,13 @@ public class ViewItemForm extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -342,10 +396,6 @@ public class ViewItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(itemPane)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(keywordSerachRadioButton)
                             .addComponent(keywordSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -353,7 +403,15 @@ public class ViewItemForm extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(advanceSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(advancedSearchButton))
-                        .addGap(0, 163, Short.MAX_VALUE)))
+                        .addGap(0, 163, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(165, 165, 165)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -376,9 +434,12 @@ public class ViewItemForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(itemPane, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
 
@@ -422,13 +483,8 @@ public class ViewItemForm extends javax.swing.JDialog {
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
-        String text = searchTextField.getText();
 
-        if (text.trim().length() == 0) {
-            sorter.setRowFilter(null);
-        } else {
-            sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text));
-        }
+        filterTableInkeywordSearch();
 
 
     }//GEN-LAST:event_searchTextFieldKeyReleased
@@ -438,30 +494,8 @@ public class ViewItemForm extends javax.swing.JDialog {
 
     private void searchAdvanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAdvanceButtonActionPerformed
 
-        try {
-
-            ArrayList<RowFilter<Object, Object>> rfs = new ArrayList<RowFilter<Object, Object>>(2);
-
-            if(itemCategoryCheckBox.isSelected()){
-                rfs.add(RowFilter.regexFilter("^(?i)" + itemCategoryCombo.getSelectedItem().toString(), 1));
-            }
-            
-            if(brandCheckBox.isSelected()){
-                rfs.add(RowFilter.regexFilter("^(?i)" + brandCombo.getSelectedItem().toString(), 2));
-            }
-            
-            if(supplierCheckBox.isSelected()){
-                rfs.add(RowFilter.regexFilter("^(?i)" + supplierCombo.getSelectedItem().toString(), 4));
-            }
-
-   
-            RowFilter<Object, Object> af = RowFilter.andFilter(rfs);
-
-
-            sorter.setRowFilter(af);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }        // TODO add your handling code here:
+        filterDetailsInAdvancedSearch();
+        // TODO add your handling code here:
     }//GEN-LAST:event_searchAdvanceButtonActionPerformed
 
     private void keywordSerachRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordSerachRadioButtonActionPerformed
@@ -471,6 +505,46 @@ public class ViewItemForm extends javax.swing.JDialog {
     private void advancedSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedSearchButtonActionPerformed
         advancedSearch();        // TODO add your handling code here:
     }//GEN-LAST:event_advancedSearchButtonActionPerformed
+
+    private void itemTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemTableMouseClicked
+        try {
+            setItemDetails();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ViewItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_itemTableMouseClicked
+
+    private void itemDetailTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemDetailTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemDetailTableMouseClicked
+
+    private void itemTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemTableKeyPressed
+    }//GEN-LAST:event_itemTableKeyPressed
+
+    private void itemDetailTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemDetailTableKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemDetailTableKeyPressed
+
+    private void itemTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemTableKeyReleased
+    }//GEN-LAST:event_itemTableKeyReleased
+
+    private void itemTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_itemTablePropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemTablePropertyChange
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (itemTable.getSelectedRow() != -1) {
+            if (updateItemDetail == null) {
+                updateItemDetail = new UpdateItemForm(this, true);
+            }
+            try {
+                updateItemDetail.setCodeToGetDetails(itemTable.getValueAt(itemTable.getSelectedRow(), 0).toString());
+            } catch (    ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(ViewItemForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            updateItemDetail.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -519,10 +593,13 @@ public class ViewItemForm extends javax.swing.JDialog {
     private javax.swing.JCheckBox brandCheckBox;
     private javax.swing.JComboBox brandCombo;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JScrollPane detailPanel;
     private javax.swing.JCheckBox itemCategoryCheckBox;
     private javax.swing.JComboBox itemCategoryCombo;
+    private org.jdesktop.swingx.JXTable itemDetailTable;
     private javax.swing.JScrollPane itemPane;
     private org.jdesktop.swingx.JXTable itemTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -530,10 +607,8 @@ public class ViewItemForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private org.jdesktop.swingx.JXTable jXTable1;
     private org.jdesktop.swingx.JXTable jXTable3;
     private javax.swing.JPanel keywordSearchPanel;
     private javax.swing.JRadioButton keywordSerachRadioButton;
@@ -546,7 +621,7 @@ public class ViewItemForm extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     //-------------------------------constructor calls---------------------------------------------
-    private void getAllItemDetails() throws ClassNotFoundException, SQLException {
+    public void getAllItemDetails() throws ClassNotFoundException, SQLException {
 
         //load table
         allItems = ItemController.getAllItems();
@@ -564,48 +639,46 @@ public class ViewItemForm extends javax.swing.JDialog {
         dtm.setRowCount(0);
 
 
-        for (int i = 0; i < 1000; i++) {
+        //for (int i = 0; i < 5000; i++) {
 
 
 
-            for (Item item : allItems) {
+        for (Item item : allItems) {
 
-                String category = null;
-                for (ItemCategory itemCategory : itemCategories) {
-                    if (itemCategory.equals(item.getItemCode())) {
-                        category = itemCategory.getCategory();
-                    }
+            String category = null;
+            for (ItemCategory itemCategory : itemCategories) {
+                if (itemCategory.equals(item.getItemCode())) {
+                    category = itemCategory.getCategory();
                 }
-
-                String brandType = null;
-                for (Brand brand : brandTypes) {
-                    if (brand.equals(item.getBrandId())) {
-                        brandType = brand.getBrand();
-                    }
-                }
-
-                String supplierName = null;
-                for (Supplier supplier : supplierList) {
-                    if (supplier.equals(item.getSupplierId())) {
-                        supplierName = supplier.getName();
-                    }
-                }
-
-
-                dtm.addRow(new Object[]{item.getCode(), category, brandType, item.getSupplierId(), supplierName, item.getSubId()});
-
-
-
             }
+
+            String brandType = null;
+            for (Brand brand : brandTypes) {
+                if (brand.equals(item.getBrandId())) {
+                    brandType = brand.getBrand();
+                }
+            }
+
+            String supplierName = null;
+            for (Supplier supplier : supplierList) {
+                if (supplier.equals(item.getSupplierId())) {
+                    supplierName = supplier.getName();
+                }
+            }
+
+
+            dtm.addRow(new Object[]{item.getCode(), category, brandType, item.getSupplierId(), supplierName, item.getSubId()});
+
+
 
         }
 
+        //}//
 
         supplierCombo.removeAllItems();
         for (Supplier supplier : supplierList) {
             supplierCombo.addItem(supplier.getName());
         }
-
 
         brandCombo.removeAllItems();
         for (Brand brand : brandTypes) {
@@ -616,10 +689,6 @@ public class ViewItemForm extends javax.swing.JDialog {
         for (ItemCategory itemCategory : itemCategories) {
             itemCategoryCombo.addItem(itemCategory.getCategory());
         }
-
-
-
-
     }
 
     private void setCancelActionToSearchTextField() {
@@ -637,19 +706,58 @@ public class ViewItemForm extends javax.swing.JDialog {
         itemTable.setRowSorter(sorter);
     }
 
-    private void setSortKeys() {
-        sorter.setComparator(1, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.substring(0, Math.min(o1.length(), 5)).compareTo(itemCategoryCombo.getSelectedItem().toString().substring(0, Math.min(o2.length(), 5)));
-            }
-        });
+//    private void setSortKeys() {
+//        sorter.setComparator(1, new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                return o1.substring(0, Math.min(o1.length(), 5)).compareTo(itemCategoryCombo.getSelectedItem().toString().substring(0, Math.min(o2.length(), 5)));
+//            }
+//        });
+//
+//    }
+    //------------------------------filter table -------------------------------------------------------------
+    private void filterDetailsInAdvancedSearch() {
+        try {
 
+            ArrayList<RowFilter<Object, Object>> rfs = new ArrayList<RowFilter<Object, Object>>(2);
+
+            if (itemCategoryCheckBox.isSelected()) {
+                rfs.add(RowFilter.regexFilter("^(?i)" + itemCategoryCombo.getSelectedItem().toString(), 1));
+            }
+
+            if (brandCheckBox.isSelected()) {
+                rfs.add(RowFilter.regexFilter("^(?i)" + brandCombo.getSelectedItem().toString(), 2));
+            }
+
+            if (supplierCheckBox.isSelected()) {
+                rfs.add(RowFilter.regexFilter("^(?i)" + supplierCombo.getSelectedItem().toString(), 4));
+            }
+
+
+            RowFilter<Object, Object> af = RowFilter.andFilter(rfs);
+
+
+            sorter.setRowFilter(af);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error occured during filtering due to " + e.getMessage());
+        }
     }
 
+    private void filterTableInkeywordSearch() {
+        String text = searchTextField.getText();
+
+        if (text.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text));
+        }
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------disable/enable fields according to search type--------------------- 
     private void keywordSearch() {
         if (keywordSerachRadioButton.isSelected()) {
-sorter.setRowFilter(null);
+            sorter.setRowFilter(null);
             for (Component component : keywordSearchPanel.getComponents()) {
                 component.setEnabled(true);
             }
@@ -675,4 +783,93 @@ sorter.setRowFilter(null);
         }
 
     }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------set item details---------------------------------------------
+    private void setItemDetails() throws ClassNotFoundException, SQLException {
+        if (itemTable.getSelectedRow() != -1) {
+            String category = itemTable.getValueAt(itemTable.getSelectedRow(), 1).toString();
+            String code = itemTable.getValueAt(itemTable.getSelectedRow(), 0).toString();
+            //System.out.println(code);
+
+
+            if (category.equals(Kiyath.class.getSimpleName())) {
+                setKiyathDetails(code);
+            } else if (category.equals(RouterCutter.ROUTERCUTTER)) {
+                setRouterCutterDetails(code);
+            } else if (category.equals(SilverSole.SILVERSOLE)) {
+                setSilverSoleDetails(code);
+            } else if (category.equals(PlanerBlade.PLANERBLADE)) {
+                setPlanerBladeDetails(code);
+            } else if (category.equals(Tip.TIP)) {
+                setTipDetails(code);
+            } else if (category.equals(Cutter.CUTTER)) {
+                setCutterDetails(code);
+            } else if (category.equals(Wheel.WHEEL)) {
+                setWheelDetails(code);
+            } else if (category.equals(Plux.PLUX)) {
+                setPluxDetails(code);
+            }
+
+        }
+    }
+
+    private void setKiyathDetails(String code) throws ClassNotFoundException, SQLException {
+        Kiyath detailsOfItem = KiyathController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Size: ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"No of Tips: ", detailsOfItem.getNoOfTips()});
+
+    }
+
+    private void setRouterCutterDetails(String code) throws ClassNotFoundException, SQLException {
+        RouterCutter detailsOfItem = RouterCutterController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Size: ", detailsOfItem.getSize()});
+    }
+
+    private void setSilverSoleDetails(String code) throws ClassNotFoundException, SQLException {
+        SilverSole detailsOfItem = SilverSoleController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Type : ", detailsOfItem.getType()});
+        dtmForItemDetailTable.addRow(new Object[]{"Price : ", detailsOfItem.getPrice()});
+    }
+
+    private void setPlanerBladeDetails(String code) throws ClassNotFoundException, SQLException {
+        PlanerBlade detailsOfItem = PlanerBladeController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Type : ", detailsOfItem.getType()});
+        dtmForItemDetailTable.addRow(new Object[]{"size : ", detailsOfItem.getSize()});
+    }
+
+    private void setTipDetails(String code) throws ClassNotFoundException, SQLException {
+        Tip detailsOfItem = TipController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Size : ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"country : ", detailsOfItem.getCountry()});
+        dtmForItemDetailTable.addRow(new Object[]{"price : ", detailsOfItem.getPrice()});
+    }
+
+    private void setCutterDetails(String code) throws ClassNotFoundException, SQLException {
+        Cutter detailsOfItem = CutterController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"Size : ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"No of tips : ", detailsOfItem.getNoOfTips()});
+        dtmForItemDetailTable.addRow(new Object[]{"Thickness : ", detailsOfItem.getThickness()});
+
+    }
+
+    private void setWheelDetails(String code) throws ClassNotFoundException, SQLException {
+        Wheel detailsOfItem = WheelController.getDetailsOfItem(code);
+        dtmForItemDetailTable.setRowCount(0);
+        dtmForItemDetailTable.addRow(new Object[]{"SIze : ", detailsOfItem.getSize()});
+        dtmForItemDetailTable.addRow(new Object[]{"Country : ", detailsOfItem.getCountry()});
+        dtmForItemDetailTable.addRow(new Object[]{"Diameter : ", detailsOfItem.getDiameter()});
+        dtmForItemDetailTable.addRow(new Object[]{"Hole : ", detailsOfItem.getHole()});
+    }
+
+    private void setPluxDetails(String code) {
+        dtmForItemDetailTable.setRowCount(0);
+    }
+    //--------------------------------------------------------------------------------------------------------
 }

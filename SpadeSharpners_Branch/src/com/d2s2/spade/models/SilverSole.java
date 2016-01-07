@@ -11,6 +11,21 @@ package com.d2s2.spade.models;
 public class SilverSole extends Item{
     private String type;
     private double price;
+    
+    public static final String SILVERSOLE="Silver Sole";
+    public static final String TYPE="type";
+    public static final String PRICE="price";
+
+    public SilverSole(String type, double price) {
+        this.type=type;
+        this.price=price;
+    }
+
+    public SilverSole() {
+    }
+    
+    
+    
 
     /**
      * @return the type

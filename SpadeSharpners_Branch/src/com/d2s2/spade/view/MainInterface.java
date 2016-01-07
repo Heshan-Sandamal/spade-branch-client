@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.d2s2.spade.view;
 
 import com.d2s2.spade.view.customer.AddCustomerForm;
@@ -139,10 +136,9 @@ public class MainInterface extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        /*if (addItemForm == null) {
+        if (addItemForm == null) {
             addItemForm = new AddItemForm(this, true);
-        }*/
-        addItemForm = new AddItemForm(this, true);
+        }
         addItemForm.setVisible(true);
         
         
@@ -150,7 +146,7 @@ public class MainInterface extends javax.swing.JFrame {
     
     private void addSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierButtonActionPerformed
         if (addSupplierForm == null) {
-            addSupplierForm = new AddSupplierForm();
+            addSupplierForm = new AddSupplierForm(this,true);
         }
         
         addSupplierForm.setVisible(true);
