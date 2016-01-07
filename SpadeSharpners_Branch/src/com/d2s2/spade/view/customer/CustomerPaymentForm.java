@@ -4,12 +4,12 @@
  */
 package com.d2s2.spade.view.customer;
 
-
 import com.d2s2.spade.controllers.CustomerController;
 import com.d2s2.spade.models.Customer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,25 +28,26 @@ import javax.swing.text.DefaultFormatter;
  * @author Heshan Sandamal
  */
 public class CustomerPaymentForm extends javax.swing.JDialog {
+
     private ArrayList<Customer> customersBasicInfo;
+
     /**
      * Creates new form CustomerPayment
      */
-   public CustomerPaymentForm(java.awt.Frame parent, boolean modal) {
+    public CustomerPaymentForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         try {
             getAllCustomerDataBasic();
+            setpaymentId();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         configureRadioButtons();
-        
-        
-        
+
     }
 
     /**
@@ -66,7 +67,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         customerIDComboBox = new javax.swing.JComboBox();
         customerNameComboBox = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        paymentIdTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -115,7 +116,6 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             }
         });
 
-        customerNameComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         customerNameComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 customerNameComboBoxItemStateChanged(evt);
@@ -124,11 +124,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
         jLabel2.setText("Customer Name:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        paymentIdTextField.setEditable(false);
+        paymentIdTextField.setBackground(new java.awt.Color(255, 255, 255));
+        paymentIdTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                paymentIdTextFieldActionPerformed(evt);
             }
         });
 
@@ -225,15 +225,14 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(issueDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(statusTextField))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(expiryDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(statusTextField))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(expiryDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -310,7 +309,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
                                                 .addGap(32, 32, 32)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(customerIDComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jTextField1)))
+                                                    .addComponent(paymentIdTextField)))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,7 +346,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -417,10 +416,10 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cashRadioButtonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void paymentIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentIdTextFieldActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    }//GEN-LAST:event_paymentIdTextFieldActionPerformed
 
     private void customerIDComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_customerIDComboBoxItemStateChanged
         // TODO add your handling code here:
@@ -434,12 +433,12 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         confirmPayment();
+        confirmPayment();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void grossAmountTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grossAmountTextFieldActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_grossAmountTextFieldActionPerformed
 
     private void netAmountTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_netAmountTextFieldActionPerformed
@@ -536,19 +535,20 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker3;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
     private javax.swing.JTextField netAmountTextField;
+    private javax.swing.JTextField paymentIdTextField;
     private javax.swing.JTextField statusTextField;
     // End of variables declaration//GEN-END:variables
  /**
-     * sets data from the database into the given 
-     * @throws SQLException combo boxes/ spinners and puts these 
-     * data in the ascending order present in the arrayList returned from
-     * the database handling class.
-     * @throws ClassNotFoundException 
+     * sets data from the database into the given
+     *
+     * @throws SQLException combo boxes/ spinners and puts these data in the
+     * ascending order present in the arrayList returned from the database
+     * handling class.
+     * @throws ClassNotFoundException
      */
     private void getAllCustomerDataBasic() throws SQLException, ClassNotFoundException {
         customersBasicInfo = CustomerController.getCustomersBasicInfo();
@@ -556,31 +556,34 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         for (Customer customer : customersBasicInfo) {
             customerIDComboBox.addItem(customer.getCustomerId());
             customerNameComboBox.addItem(customer.getName());
-            
+
         }
         debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
     }
+
     /**
      * Changes the values in the customer name combo box to the correct value
-     * when the id is selected from the customerID combo box 
+     * when the id is selected from the customerID combo box
      */
     private void customerIDComboBoxEventHandler() {
         int selectedIndex = customerIDComboBox.getSelectedIndex();
-        if (selectedIndex!=-1) {
-            Customer customer=customersBasicInfo.get(selectedIndex);
-            customerNameComboBox.setSelectedItem(customer.getName());
+        if (selectedIndex != -1) {
             try {
-                debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
+                Customer customer = customersBasicInfo.get(selectedIndex);
+                customerNameComboBox.setSelectedItem(customer.getName());
+                System.out.println(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
+                //debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
+
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
 
-     /**
-     * Changes the values in the customer id combo box to the correct value
-     * when the name is selected from the customerName combo box 
+    /**
+     * Changes the values in the customer id combo box to the correct value when
+     * the name is selected from the customerName combo box
      */
     private void customerNameComboBoxEventHandler() {
         int selectedIndex = customerNameComboBox.getSelectedIndex();
@@ -598,7 +601,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     private void configureRadioButtons() {
         cashRadioButton.setActionCommand("cash");
         chequeRadioButton.setActionCommand("cheque");
-        ButtonGroup buttonGroup=new ButtonGroup();
+        ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(cashRadioButton);
         buttonGroup.add(chequeRadioButton);
         cashRadioButton.addActionListener(new ActionListener() {
@@ -626,28 +629,27 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     }
 
     private void confirmPayment() {
-       // if the input data is validated then the form is submitted
+        // if the input data is validated then the form is submitted
     }
 
     private void calculateFinalPayment() {
         double grossAmount;
-        try{
+        try {
             String text = grossAmountTextField.getText();
-            if (text.length()==0) {
-                grossAmount=0;
-            }else{
-                grossAmount=Double.valueOf(text);
+            if (text.length() == 0) {
+                grossAmount = 0;
+            } else {
+                grossAmount = Double.valueOf(text);
             }
             double discountPercentage = Double.valueOf((String.valueOf(discountSpinner.getValue())));
             double netAmount = grossAmount - grossAmount * (discountPercentage / 100);
             grossAmountTextField.setText(String.valueOf(netAmount));
             System.out.println(netAmount);
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Invalid input data for gross amount or the discount","Error in data",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid input data for gross amount or the discount", "Error in data", JOptionPane.ERROR_MESSAGE);
         }
-        
-       
+
     }
 
     private void updateTextFields() {
@@ -667,7 +669,8 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             public void changedUpdate(DocumentEvent e) {
                 updateText();
             }
-            private void updateText(){
+
+            private void updateText() {
                 calculateFinalPayment();
             }
         });
@@ -682,9 +685,25 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-              
+
                 calculateFinalPayment();
             }
         });
+    }
+
+    private void setpaymentId() {
+        String paymentId=null;
+        try {
+            paymentId = CustomerController.getLastPaymentId();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            paymentId="P-00001";
+        }
+        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
+        numberFormat.setGroupingUsed(false);
+        numberFormat.setMinimumIntegerDigits(5);    
+        String newId = "P-" + numberFormat.format(paymentId);
+        paymentIdTextField.setText(paymentId);
     }
 }

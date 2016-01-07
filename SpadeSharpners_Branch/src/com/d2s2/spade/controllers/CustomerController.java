@@ -91,7 +91,7 @@ public class CustomerController {
 
     public static ArrayList<Customer> getCustomersBasicInfo() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Customer.NAME, Customer.CUSTOMERID}, Customer.class.getSimpleName(), null, null);
+        String sql = DBQueryGenerator.selectLimitedColumnsQuery(new String[]{Customer.NAME, Customer.CUSTOMERID}, Customer.class.getSimpleName());
         ResultSet resultSet = DBHandler.getData(connection, sql);
 
         ArrayList<Customer> customerListBasic = new ArrayList<>();
@@ -123,6 +123,15 @@ public class CustomerController {
         Connection connection = DBConnection.getDBConnection().getConnection();
         String sql = DBQueryGenerator.selectwhereQuery(CustDebt.class.getSimpleName(), CustDebt.CUSTOMERID, customerID);
         ResultSet resultSet = DBHandler.getData(connection, sql);
+        resultSet.next();
         return resultSet.getInt(CustDebt.AMOUNT);
     }
+    public static String getLastPaymentId() throws ClassNotFoundException, SQLException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = "SELECT paymentId FROM custpayment ORDER BY paymentId DESC LIMIT 1";
+        ResultSet resultSet = DBHandler.getData(connection, sql);
+        resultSet.next();
+        return resultSet.getString("paymentId");
+    }
+    
 }
