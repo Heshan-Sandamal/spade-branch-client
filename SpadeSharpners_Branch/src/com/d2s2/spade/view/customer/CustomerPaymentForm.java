@@ -40,11 +40,22 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
         try {
             getAllCustomerDataBasic();
-            setpaymentId();
+            
         } catch (SQLException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            setpaymentId();
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+            if(ex.getMessage().equals("Illegal operation on empty result set.")){
+                paymentIdTextField.setText("P-00001");
+            }else{
+                JOptionPane.showMessageDialog(this,"Error in cce"+ex.getMessage());
+            }
         }
         configureRadioButtons();
 
@@ -691,19 +702,16 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         });
     }
 
-    private void setpaymentId() {
-        String paymentId=null;
-        try {
-            paymentId = CustomerController.getLastPaymentId();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            paymentId="P-00001";
-        }
+    private void setpaymentId() throws ClassNotFoundException, SQLException {
+        String paymentId = null;
+        paymentId = CustomerController.getLastPaymentId();
+        paymentId = paymentId.substring(2);
+        int newIdVal = Integer.parseInt(paymentId) + 1;
         NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
         numberFormat.setGroupingUsed(false);
-        numberFormat.setMinimumIntegerDigits(5);    
-        String newId = "P-" + numberFormat.format(paymentId);
-        paymentIdTextField.setText(paymentId);
+        numberFormat.setMinimumIntegerDigits(5);
+        String newId = "P-" + numberFormat.format(newIdVal);
+        paymentIdTextField.setText(newId);
+
     }
 }
