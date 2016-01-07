@@ -61,7 +61,36 @@ public class WheelController {
         return new Wheel(data.getString(Wheel.SIZE),data.getString(Wheel.COUNTRY),data.getDouble(Wheel.DIAMETER),data.getDouble(Wheel.HOLE));
     }
 
-    public static boolean updateItem(Wheel wheel) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public static boolean updateItem(Wheel wheel) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.updateQuery(new String[]{Wheel.SIZE,Wheel.COUNTRY,Wheel.DIAMETER,Wheel.HOLE}, Wheel.class.getSimpleName(), Tip.CODE);
+
+
+        try {
+            connection.setAutoCommit(false);
+
+            Object[] ob = new Object[]{wheel.getSize(),wheel.getCountry(),wheel.getDiameter(),wheel.getHole(),wheel.getCode()};
+            boolean itemDetailAdded = ItemController.updateItem(wheel);
+            if (itemDetailAdded) {
+                boolean kiyathAdded = DBHandler.setData(connection, sql, ob) > 0 ? true : false;
+                if (kiyathAdded) {
+                    connection.commit();
+                    return true;
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+
+            } else {
+                connection.rollback();
+                return false;
+            }
+
+        } catch (Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 }

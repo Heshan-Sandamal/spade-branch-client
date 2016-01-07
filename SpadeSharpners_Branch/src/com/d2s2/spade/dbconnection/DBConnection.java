@@ -21,11 +21,12 @@ public class DBConnection {
        Class.forName("com.mysql.jdbc.Driver");
 
 
-       connection = DriverManager.getConnection("jdbc:mysql://localhost/spades", "root", null);
+       //connection = DriverManager.getConnection("jdbc:mysql://localhost/spades", "root", null);
 
+       connection = DriverManager.getConnection("jdbc:mysql://localhost/spadeBranchDB", "root", "19930417");
        //connection = DriverManager.getConnection("jdbc:mysql://localhost/spadeBranchDB", "root", "diluksha");
-        
 
+        
     }
 
     public static DBConnection getDBConnection() throws ClassNotFoundException, SQLException {
@@ -36,7 +37,6 @@ public class DBConnection {
     }
 
     
-
     public Connection getConnection() {
         return connection;
 
