@@ -1247,7 +1247,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         RouterCutter routerCutter = (RouterCutter) item;
 
         //get details from view
-        routerCutter.setSize("large");
+        routerCutter.setSize("medium");
 
         return RouterCutterController.updateItem(routerCutter);
     }
@@ -1261,7 +1261,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         //get details from view
         planerBlade.setSize("large");
-        planerBlade.setType("ss");
+        planerBlade.setType("xx");
 
         return PlanerBladeController.updateItem(planerBlade);
 
@@ -1290,7 +1290,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         Tip tip = (Tip) item;
 
         //get details from view
-        tip.setSize("large");
+        tip.setSize("large update");
         tip.setCountry("sri lanka");
         tip.setPrice(100.00);
 
@@ -1304,7 +1304,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         Wheel wheel = (Wheel) item;
 
         //get details from view
-        wheel.setSize("large");
+        wheel.setSize("large update");
         wheel.setCountry("omd");
         wheel.setDiameter(100.00);
         wheel.setHole(20.00);
@@ -1320,7 +1320,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         SilverSole silverSole = (SilverSole) item;
 
         //get from view
-        silverSole.setType("type");
+        silverSole.setType("updated");
         silverSole.setPrice(3.00);
 
         return SilverSoleController.updateItem(silverSole);
