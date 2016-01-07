@@ -15,6 +15,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -37,12 +38,18 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private JScrollPane scrollpane;
     private ArrayList<Customer> customerList;
     private ViewSingleCustomer viewsinglecustomer;
+    private String[] tableHeaders;
     
     public ViewCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         customerList = new ArrayList<>();
+        tableHeaders = new String[] {"CustomerID","Name","Balance"};
         
+        searchByCombobox.addItem("CustomerID");
+        searchByCombobox.addItem("Name");
+        searchByCombobox.addItem("Balance");
+        searchByCombobox.addActionListener(searchByCombobox);//
         /* creating customer table with specified properties*/
         customerTable = new JXTable() {
         @Override
@@ -89,7 +96,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         updateButton = new javax.swing.JButton();
         viewButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        searchByCombo = new javax.swing.JComboBox<>();
+        searchByCombobox = new javax.swing.JComboBox<>();
         searchTextBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
@@ -108,7 +115,11 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
         deleteButton.setText("Delete");
 
-        searchByCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        searchByCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchByComboboxActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Search By");
 
@@ -134,7 +145,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchByCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)))
                 .addComponent(searchTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94))
@@ -148,7 +159,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(searchByCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchByCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewButton)
@@ -175,6 +186,10 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         
         
     }//GEN-LAST:event_viewButtonActionPerformed
+
+    private void searchByComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByComboboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchByComboboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,7 +238,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JComboBox<String> searchByCombo;
+    private javax.swing.JComboBox<String> searchByCombobox;
     private javax.swing.JTextField searchTextBox;
     private javax.swing.JButton updateButton;
     private javax.swing.JButton viewButton;
@@ -233,7 +248,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private void TableInit() throws ClassNotFoundException,SQLException
     {
         defaulttablemodel = new DefaultTableModel(0,0);
-        String[] tableHeaders = new String[] {"CustomerID","Name","Balance"};
+        
         defaulttablemodel.setColumnIdentifiers(tableHeaders);
         customerTable.setModel(defaulttablemodel);
         

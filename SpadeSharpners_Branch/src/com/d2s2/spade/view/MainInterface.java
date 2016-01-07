@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.d2s2.spade.view;
 
 import com.d2s2.spade.view.customer.AddCustomerForm;

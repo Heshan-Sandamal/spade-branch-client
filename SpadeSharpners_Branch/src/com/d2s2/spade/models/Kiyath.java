@@ -12,6 +12,20 @@ public class Kiyath extends Item{
     
     private  String size;
     private int noOfTips;
+    
+    
+    public static final String SIZE="size";
+    public static final String KIYATH="Kiyath";
+    public static final String NOOFTIPS="noOfTips";
+
+    public Kiyath(String size, int noOfTips) {
+        this.size=size;
+        this.noOfTips=noOfTips;
+    }
+
+    public Kiyath() {
+        
+    }
 
    
     /**

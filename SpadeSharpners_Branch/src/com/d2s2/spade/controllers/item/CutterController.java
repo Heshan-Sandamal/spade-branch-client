@@ -9,6 +9,7 @@ import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Cutter;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -49,5 +50,13 @@ public class CutterController {
         }
 
 
+    }
+
+    public static Cutter getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectwhereQuery(Cutter.class.getSimpleName(), Cutter.CODE, code);
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        return new Cutter(data.getString(Cutter.SIZE),data.getInt(Cutter.NOOFTIPS),data.getString(Cutter.THICKNESS));
     }
 }
