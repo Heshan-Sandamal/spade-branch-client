@@ -13,7 +13,7 @@ public class CustDebt {
     private String customerId;
     private double amount;
     public  static final String CUSTOMERID="customerId";
-    public  static final String AMOUNT="amount";
+        public  static final String AMOUNT="amount";
     public String getCustomerId() {
         return customerId;
     }

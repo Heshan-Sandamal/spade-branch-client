@@ -62,7 +62,36 @@ public class SilverSoleController {
         return new SilverSole(data.getString(SilverSole.TYPE),data.getDouble(SilverSole.PRICE));
     }
 
-    public static boolean updateItem(SilverSole silverSole) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public static boolean updateItem(SilverSole silverSole) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.updateQuery(new String[]{SilverSole.TYPE,SilverSole.PRICE}, SilverSole.class.getSimpleName(), silverSole.CODE);
+
+
+        try {
+            connection.setAutoCommit(false);
+
+            Object[] ob = new Object[]{silverSole.getType(),silverSole.getPrice(),silverSole.getCode()};
+            boolean itemDetailAdded = ItemController.updateItem(silverSole);
+            if (itemDetailAdded) {
+                boolean kiyathAdded = DBHandler.setData(connection, sql, ob) > 0 ? true : false;
+                if (kiyathAdded) {
+                    connection.commit();
+                    return true;
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+
+            } else {
+                connection.rollback();
+                return false;
+            }
+
+        } catch (Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 }
