@@ -25,20 +25,20 @@ public class KiyathController {
 
         try {
             connection.setAutoCommit(false);
-            
-            Object[] ob=new Object[]{kiyath.getCode(),kiyath.getSize(),kiyath.getNoOfTips()};
+
+            Object[] ob = new Object[]{kiyath.getCode(), kiyath.getSize(), kiyath.getNoOfTips()};
             boolean itemDetailAdded = ItemController.addItem(kiyath);
             if (itemDetailAdded) {
-                boolean kiyathAdded=DBHandler.setData(connection, sql, ob) > 0 ? true : false;
-                if(kiyathAdded){
+                boolean kiyathAdded = DBHandler.setData(connection, sql, ob) > 0 ? true : false;
+                if (kiyathAdded) {
                     connection.commit();
                     return true;
-                }else{
+                } else {
                     connection.rollback();
                     return false;
                 }
 
-            }else{
+            } else {
                 connection.rollback();
                 return false;
             }
@@ -55,9 +55,46 @@ public class KiyathController {
 
     public static Kiyath getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Kiyath.SIZE,Kiyath.NOOFTIPS},Kiyath.class.getSimpleName(), Kiyath.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql = DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Kiyath.SIZE, Kiyath.NOOFTIPS}, Kiyath.class.getSimpleName(), Kiyath.CODE);
+        ResultSet data = DBHandler.getData(connection, sql, new Object[]{code});
         data.next();
-        return new Kiyath(data.getString(Kiyath.SIZE),data.getInt(Kiyath.NOOFTIPS));
+        return new Kiyath(data.getString(Kiyath.SIZE), data.getInt(Kiyath.NOOFTIPS));
     }
+    
+    
+    public static boolean updateItem(Kiyath kiyath) throws ClassNotFoundException, SQLException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.updateQuery(new String[]{Kiyath.SIZE,Kiyath.NOOFTIPS},Kiyath.class.getSimpleName(), Kiyath.CODE);
+
+
+        try {
+            connection.setAutoCommit(false);
+
+            Object[] ob = new Object[]{kiyath.getSize(), kiyath.getNoOfTips(), kiyath.getCode()};
+            boolean itemDetailAdded = ItemController.updateItem(kiyath);
+            if (itemDetailAdded) {
+                boolean kiyathAdded = DBHandler.setData(connection, sql, ob) > 0 ? true : false;
+                if (kiyathAdded) {
+                    connection.commit();
+                    return true;
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+
+            } else {
+                connection.rollback();
+                return false;
+            }
+
+        } catch (Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    
+    }
+    
+    
 }

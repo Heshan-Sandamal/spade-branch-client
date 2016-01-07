@@ -55,9 +55,15 @@ public class RouterCutterController {
 
     public static RouterCutter getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{RouterCutter.SIZE},RouterCutter.class.getSimpleName(), RouterCutter.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{RouterCutter.SIZE},RouterCutter.class.getSimpleName(), RouterCutter.CODE);
+        ResultSet data = DBHandler.getData(connection, sql,new Object[]{code});
         data.next();
         return new RouterCutter(data.getString(RouterCutter.SIZE));
     }
+
+    public static boolean updateItem(RouterCutter routerCutter) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    
 }

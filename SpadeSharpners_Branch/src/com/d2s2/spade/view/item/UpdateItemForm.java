@@ -28,6 +28,7 @@ import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        noOfTipsTextField = new javax.swing.JTextField();
         kiyathAddButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -264,6 +265,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 codeTextFieldActionPerformed(evt);
             }
         });
+        codeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                codeTextFieldKeyReleased(evt);
+            }
+        });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/d2s2/spade/view/images/scanner_add.png"))); // NOI18N
@@ -278,7 +284,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jLabel10.setText("No: of tips");
 
-        kiyathAddButton.setText("ADD Kiyath");
+        kiyathAddButton.setText("Update Kiyath");
         kiyathAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kiyathAddButtonActionPerformed(evt);
@@ -300,7 +306,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(noOfTipsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(414, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -313,7 +319,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(noOfTipsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(kiyathAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -325,7 +331,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        routerCutterAddButton.setText("ADD Router Cutter");
+        routerCutterAddButton.setText("Update Router Cutter");
         routerCutterAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 routerCutterAddButtonActionPerformed(evt);
@@ -370,7 +376,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        planerBladeAddButton.setText("ADD Planer Blade");
+        planerBladeAddButton.setText("Update Planer Blade");
         planerBladeAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 planerBladeAddButtonActionPerformed(evt);
@@ -423,7 +429,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jLabel17.setText("Thickness");
 
-        addCutterButton.setText("ADD Cutter");
+        addCutterButton.setText("Update Cutter");
         addCutterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCutterButtonActionPerformed(evt);
@@ -482,7 +488,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jComboBox12.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        tipAddButton.setText("ADD Tip");
+        tipAddButton.setText("Update Tip");
         tipAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipAddButtonActionPerformed(evt);
@@ -544,7 +550,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jLabel24.setText("Hole");
 
-        wheelAddButton.setText("ADD Wheel");
+        wheelAddButton.setText("Update Wheel");
         wheelAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 wheelAddButtonActionPerformed(evt);
@@ -601,7 +607,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jLabel25.setText("Description");
 
-        jButton7.setText("Add Plux");
+        jButton7.setText("Update Plux");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -633,7 +639,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jLabel26.setText("Type");
 
-        jButton8.setText("ADD Silver Sole");
+        jButton8.setText("Update  Silver Sole");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -683,7 +689,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         jLabel28.setText("Description");
 
-        jButton9.setText("ADD");
+        jButton9.setText("Update");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -888,11 +894,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addKiyath = addKiyath();
-                if (addKiyath) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updateKiyath = updateKiyath();
+                if (updateKiyath) {
+                    JOptionPane.showMessageDialog(this, "Updated successfully");
                     //generateId();
                     // setCode();
 
@@ -900,18 +906,18 @@ public class UpdateItemForm extends javax.swing.JDialog {
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Unable to new item due to " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to update item due to " + ex.getMessage());
 
         }
     }//GEN-LAST:event_kiyathAddButtonActionPerformed
 
     private void routerCutterAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_routerCutterAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addRouterCutter = addRouterCutter();
-                if (addRouterCutter) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updateRouterCutter = updateRouterCutter();
+                if (updateRouterCutter) {
+                    JOptionPane.showMessageDialog(this, "New item updateed successfully");
                     //generateId();
                     // setCode();
 
@@ -926,11 +932,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     private void planerBladeAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planerBladeAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addPlanerBlade = addPlanerBlade();
-                if (addPlanerBlade) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updatePlanerBlade = updatePlanerBlade();
+                if (updatePlanerBlade) {
+                    JOptionPane.showMessageDialog(this, "New item updateed successfully");
                     //generateId();
                     //setCode();
 
@@ -945,11 +951,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     private void addCutterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCutterButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addCutter = addCutter();
-                if (addCutter) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updateCutter = updateCutter();
+                if (updateCutter) {
+                    JOptionPane.showMessageDialog(this, "New item updateed successfully");
                     //generateId();
                     //setCode();
 
@@ -964,11 +970,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     private void tipAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addTip = addTip();
-                if (addTip) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updateTip = updateTip();
+                if (updateTip) {
+                    JOptionPane.showMessageDialog(this, "New item updateed successfully");
                     // generateId();
                     //setCode();
 
@@ -983,11 +989,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     private void wheelAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelAddButtonActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addwheel = addWheel();
-                if (addwheel) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updatewheel = updateWheel();
+                if (updatewheel) {
+                    JOptionPane.showMessageDialog(this, "New item updateed successfully");
                     //  generateId();
                     //setCode();
 
@@ -1002,11 +1008,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         try {
-            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
+            int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to update this Item??");
             if (showConfirmDialog == 0) {
-                boolean addSilverSole = addSilverSole();
-                if (addSilverSole) {
-                    JOptionPane.showMessageDialog(this, "New item added successfully");
+                boolean updateSilverSole = updateSilverSole();
+                if (updateSilverSole) {
+                    JOptionPane.showMessageDialog(this, "New item updateed successfully");
                     // generateId();
                     //setCode();
 
@@ -1048,6 +1054,13 @@ public class UpdateItemForm extends javax.swing.JDialog {
             }
         }        // TODO add your handling code here:
     }//GEN-LAST:event_supplierComboItemStateChanged
+
+    private void codeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codeTextFieldKeyReleased
+
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+            disableSelectedTab();
+        };
+    }//GEN-LAST:event_codeTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1152,12 +1165,12 @@ public class UpdateItemForm extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton kiyathAddButton;
+    private javax.swing.JTextField noOfTipsTextField;
     private javax.swing.JButton planerBladeAddButton;
     private javax.swing.JButton routerCutterAddButton;
     private javax.swing.JComboBox salesTypeCombo;
@@ -1171,10 +1184,6 @@ public class UpdateItemForm extends javax.swing.JDialog {
     private void setItemDetails() {
 
         String code = codeTextField.getText();
-        String supplierId = supplierIdTextField.getText();
-        String brandId = brandTextField.getText();
-        String itemCode = itemCategoryIdTextField.getText();
-        String subId = subIdTextField.getText();
         String salesType = salesTypeCombo.getSelectedItem().toString();
 
         if (salesType.equals("Sale")) {
@@ -1184,11 +1193,8 @@ public class UpdateItemForm extends javax.swing.JDialog {
         }
 
         item.setCode(code);
-        item.setBrandId(brandId);
-        item.setItemCode(itemCode);
-        item.setSubId(subId);
         item.setSaleType(salesType);
-        item.setSupplierId(supplierId);
+
     }
 
     //----------------------------------Constructor calls---------------------------------------------------
@@ -1221,20 +1227,20 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
     //---------------------------------------------------------------------------------------------------------------
     //---------------------------------controller calls to add to db-------------------------------
-    private boolean addKiyath() throws ClassNotFoundException, SQLException {
+    private boolean updateKiyath() throws ClassNotFoundException, SQLException {
         item = new Kiyath();
         setItemDetails();
         Kiyath kiyath = (Kiyath) item;
 
         //get details from the view
         kiyath.setSize("large");
-        kiyath.setNoOfTips(10);
+        kiyath.setNoOfTips(Integer.parseInt(noOfTipsTextField.getText()));
 
-        return KiyathController.addItem(kiyath);
+        return KiyathController.updateItem(kiyath);
 
     }
 
-    private boolean addRouterCutter() throws ClassNotFoundException, SQLException {
+    private boolean updateRouterCutter() throws ClassNotFoundException, SQLException {
         item = new RouterCutter();
         setItemDetails();
 
@@ -1243,10 +1249,10 @@ public class UpdateItemForm extends javax.swing.JDialog {
         //get details from view
         routerCutter.setSize("large");
 
-        return RouterCutterController.addItem(routerCutter);
+        return RouterCutterController.updateItem(routerCutter);
     }
 
-    private boolean addPlanerBlade() throws ClassNotFoundException, SQLException {
+    private boolean updatePlanerBlade() throws ClassNotFoundException, SQLException {
 
         item = new PlanerBlade();
         setItemDetails();
@@ -1257,11 +1263,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
         planerBlade.setSize("large");
         planerBlade.setType("ss");
 
-        return PlanerBladeController.addItem(planerBlade);
+        return PlanerBladeController.updateItem(planerBlade);
 
     }
 
-    private boolean addCutter() throws ClassNotFoundException, SQLException {
+    private boolean updateCutter() throws ClassNotFoundException, SQLException {
 
         item = new Cutter();
         setItemDetails();
@@ -1273,11 +1279,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
         cutter.setSize("large");
         cutter.setThickness("10");
 
-        return CutterController.addItem(cutter);
+        return CutterController.updateItem(cutter);
 
     }
 
-    private boolean addTip() throws ClassNotFoundException, SQLException {
+    private boolean updateTip() throws ClassNotFoundException, SQLException {
         item = new Tip();
         setItemDetails();
 
@@ -1288,10 +1294,10 @@ public class UpdateItemForm extends javax.swing.JDialog {
         tip.setCountry("sri lanka");
         tip.setPrice(100.00);
 
-        return TipController.addItem(tip);
+        return TipController.updateItem(tip);
     }
 
-    private boolean addWheel() throws ClassNotFoundException, SQLException {
+    private boolean updateWheel() throws ClassNotFoundException, SQLException {
         item = new Wheel();
         setItemDetails();
 
@@ -1303,11 +1309,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
         wheel.setDiameter(100.00);
         wheel.setHole(20.00);
 
-        return WheelController.addItem(wheel);
+        return WheelController.updateItem(wheel);
 
     }
 
-    private boolean addSilverSole() throws ClassNotFoundException, SQLException {
+    private boolean updateSilverSole() throws ClassNotFoundException, SQLException {
         item = new SilverSole();
         setItemDetails();
 
@@ -1317,7 +1323,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         silverSole.setType("type");
         silverSole.setPrice(3.00);
 
-        return SilverSoleController.addItem(silverSole);
+        return SilverSoleController.updateItem(silverSole);
 
     }
     //-----------------------------------------------------------------------------------------------
@@ -1341,7 +1347,6 @@ public class UpdateItemForm extends javax.swing.JDialog {
     }
 
     //-------------------------------------------------------------------------------------------------------------------------
-    
     private void getItemDetails() throws ClassNotFoundException, SQLException {
         String code = codeTextField.getText();
         String[] splitCode = code.split(":");
@@ -1381,6 +1386,10 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
                 if (category.equals(Kiyath.class.getSimpleName())) {
                     Kiyath detailsOfItem = KiyathController.getDetailsOfItem(code);
+                    
+                    
+                    
+                    
                 } else if (category.equals(RouterCutter.ROUTERCUTTER)) {
                     RouterCutter detailsOfItem = RouterCutterController.getDetailsOfItem(code);
                 } else if (category.equals(SilverSole.SILVERSOLE)) {
@@ -1421,11 +1430,9 @@ public class UpdateItemForm extends javax.swing.JDialog {
             component.setEnabled(true);
         }
     }
-    
-    
-    public void setCodeToGetDetails(String code) throws ClassNotFoundException, SQLException{
+
+    public void setCodeToGetDetails(String code) throws ClassNotFoundException, SQLException {
         codeTextField.setText(code);
         getItemDetails();
     }
-    
 }

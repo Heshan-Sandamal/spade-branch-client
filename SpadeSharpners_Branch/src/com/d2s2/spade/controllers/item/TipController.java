@@ -57,9 +57,13 @@ public class TipController {
 
     public static Tip getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Tip.SIZE,Tip.COUNTRY,Tip.PRICE},Tip.class.getSimpleName(), Tip.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Tip.SIZE,Tip.COUNTRY,Tip.PRICE},Tip.class.getSimpleName(), Tip.CODE);
+        ResultSet data = DBHandler.getData(connection, sql,new Object[]{code});
         data.next();
         return new Tip(data.getString(Tip.SIZE),data.getString(Tip.COUNTRY),data.getDouble(Tip.PRICE));
+    }
+
+    public static boolean updateItem(Tip tip) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

@@ -102,8 +102,10 @@ public class SupplierController {
         String tableName="supplierTelephone";
         String beforeEquals="supplierID";
         String afterEquals=iDValue;
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(colums,tableName,beforeEquals,afterEquals);
-        ResultSet resultSet=DBHandler.getData(connection, sql);
+        Object[] ob={afterEquals};
+        
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(colums,tableName,beforeEquals);
+        ResultSet resultSet=DBHandler.getData(connection, sql,ob);
         ArrayList<SupplierTelephone> contactList=new ArrayList<SupplierTelephone>();
         while(resultSet.next()){
             

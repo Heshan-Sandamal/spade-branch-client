@@ -270,6 +270,7 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="codeTextFieldActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="codeTextFieldKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -355,7 +356,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jComboBox5" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <Component id="jTextField5" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                                      <Component id="noOfTipsTextField" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -374,7 +375,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="noOfTipsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="kiyathAddButton" min="-2" pref="31" max="-2" attributes="0"/>
@@ -406,11 +407,11 @@
                     <Property name="text" type="java.lang.String" value="No: of tips"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField5">
+                <Component class="javax.swing.JTextField" name="noOfTipsTextField">
                 </Component>
                 <Component class="javax.swing.JButton" name="kiyathAddButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Kiyath"/>
+                    <Property name="text" type="java.lang.String" value="Update Kiyath"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kiyathAddButtonActionPerformed"/>
@@ -482,7 +483,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="routerCutterAddButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Router Cutter"/>
+                    <Property name="text" type="java.lang.String" value="Update Router Cutter"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="routerCutterAddButtonActionPerformed"/>
@@ -581,7 +582,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="planerBladeAddButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Planer Blade"/>
+                    <Property name="text" type="java.lang.String" value="Update Planer Blade"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="planerBladeAddButtonActionPerformed"/>
@@ -682,7 +683,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="addCutterButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Cutter"/>
+                    <Property name="text" type="java.lang.String" value="Update Cutter"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCutterButtonActionPerformed"/>
@@ -798,7 +799,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="tipAddButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Tip"/>
+                    <Property name="text" type="java.lang.String" value="Update Tip"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tipAddButtonActionPerformed"/>
@@ -913,7 +914,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="wheelAddButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Wheel"/>
+                    <Property name="text" type="java.lang.String" value="Update Wheel"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="wheelAddButtonActionPerformed"/>
@@ -972,7 +973,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton7">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Add Plux"/>
+                    <Property name="text" type="java.lang.String" value="Update Plux"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1040,7 +1041,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton8">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD Silver Sole"/>
+                    <Property name="text" type="java.lang.String" value="Update  Silver Sole"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
@@ -1116,7 +1117,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton9">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADD"/>
+                    <Property name="text" type="java.lang.String" value="Update"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>

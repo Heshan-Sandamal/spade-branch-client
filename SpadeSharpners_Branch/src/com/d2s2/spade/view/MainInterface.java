@@ -7,7 +7,7 @@ import com.d2s2.spade.view.item.AddItemForm;
 import com.d2s2.spade.view.item.ViewItemForm;
 import com.d2s2.spade.view.supplier.AddSupplierForm;
 import com.d2s2.spade.view.customer.ViewCustomerForm;
-import com.d2s2.spade.view.supplier.ViewSupplier;
+import com.d2s2.spade.view.item.UpdateItemForm;
 import java.awt.event.ActionEvent;
 
 /**
@@ -15,20 +15,23 @@ import java.awt.event.ActionEvent;
  * @author Heshan Sandamal
  */
 public class MainInterface extends javax.swing.JFrame {
-    
+
     private AddCustomerForm addCustomerForm;
     private AddItemForm addItemForm;
     private CustomerPaymentForm customerPayment;
     private ViewItemForm viewItemForm;
     private AddSupplierForm addSupplierForm;
     private ViewCustomerForm viewCustomerForm;
-    private ViewSupplier viewSupplierForm;
-     
+    private UpdateItemForm updateItemForm;
+
+    /**
+     * Creates new form MainInterface
+     */
     public MainInterface() {
         initComponents();
-        
-        
-        
+
+
+
     }
 
     /**
@@ -46,8 +49,7 @@ public class MainInterface extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         viewCustomerButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        viewSupplierButon = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,17 +95,10 @@ public class MainInterface extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Update  item form");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Update Item");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        viewSupplierButon.setText("View Supplier");
-        viewSupplierButon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewSupplierButonActionPerformed(evt);
+                jButton6ActionPerformed(evt);
             }
         });
 
@@ -111,48 +106,37 @@ public class MainInterface extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(126, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(viewCustomerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addSupplierButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(22, 22, 22)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(viewSupplierButon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jButton5)
+                    .addComponent(jButton4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(viewCustomerButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addSupplierButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(19, 19, 19)
+                .addComponent(jButton6)
+                .addGap(18, 18, 18)
                 .addComponent(viewCustomerButton)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton3)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(addSupplierButton)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
-                .addGap(18, 18, 18)
-                .addComponent(viewSupplierButon)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,32 +148,32 @@ public class MainInterface extends javax.swing.JFrame {
         }
         addCustomerForm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         if (addItemForm == null) {
             addItemForm = new AddItemForm(this, true);
         }
         addItemForm.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void addSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierButtonActionPerformed
         if (addSupplierForm == null) {
-            addSupplierForm = new AddSupplierForm(this,true);
+            addSupplierForm = new AddSupplierForm(this, true);
         }
-        
+
         addSupplierForm.setVisible(true);
     }//GEN-LAST:event_addSupplierButtonActionPerformed
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (customerPayment == null) {
             customerPayment = new CustomerPaymentForm(this, true);
         }
         customerPayment.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
-    
+
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         if (viewItemForm == null) {
             viewItemForm = new ViewItemForm(this, true);
@@ -201,18 +185,19 @@ public class MainInterface extends javax.swing.JFrame {
     private void viewCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCustomerButtonActionPerformed
         // TODO add your handling code here:
        /* if (viewCustomerForm == null){
-            viewCustomerForm = new ViewCustomerForm(this, rootPaneCheckingEnabled);
-        }*/
+         viewCustomerForm = new ViewCustomerForm(this, rootPaneCheckingEnabled);
+         }*/
         viewCustomerForm = new ViewCustomerForm(this, rootPaneCheckingEnabled);
         viewCustomerForm.setVisible(true);
     }//GEN-LAST:event_viewCustomerButtonActionPerformed
 
-    private void viewSupplierButonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSupplierButonActionPerformed
-         if (viewSupplierForm == null) {
-            viewSupplierForm = new ViewSupplier(this, true);
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if (updateItemForm == null) {
+            updateItemForm = new UpdateItemForm(this, true);
         }
-        viewCustomerForm.setVisible(true);
-    }//GEN-LAST:event_viewSupplierButonActionPerformed
+        
+        updateItemForm.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,10 +237,10 @@ public class MainInterface extends javax.swing.JFrame {
     private javax.swing.JButton addSupplierButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton viewCustomerButton;
-    private javax.swing.JButton viewSupplierButon;
     // End of variables declaration//GEN-END:variables
 }
+

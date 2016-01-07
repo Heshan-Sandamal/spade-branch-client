@@ -34,7 +34,7 @@ public class DBQueryGenerator {
         return "SELECT * FROM "+tableName+" WHERE " +columnName+"= ?" ;
     }
     
-    public static String selectLimitedColumnswhereQuery(String[] columns,String tableName, String beforeequal, String afterequal ){
+    public static String selectLimitedColumnswhereQuery(String[] columns,String tableName, String beforeequal ){
         
         String a="SELECT ";
         for (int i = 0; i < columns.length; i++) {
@@ -43,7 +43,7 @@ public class DBQueryGenerator {
                 a+=",";
             }
         }
-        return a+" FROM "+tableName+" WHERE " +beforeequal+"= '"+afterequal+"'" ;
+        return a+" FROM "+tableName+" WHERE " +beforeequal+"=?" ;
     }
     
     public static String checkExistencywhereQuery(String tableName, String beforeequal ){
@@ -59,6 +59,19 @@ public class DBQueryGenerator {
             }
         }
         return a+" FROM "+tableName ;
+    }
+    
+    public static String updateQuery(String[] columns,String tableName, String beforeequal ){
+        
+        String a="UPDATE "+tableName+" SET ";
+        for (int i = 0; i < columns.length; i++) {
+            a+=columns[i]+="=?";
+            if(i!=columns.length-1){
+                a+=",";
+            }
+            
+        }
+        return a+" WHERE " +beforeequal+"=?" ;
     }
     
 }

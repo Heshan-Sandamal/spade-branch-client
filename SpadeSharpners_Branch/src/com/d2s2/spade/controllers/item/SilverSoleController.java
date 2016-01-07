@@ -56,9 +56,13 @@ public class SilverSoleController {
 
     public static SilverSole getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{SilverSole.TYPE,SilverSole.PRICE},SilverSole.class.getSimpleName(), Kiyath.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{SilverSole.TYPE,SilverSole.PRICE},SilverSole.class.getSimpleName(), SilverSole.CODE);
+        ResultSet data = DBHandler.getData(connection, sql,new Object[]{code});
         data.next();
         return new SilverSole(data.getString(SilverSole.TYPE),data.getDouble(SilverSole.PRICE));
+    }
+
+    public static boolean updateItem(SilverSole silverSole) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

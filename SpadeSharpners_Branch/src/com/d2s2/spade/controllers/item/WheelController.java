@@ -55,9 +55,13 @@ public class WheelController {
 
     public static Wheel getDetailsOfItem(String code)throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Wheel.SIZE,Wheel.COUNTRY,Wheel.DIAMETER,Wheel.HOLE},Wheel.class.getSimpleName(), Wheel.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Wheel.SIZE,Wheel.COUNTRY,Wheel.DIAMETER,Wheel.HOLE},Wheel.class.getSimpleName(), Wheel.CODE);
+        ResultSet data = DBHandler.getData(connection, sql,new Object[]{code});
         data.next();
         return new Wheel(data.getString(Wheel.SIZE),data.getString(Wheel.COUNTRY),data.getDouble(Wheel.DIAMETER),data.getDouble(Wheel.HOLE));
+    }
+
+    public static boolean updateItem(Wheel wheel) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
