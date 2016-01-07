@@ -1393,6 +1393,10 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
                 if (category.equals(Kiyath.class.getSimpleName())) {
                     Kiyath detailsOfItem = KiyathController.getDetailsOfItem(code);
+                    
+                    
+                    
+                    
                 } else if (category.equals(RouterCutter.ROUTERCUTTER)) {
                     RouterCutter detailsOfItem = RouterCutterController.getDetailsOfItem(code);
                 } else if (category.equals(SilverSole.SILVERSOLE)) {

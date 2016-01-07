@@ -55,8 +55,8 @@ public class KiyathController {
 
     public static Kiyath getDetailsOfItem(String code) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Kiyath.SIZE,Kiyath.NOOFTIPS},Kiyath.class.getSimpleName(), Kiyath.CODE, code);
-        ResultSet data = DBHandler.getData(connection, sql);
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{Kiyath.SIZE,Kiyath.NOOFTIPS},Kiyath.class.getSimpleName(), Kiyath.CODE);
+        ResultSet data = DBHandler.getData(connection, sql,new Object[]{code});
         data.next();
         return new Kiyath(data.getString(Kiyath.SIZE),data.getInt(Kiyath.NOOFTIPS));
     }
