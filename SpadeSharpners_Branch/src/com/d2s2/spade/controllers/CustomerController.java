@@ -107,8 +107,9 @@ public class CustomerController {
     
     public static ArrayList<String> viewCustomerPhone(String tableName, String customerId) throws ClassNotFoundException,SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectwhereQuery(tableName,"customerId" ,customerId);
-        ResultSet resultSet = DBHandler.getData(connection, sql);
+        String sql = DBQueryGenerator.selectwhereQuery(tableName,"customerId");
+        
+        ResultSet resultSet = DBHandler.getData(connection, sql, new Object[]{customerId});
         
         ArrayList<String> telephoneNoList = new ArrayList<>();
         
