@@ -4,6 +4,7 @@
  */
 package com.d2s2.spade.view.customer;
 
+import com.d2s2.spade.controllers.CustPaymentController;
 import com.d2s2.spade.controllers.CustomerController;
 import com.d2s2.spade.models.Customer;
 import java.awt.event.ActionEvent;
@@ -569,7 +570,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             customerNameComboBox.addItem(customer.getName());
 
         }
-        debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
+        debtAmountTextField.setText(String.valueOf(CustPaymentController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
     }
 
     /**
@@ -582,7 +583,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             try {
                 Customer customer = customersBasicInfo.get(selectedIndex);
                 customerNameComboBox.setSelectedItem(customer.getName());
-                System.out.println(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
+                System.out.println(String.valueOf(CustPaymentController.getCustomerDebt(customer.getCustomerId())));
                 //debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
 
             } catch (ClassNotFoundException | SQLException ex) {
@@ -602,7 +603,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             Customer customer = customersBasicInfo.get(selectedIndex);
             customerNameComboBox.setSelectedItem(customer.getCustomerId());
             try {
-                debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
+                debtAmountTextField.setText(String.valueOf(CustPaymentController.getCustomerDebt(customer.getCustomerId())));
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
             }
