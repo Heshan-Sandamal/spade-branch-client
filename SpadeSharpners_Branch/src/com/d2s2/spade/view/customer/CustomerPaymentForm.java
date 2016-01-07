@@ -4,11 +4,16 @@
  */
 package com.d2s2.spade.view.customer;
 
+import com.d2s2.spade.controllers.CustDebtController;
 import com.d2s2.spade.controllers.CustPaymentController;
 import com.d2s2.spade.controllers.CustomerController;
+import com.d2s2.spade.models.CustDebt;
+import com.d2s2.spade.models.CustPayment;
 import com.d2s2.spade.models.Customer;
+import com.d2s2.spade.models.PaymentType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -105,7 +110,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         issueDatePicker = new org.jdesktop.swingx.JXDatePicker();
         expiryDatePicker = new org.jdesktop.swingx.JXDatePicker();
         BankComboBox = new javax.swing.JComboBox();
-        jXDatePicker3 = new org.jdesktop.swingx.JXDatePicker();
+        paymentDatePicker = new org.jdesktop.swingx.JXDatePicker();
         grossAmountTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         netAmountTextField = new javax.swing.JTextField();
@@ -336,7 +341,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
                                                         .addComponent(jTextField2)
                                                         .addComponent(debtAmountTextField)
                                                         .addComponent(discountSpinner)
-                                                        .addComponent(jXDatePicker3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paymentDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(grossAmountTextField))
                                                     .addComponent(netAmountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(3, 3, 3)))
@@ -392,7 +397,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jXDatePicker3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paymentDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -548,9 +553,9 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JTextField jTextField2;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker3;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
     private javax.swing.JTextField netAmountTextField;
+    private org.jdesktop.swingx.JXDatePicker paymentDatePicker;
     private javax.swing.JTextField paymentIdTextField;
     private javax.swing.JTextField statusTextField;
     // End of variables declaration//GEN-END:variables
@@ -642,6 +647,15 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
     private void confirmPayment() {
         // if the input data is validated then the form is submitted
+        CustPayment custPayment=prepareCustPayment();
+        CustDebt custDebt=prepareCustDebt();
+        try {
+            CustPaymentController.addPaymentInfo(custPayment);
+            CustDebtController.updateDebtInfo(custDebt);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     private void calculateFinalPayment() {
@@ -714,5 +728,22 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         String newId = "P-" + numberFormat.format(newIdVal);
         paymentIdTextField.setText(newId);
 
+    }
+    private CustPayment prepareCustPayment(){
+        CustPayment custPayment=new CustPayment();
+        custPayment.setAmount(Double.parseDouble(netAmountTextField.getText()));
+        custPayment.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
+        custPayment.setDate((Date) paymentDatePicker.getDate());
+        custPayment.setDiscount(Double.parseDouble((String) discountSpinner.getValue()));
+        custPayment.setType(PaymentType.csh);
+        custPayment.setPaymentId(paymentIdTextField.getText());
+        return custPayment;
+    }
+
+    private CustDebt prepareCustDebt() {
+        CustDebt custDebt=new CustDebt();
+        custDebt.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
+        custDebt.setDebt(Double.valueOf(debtAmountTextField.getText())-Double.valueOf(netAmountTextField.getText()));
+        return custDebt;
     }
 }

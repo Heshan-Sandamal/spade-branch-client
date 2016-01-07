@@ -14,7 +14,7 @@ import java.sql.Date;
 public class CustPayment {
     private String paymentId;
     private String customerId;
-    private paymentType type;
+    private PaymentType type;
     private double discount;
     private double amount;
     private Date date;
@@ -42,11 +42,11 @@ public class CustPayment {
         this.customerId = customerId;
     }
 
-    public paymentType getType() {
+    public PaymentType getType() {
         return type;
     }
 
-    public void setType(paymentType type) {
+    public void setType(PaymentType type) {
         this.type = type;
     }
 
