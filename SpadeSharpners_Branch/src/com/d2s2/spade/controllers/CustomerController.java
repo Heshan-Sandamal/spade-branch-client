@@ -38,6 +38,8 @@ public class CustomerController {
             if (setData > 0) {              //check customer data is added
 
                 for (CustomerTelephone customerTelephone : telList) {
+                    
+                   // CustomerTelephoneController.addCustomerTelephone(customerTelephone)
 
                     String sqlTelephone = DBQueryGenerator.insertQuery(CustomerTelephone.class.getSimpleName(), 2);       //use this way to get db table name.because model name is same as db table name
 

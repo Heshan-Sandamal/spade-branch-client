@@ -254,15 +254,21 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         
         customerList = CustomerController.viewCustomers();
         
-        /* customer table data */
-        for (int i=0; i<customerList.size();i++){
-            Vector<Object> customerData = new Vector<Object>();
-            customerData.add(customerList.get(i).getCustomerId());
-            customerData.add(customerList.get(i).getName());
-            customerData.add("Balance"+i);
-            
-            defaulttablemodel.addRow(customerData);
+        
+        for (Customer cl : customerList) {
+            defaulttablemodel.addRow(new Object[]{cl.getCustomerId(),cl.getName(),cl.getAddress()});
         }
+        
+        
+        /* customer table data */
+//        for (int i=0; i<customerList.size();i++){
+//            Vector<Object> customerData = new Vector<Object>();
+//            customerData.add(customerList.get(i).getCustomerId());
+//            customerData.add(customerList.get(i).getName());
+//            customerData.add("Balance"+i);
+//            
+//            defaulttablemodel.addRow(customerData);
+//        }
         /*for (int i=0; i<50; i++){
             Vector<Object> data = new Vector<Object>();
             data.add("000"+i);
