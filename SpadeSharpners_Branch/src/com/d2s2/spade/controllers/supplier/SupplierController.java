@@ -86,14 +86,33 @@ public class SupplierController {
             
             String supplierId=resultSet.getString(Supplier.SUPPLIERID);
             String name=resultSet.getString(Supplier.NAME);
-            
-            supplierList.add(new Supplier(supplierId,name));
+            String adress=resultSet.getString(Supplier.ADDRESS);
+            String email = resultSet.getString(Supplier.EMAIL);
+         
+            supplierList.add(new Supplier(supplierId,name,adress,email));
             
             //itemList.add(new Item(code,itemCode,subId,brandId,supplierId,salesType));     
         }
         
         return supplierList;
     }
-
+    public static ArrayList<SupplierTelephone> getSupplierContactInfo(String iDValue) throws ClassNotFoundException, SQLException{
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String[] colums ={"contactName","telNo"};
+        String tableName="supplierTelephone";
+        String beforeEquals="supplierID";
+        String afterEquals=iDValue;
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(colums,tableName,beforeEquals,afterEquals);
+        ResultSet resultSet=DBHandler.getData(connection, sql);
+        ArrayList<SupplierTelephone> contactList=new ArrayList<SupplierTelephone>();
+        while(resultSet.next()){
+            
+            SupplierTelephone supplierTelephone =new SupplierTelephone();
+            supplierTelephone.setContactName(resultSet.getString("contactName"));
+            supplierTelephone.setTelNo(resultSet.getString("telNo"));
+            contactList.add(supplierTelephone);
+        }
+        return contactList;
+    }
     
 }

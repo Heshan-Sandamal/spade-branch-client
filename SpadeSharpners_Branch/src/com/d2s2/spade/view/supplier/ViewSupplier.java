@@ -7,8 +7,10 @@ package com.d2s2.spade.view.supplier;
 
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
+import com.d2s2.spade.models.SupplierTelephone;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -24,14 +26,19 @@ public class ViewSupplier extends javax.swing.JDialog {
      */
     public ViewSupplier(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
         initComponents();
         try {
-            addSuppliersToTable();
+            createModel();
+            model=addSuppliersToTable(model);
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }
 
     /**
@@ -47,13 +54,20 @@ public class ViewSupplier extends javax.swing.JDialog {
         idSearchField = new org.jdesktop.swingx.JXSearchField();
         IDrequestLabel = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         supplierDetailsTable = new org.jdesktop.swingx.JXTable();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jXTable2 = new org.jdesktop.swingx.JXTable();
+        contactTable = new org.jdesktop.swingx.JXTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mouseClickHandler(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Keyword"));
 
@@ -87,31 +101,71 @@ public class ViewSupplier extends javax.swing.JDialog {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setText("View Supplier");
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Supplier Details"));
+
         supplierDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Supplier ID", "Supplier Name", "Address", "Email"
+                "ID", "Name", "Address", "Email"
             }
         ));
+        supplierDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplierDetailsTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(supplierDetailsTable);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("View Supplier");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
 
-        jXTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Contact Information"));
+
+        contactTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Contact Name ", "Telephone Number"
             }
         ));
-        jScrollPane2.setViewportView(jXTable2);
+        jScrollPane2.setViewportView(contactTable);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(95, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,34 +175,57 @@ public class ViewSupplier extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(227, 227, 227)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 449, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabel1)))
+                .addContainerGap(802, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 6, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mouseClickHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClickHandler
+        
+        System.out.println("Action");
+    }//GEN-LAST:event_mouseClickHandler
+
+    private void supplierDetailsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierDetailsTableMouseClicked
+        
+        int clickedRow =supplierDetailsTable.rowAtPoint(evt.getPoint());
+        contactModel.setRowCount(0);
+        createContactModel();
+        try {
+            
+            contactModel = getSpecificSupplierDetails((String) supplierDetailsTable.getValueAt(clickedRow, 0), contactModel);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_supplierDetailsTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -196,37 +273,54 @@ public class ViewSupplier extends javax.swing.JDialog {
         model.setColumnIdentifiers(columns);
         setModel(model);
     }
+     public void createContactModel(){
+        Object[] columns={"Contact Name","Telephone Number"};
+        contactModel.setColumnIdentifiers(columns);
+        setContactModel(contactModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDrequestLabel;
+    private org.jdesktop.swingx.JXTable contactTable;
     private org.jdesktop.swingx.JXSearchField idSearchField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private org.jdesktop.swingx.JXTable jXTable2;
     private javax.swing.JButton searchButton;
     private org.jdesktop.swingx.JXTable supplierDetailsTable;
     // End of variables declaration//GEN-END:variables
     private Object row[]  = new Object[4];
+    private DefaultTableModel contactModel = new DefaultTableModel();
     private DefaultTableModel model = new DefaultTableModel();
-    private void setModel(DefaultTableModel model){
-        jXTable2.setModel(model);
+    private void setModel(DefaultTableModel newmodel){
+        supplierDetailsTable.setModel(model);
 
     }
-    private void addSuppliersToTable() throws ClassNotFoundException, SQLException{
+     private void setContactModel(DefaultTableModel newmodel){
+        contactTable.setModel(contactModel);
+
+    }
+    private DefaultTableModel addSuppliersToTable(DefaultTableModel newModel) throws ClassNotFoundException, SQLException{
         ArrayList<Supplier> supplierList=SupplierController.getAllSuppliers();
-        for (int x=0;x<supplierList.size();x++){
-            row[0]=supplierList.get(x).getSupplierId();
-            row[1]=supplierList.get(x).getName();
-            row[2]=supplierList.get(x).getAddress();
-            row[3]=supplierList.get(x).getName();
-            model.addRow(row);
-        }
         
-        for (Supplier supplierList1 : supplierList) {
-            model.addRow(new Object[]{});
+      
+        
+        for (Supplier spl : supplierList) {
+             System.out.println(spl.getSupplierId()+spl.getName()+spl.getAddress()+spl.getEmail());
+             newModel.addRow(new Object[]{spl.getSupplierId(),spl.getName(),spl.getAddress(),spl.getEmail()});
         }
+        return model;
+    }
+    private DefaultTableModel getSpecificSupplierDetails(String ID, DefaultTableModel model) throws ClassNotFoundException, SQLException{
+        ArrayList<SupplierTelephone> supplierContactList = SupplierController.getSupplierContactInfo(ID);
+        for (SupplierTelephone contact : supplierContactList) {
+            model.addRow(new Object[]{ID,contact.getContactName(),contact.getTelNo()});
+            System.out.println("Contact Name="+ contact.getContactName()+contact.getTelNo());
+        }
+        return model;
     }
    
     

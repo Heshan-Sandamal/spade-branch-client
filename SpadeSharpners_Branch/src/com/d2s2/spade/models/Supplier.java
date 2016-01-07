@@ -15,9 +15,11 @@ public class Supplier {
     public static final String ADDRESS = "supplierId";
     public static final String EMAIL = "email";
 
-    public Supplier(String supplierId, String name) {
+    public Supplier(String supplierId, String name,String address,String email) {
         this.supplierId = supplierId;
         this.name = name;
+        this.address=address;
+        this.email=email;
     }
 
     public Supplier() {

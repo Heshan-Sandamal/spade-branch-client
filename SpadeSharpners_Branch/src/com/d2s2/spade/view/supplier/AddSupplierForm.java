@@ -268,6 +268,7 @@ public class AddSupplierForm extends javax.swing.JDialog {
     private void addToTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToTableButtonActionPerformed
         row[0]=contactNameField.getText();
         row[1]=telephoneNumberField.getText();
+        System.out.println(row);
         
         model.addRow(row);
 
