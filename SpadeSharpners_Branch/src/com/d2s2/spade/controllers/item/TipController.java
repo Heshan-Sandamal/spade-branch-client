@@ -62,4 +62,8 @@ public class TipController {
         data.next();
         return new Tip(data.getString(Tip.SIZE),data.getString(Tip.COUNTRY),data.getDouble(Tip.PRICE));
     }
+
+    public static boolean updateItem(Tip tip) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

@@ -61,4 +61,8 @@ public class SilverSoleController {
         data.next();
         return new SilverSole(data.getString(SilverSole.TYPE),data.getDouble(SilverSole.PRICE));
     }
+
+    public static boolean updateItem(SilverSole silverSole) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

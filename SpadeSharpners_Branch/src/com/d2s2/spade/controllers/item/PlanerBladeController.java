@@ -61,4 +61,10 @@ public class PlanerBladeController {
         return new PlanerBlade(data.getString(PlanerBlade.TYPE),data.getString(PlanerBlade.SIZE));
     }
 
+    public static boolean updateItem(PlanerBlade planerBlade) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    
+
 }

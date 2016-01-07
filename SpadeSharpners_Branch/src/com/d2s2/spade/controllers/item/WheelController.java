@@ -60,4 +60,8 @@ public class WheelController {
         data.next();
         return new Wheel(data.getString(Wheel.SIZE),data.getString(Wheel.COUNTRY),data.getDouble(Wheel.DIAMETER),data.getDouble(Wheel.HOLE));
     }
+
+    public static boolean updateItem(Wheel wheel) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

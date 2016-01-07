@@ -60,4 +60,10 @@ public class RouterCutterController {
         data.next();
         return new RouterCutter(data.getString(RouterCutter.SIZE));
     }
+
+    public static boolean updateItem(RouterCutter routerCutter) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    
 }

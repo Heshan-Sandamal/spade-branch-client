@@ -65,10 +65,11 @@ public class DBQueryGenerator {
         
         String a="UPDATE "+tableName+" SET ";
         for (int i = 0; i < columns.length; i++) {
-            a+=columns[i];
+            a+=columns[i]+="=?";
             if(i!=columns.length-1){
-                a+="=?";
+                a+=",";
             }
+            
         }
         return a+" WHERE " +beforeequal+"=?" ;
     }

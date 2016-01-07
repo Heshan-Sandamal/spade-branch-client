@@ -59,4 +59,8 @@ public class CutterController {
         data.next();
         return new Cutter(data.getString(Cutter.SIZE),data.getInt(Cutter.NOOFTIPS),data.getString(Cutter.THICKNESS));
     }
+
+    public static boolean updateItem(Cutter cutter) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

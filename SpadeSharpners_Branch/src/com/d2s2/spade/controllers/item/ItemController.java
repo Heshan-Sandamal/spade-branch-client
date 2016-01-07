@@ -8,6 +8,7 @@ import com.d2s2.spade.dbconnection.DBConnection;
 import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Item;
+import com.d2s2.spade.models.Kiyath;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,6 +77,17 @@ public class ItemController {
         ResultSet resultSet = DBHandler.getData(connection, sql,ob);
         resultSet.next();
         return resultSet.getInt("mycheck")==1 ? true:false;
+    }
+
+    static boolean updateItem(Item item) throws ClassNotFoundException, SQLException{
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.updateQuery(new String[]{Item.TYPE},Item.class.getSimpleName(), Item.CODE);
+        
+        
+        Object[] ob=new Object[]{item.getSaleType(),item.getCode()};
+        
+        
+        return DBHandler.setData(connection, sql,ob)>0 ? true:false;
     }
     
 }
