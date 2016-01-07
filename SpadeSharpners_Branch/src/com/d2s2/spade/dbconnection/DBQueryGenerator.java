@@ -46,4 +46,8 @@ public class DBQueryGenerator {
         return a+" FROM "+tableName+" WHERE " +beforeequal+"= '"+afterequal+"'" ;
     }
     
+    public static String checkExistencywhereQuery(String tableName, String beforeequal ){
+        return "SELECT EXISTS(SELECT 1 FROM "+tableName+" WHERE " +beforeequal+"=?) AS mycheck" ;
+    }
+    
 }

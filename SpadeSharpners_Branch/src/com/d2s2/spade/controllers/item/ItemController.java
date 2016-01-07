@@ -68,5 +68,14 @@ public class ItemController {
         
         return itemList;
     }
+
+    public static boolean checkExistence(String code) throws ClassNotFoundException, SQLException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql =DBQueryGenerator.checkExistencywhereQuery(Item.class.getSimpleName(), Item.CODE);
+        Object[] ob=new Object[]{code};
+        ResultSet resultSet = DBHandler.getData(connection, sql,ob);
+        resultSet.next();
+        return resultSet.getInt("mycheck")==1 ? true:false;
+    }
     
 }

@@ -24,22 +24,18 @@ import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
-import java.awt.Component;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
  * @author Heshan Sandamal
  */
-public class AddItemForm extends javax.swing.JDialog {
+public class UpdateItemForm extends javax.swing.JDialog {
 
     /**
      * Creates new form AddItemForm
@@ -50,43 +46,24 @@ public class AddItemForm extends javax.swing.JDialog {
     private AddItemCategoryForm addItemCategoryForm;
     private AddBrandForm brandForm;
 
-    public AddItemForm(java.awt.Frame parent, boolean modal) {
+    public UpdateItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         try {
             getAllBrands();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
             getAllItemCategories();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        try {
-            generateId();
-        } catch (ClassNotFoundException | SQLException ex) {
+        
 
-            if (ex.getMessage().equals("Illegal operation on empty result set.")) {
-                subIdTextField.setText("SB-0001");
-            } else {
-                JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
-            }
-        }
-        
-//        final JTextField editorComponent = (JTextField) itemCategoryCombo.getEditor().getEditorComponent(); 
-//        editorComponent.addKeyListener(new KeyAdapter() {
-//
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                itemCategoryCombo.showPopup();
-//                itemCategoryCombo.selectWithKeyChar(e.getKeyChar());               
-//            }
-//        
-//        });
-        
+
 
 
 
@@ -109,14 +86,16 @@ public class AddItemForm extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        salesTypeCombo = new javax.swing.JComboBox();
         subIdTextField = new javax.swing.JTextField();
         supplierCombo = new javax.swing.JComboBox();
         brandCombo = new javax.swing.JComboBox();
         itemCategoryCombo = new javax.swing.JComboBox();
         itemCategoryIdTextField = new javax.swing.JTextField();
         supplierIdTextField = new javax.swing.JTextField();
+        brandTextField = new javax.swing.JTextField();
+        codeTextField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         itemDetailsTab = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -174,18 +153,14 @@ public class AddItemForm extends javax.swing.JDialog {
         jLabel28 = new javax.swing.JLabel();
         jTextField13 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
-        brandTextField = new javax.swing.JTextField();
-        itemCategoryAddButton = new javax.swing.JButton();
-        brandAddButton = new javax.swing.JButton();
-        supplierAddButton = new javax.swing.JButton();
-        codeTextField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        salesTypeCombo = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Add Item Form");
+        jLabel6.setText("Update Item Form");
 
         jLabel5.setText("Code");
 
@@ -197,15 +172,13 @@ public class AddItemForm extends javax.swing.JDialog {
 
         jLabel8.setText("Sub ID");
 
-        jLabel4.setText("Sale/Non-Sale");
-
-        salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
-
         subIdTextField.setEditable(false);
 
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001", "S-0002" }));
+        supplierCombo.setEnabled(false);
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        brandCombo.setEnabled(false);
         brandCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 brandComboItemStateChanged(evt);
@@ -218,6 +191,7 @@ public class AddItemForm extends javax.swing.JDialog {
         });
 
         itemCategoryCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemCategoryCombo.setEnabled(false);
         itemCategoryCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 itemCategoryComboItemStateChanged(evt);
@@ -240,6 +214,23 @@ public class AddItemForm extends javax.swing.JDialog {
                 supplierIdTextFieldActionPerformed(evt);
             }
         });
+
+        brandTextField.setEditable(false);
+        brandTextField.setBackground(new java.awt.Color(255, 255, 255));
+
+        codeTextField.setBackground(new java.awt.Color(255, 255, 255));
+        codeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        codeTextField.setForeground(new java.awt.Color(51, 51, 255));
+        codeTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codeTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/d2s2/spade/view/images/scanner_add.png"))); // NOI18N
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Update Details"));
 
         itemDetailsTab.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -689,42 +680,45 @@ public class AddItemForm extends javax.swing.JDialog {
 
         itemDetailsTab.addTab("Other", jPanel10);
 
-        brandTextField.setEditable(false);
-        brandTextField.setBackground(new java.awt.Color(255, 255, 255));
+        salesTypeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sale", "Non-Sale" }));
 
-        itemCategoryAddButton.setText("Add");
-        itemCategoryAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemCategoryAddButtonActionPerformed(evt);
-            }
-        });
+        jLabel4.setText("Sale/Non-Sale");
 
-        brandAddButton.setText("Add");
-        brandAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                brandAddButtonActionPerformed(evt);
-            }
-        });
-
-        supplierAddButton.setText("Add");
-
-        codeTextField.setEditable(false);
-        codeTextField.setBackground(new java.awt.Color(255, 255, 255));
-        codeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        codeTextField.setForeground(new java.awt.Color(51, 51, 255));
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/d2s2/spade/view/images/scanner_add.png"))); // NOI18N
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(itemDetailsTab)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(salesTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(446, 446, 446)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salesTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(itemDetailsTab, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(itemDetailsTab)
-                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -737,10 +731,6 @@ public class AddItemForm extends javax.swing.JDialog {
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(supplierCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(salesTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -763,15 +753,11 @@ public class AddItemForm extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(codeTextField))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(brandAddButton)
-                            .addComponent(supplierAddButton)
-                            .addComponent(itemCategoryAddButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(97, 97, 97)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
-            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -783,7 +769,7 @@ public class AddItemForm extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -791,36 +777,29 @@ public class AddItemForm extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(itemCategoryCombo)
-                            .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(itemCategoryAddButton))
+                            .addComponent(itemCategoryIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(brandAddButton))
+                                .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(supplierCombo)
-                                .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(supplierAddButton))
+                                .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(subIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(salesTypeCombo)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(29, 29, 29))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(38, 38, 38)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(itemDetailsTab, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
 
@@ -834,33 +813,21 @@ public class AddItemForm extends javax.swing.JDialog {
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
         int selectedIndex = itemCategoryCombo.getSelectedIndex();
         try {
-            int indexOfTab=itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
-            if(indexOfTab!=-1){
+            int indexOfTab = itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
+            if (indexOfTab != -1) {
                 itemDetailsTab.setSelectedIndex(indexOfTab);
-            }else{
+            } else {
                 itemDetailsTab.setSelectedIndex(itemDetailsTab.indexOfTab("Other"));
             }
             itemDetailsTab.setEnabled(false);
-            
-            
+
+
         } catch (Exception e) {
         }
-        
-        
+
+
         if (selectedIndex != -1) {
             itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
-
-            try {
-                generateId();
-            } catch (ClassNotFoundException | SQLException ex) {
-
-                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
-                    subIdTextField.setText("SB-0001");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
-                }
-            }
-
 
             setCode();
 
@@ -875,17 +842,7 @@ public class AddItemForm extends javax.swing.JDialog {
             brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
 
 
-            try {
-                generateId();
-            } catch (ClassNotFoundException | SQLException ex) {
-
-                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
-                    subIdTextField.setText("SB-0001");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
-                }
-            }
-
+           
             //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
             if (!itemCategoryIdTextField.getText().isEmpty()) {
                 setCode();
@@ -898,14 +855,6 @@ public class AddItemForm extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_brandComboActionPerformed
 
-    private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
-
-        if(brandForm==null){
-            brandForm=new AddBrandForm(this, true);       
-        }
-        brandForm.setVisible(true);
-    }//GEN-LAST:event_brandAddButtonActionPerformed
-
     private void kiyathAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathAddButtonActionPerformed
         try {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Do you really want to add this Item??");
@@ -913,7 +862,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addKiyath = addKiyath();
                 if (addKiyath) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                    //generateId();
                     setCode();
 
                 }
@@ -932,7 +881,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addRouterCutter = addRouterCutter();
                 if (addRouterCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                    //generateId();
                     setCode();
 
                 }
@@ -951,7 +900,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addPlanerBlade = addPlanerBlade();
                 if (addPlanerBlade) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                    //generateId();
                     setCode();
 
                 }
@@ -970,7 +919,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addCutter = addCutter();
                 if (addCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                    //generateId();
                     setCode();
 
                 }
@@ -989,7 +938,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addTip = addTip();
                 if (addTip) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                   // generateId();
                     setCode();
 
                 }
@@ -1008,7 +957,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addwheel = addWheel();
                 if (addwheel) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                  //  generateId();
                     setCode();
 
                 }
@@ -1027,7 +976,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 boolean addSilverSole = addSilverSole();
                 if (addSilverSole) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
-                    generateId();
+                   // generateId();
                     setCode();
 
                 }
@@ -1039,22 +988,20 @@ public class AddItemForm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void itemCategoryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoryAddButtonActionPerformed
-
-        
-        if(addItemCategoryForm==null){
-            addItemCategoryForm=new AddItemCategoryForm(this, true); 
-        }       
-        addItemCategoryForm.setVisible(true);
-    }//GEN-LAST:event_itemCategoryAddButtonActionPerformed
-
     private void itemCategoryComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemCategoryComboKeyReleased
-        
     }//GEN-LAST:event_itemCategoryComboKeyReleased
 
     private void supplierIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIdTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_supplierIdTextFieldActionPerformed
+
+    private void codeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeTextFieldActionPerformed
+        try { 
+            getItemDetails();
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Unable to load details due to "+ex.getMessage());
+        }
+    }//GEN-LAST:event_codeTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1073,20 +1020,20 @@ public class AddItemForm extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItemForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddItemForm dialog = new AddItemForm(new javax.swing.JFrame(), true);
+                UpdateItemForm dialog = new UpdateItemForm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -1099,11 +1046,9 @@ public class AddItemForm extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCutterButton;
-    private javax.swing.JButton brandAddButton;
     private javax.swing.JComboBox brandCombo;
     private javax.swing.JTextField brandTextField;
     private javax.swing.JTextField codeTextField;
-    private javax.swing.JButton itemCategoryAddButton;
     private javax.swing.JComboBox itemCategoryCombo;
     private javax.swing.JTextField itemCategoryIdTextField;
     private javax.swing.JTabbedPane itemDetailsTab;
@@ -1146,6 +1091,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1170,7 +1116,6 @@ public class AddItemForm extends javax.swing.JDialog {
     private javax.swing.JButton routerCutterAddButton;
     private javax.swing.JComboBox salesTypeCombo;
     private javax.swing.JTextField subIdTextField;
-    private javax.swing.JButton supplierAddButton;
     private javax.swing.JComboBox supplierCombo;
     private javax.swing.JTextField supplierIdTextField;
     private javax.swing.JButton tipAddButton;
@@ -1222,28 +1167,7 @@ public class AddItemForm extends javax.swing.JDialog {
 
     }
 
-    private void generateId() throws ClassNotFoundException, SQLException {
-        item = new Item();
-
-        String supplierId = supplierIdTextField.getText();
-        String brandId = brandTextField.getText();
-        String itemCode = itemCategoryIdTextField.getText();
-
-        item.setSupplierId(supplierId);
-        item.setBrandId(brandId);
-        item.setItemCode(itemCode);
-
-        String lastId = ItemController.getLastSubId(item);          //SB-0001
-
-        lastId = lastId.substring(3);             //0001
-        int newIdVal = Integer.parseInt(lastId) + 1;
-
-        NumberFormat numberFormat = java.text.NumberFormat.getIntegerInstance();
-        numberFormat.setGroupingUsed(false);
-        numberFormat.setMinimumIntegerDigits(4);
-        String newId = "SB-" + numberFormat.format(newIdVal);
-        subIdTextField.setText(newId);
-    }
+    
 
     private void setCode() {
 
@@ -1375,7 +1299,7 @@ public class AddItemForm extends javax.swing.JDialog {
             getAllItemCategories();
             itemCategoryCombo.setSelectedItem(itemCategory);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1384,7 +1308,55 @@ public class AddItemForm extends javax.swing.JDialog {
             getAllBrands();
             brandCombo.setSelectedItem(brand);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------------
+    private void getItemDetails() throws ClassNotFoundException, SQLException {
+        String code = codeTextField.getText();
+        String[] splitCode = code.split(":");
+
+        String itemCode = "C-" + splitCode[0];
+        String brand = "B-" + splitCode[1];
+        String supplier = "S-" + splitCode[2];
+        String subId = "SB-" + splitCode[3];
+
+        boolean exists = ItemController.checkExistence(code);
+
+        if (exists) {
+            if (splitCode.length == 4) {
+
+                for (ItemCategory itemCategory : allCategories) {
+                    if (itemCategory.equals(itemCode)) {
+                        itemCategoryCombo.setSelectedItem(itemCategory.getCategory());
+                    }
+                }
+
+                for (Brand br : allBrands) {
+                    if (br.equals(brand)) {
+                        brandCombo.setSelectedItem(br.getBrand());
+                    }
+                }
+                
+                
+                //set supplier
+//                for (Suppleir sp : ) {
+//                    
+//                }
+                
+                subIdTextField.setText(subId);
+                
+                
+                
+                
+
+
+
+
+            }
+        }
+
+
     }
 }

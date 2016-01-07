@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -70,8 +71,6 @@ public class ViewItemForm extends javax.swing.JDialog {
 
 
         setTableSorter();
-
-        setSortKeys();
 
         setCancelActionToSearchTextField();
 
@@ -466,13 +465,8 @@ public class ViewItemForm extends javax.swing.JDialog {
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
-        String text = searchTextField.getText();
-
-        if (text.trim().length() == 0) {
-            sorter.setRowFilter(null);
-        } else {
-            sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text));
-        }
+        
+        filterTableInkeywordSearch();
 
 
     }//GEN-LAST:event_searchTextFieldKeyReleased
@@ -482,30 +476,8 @@ public class ViewItemForm extends javax.swing.JDialog {
 
     private void searchAdvanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAdvanceButtonActionPerformed
 
-        try {
-
-            ArrayList<RowFilter<Object, Object>> rfs = new ArrayList<RowFilter<Object, Object>>(2);
-
-            if (itemCategoryCheckBox.isSelected()) {
-                rfs.add(RowFilter.regexFilter("^(?i)" + itemCategoryCombo.getSelectedItem().toString(), 1));
-            }
-
-            if (brandCheckBox.isSelected()) {
-                rfs.add(RowFilter.regexFilter("^(?i)" + brandCombo.getSelectedItem().toString(), 2));
-            }
-
-            if (supplierCheckBox.isSelected()) {
-                rfs.add(RowFilter.regexFilter("^(?i)" + supplierCombo.getSelectedItem().toString(), 4));
-            }
-
-
-            RowFilter<Object, Object> af = RowFilter.andFilter(rfs);
-
-
-            sorter.setRowFilter(af);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }        // TODO add your handling code here:
+       filterDetailsInAdvancedSearch();
+        // TODO add your handling code here:
     }//GEN-LAST:event_searchAdvanceButtonActionPerformed
 
     private void keywordSerachRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordSerachRadioButtonActionPerformed
@@ -686,6 +658,8 @@ public class ViewItemForm extends javax.swing.JDialog {
         }
     }
 
+    
+    
     private void setCancelActionToSearchTextField() {
         searchTextField.setCancelAction(new ActionListener() {
             @Override
@@ -701,15 +675,62 @@ public class ViewItemForm extends javax.swing.JDialog {
         itemTable.setRowSorter(sorter);
     }
 
-    private void setSortKeys() {
-        sorter.setComparator(1, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.substring(0, Math.min(o1.length(), 5)).compareTo(itemCategoryCombo.getSelectedItem().toString().substring(0, Math.min(o2.length(), 5)));
-            }
-        });
+//    private void setSortKeys() {
+//        sorter.setComparator(1, new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                return o1.substring(0, Math.min(o1.length(), 5)).compareTo(itemCategoryCombo.getSelectedItem().toString().substring(0, Math.min(o2.length(), 5)));
+//            }
+//        });
+//
+//    }
+    
+    
+    
+    //------------------------------filter table -------------------------------------------------------------
 
+    private void filterDetailsInAdvancedSearch() {
+         try {
+
+            ArrayList<RowFilter<Object, Object>> rfs = new ArrayList<RowFilter<Object, Object>>(2);
+
+            if (itemCategoryCheckBox.isSelected()) {
+                rfs.add(RowFilter.regexFilter("^(?i)" + itemCategoryCombo.getSelectedItem().toString(), 1));
+            }
+
+            if (brandCheckBox.isSelected()) {
+                rfs.add(RowFilter.regexFilter("^(?i)" + brandCombo.getSelectedItem().toString(), 2));
+            }
+
+            if (supplierCheckBox.isSelected()) {
+                rfs.add(RowFilter.regexFilter("^(?i)" + supplierCombo.getSelectedItem().toString(), 4));
+            }
+
+
+            RowFilter<Object, Object> af = RowFilter.andFilter(rfs);
+
+
+            sorter.setRowFilter(af);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error occured during filtering due to "+e.getMessage());
+        }  
     }
+
+    private void filterTableInkeywordSearch() {
+        String text = searchTextField.getText();
+
+        if (text.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text));
+        }
+    }
+    
+    
+    //-----------------------------------------------------------------------------------------------------------------------
+
+    
+    //--------------------------------------------disable/enable fields according to search type--------------------- 
 
     private void keywordSearch() {
         if (keywordSerachRadioButton.isSelected()) {
@@ -739,6 +760,14 @@ public class ViewItemForm extends javax.swing.JDialog {
         }
 
     }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    
+    //---------------------------------------------set item details---------------------------------------------
 
     private void setItemDetails() throws ClassNotFoundException, SQLException {
         if (itemTable.getSelectedRow() != -1) {
@@ -825,4 +854,7 @@ public class ViewItemForm extends javax.swing.JDialog {
     private void setPluxDetails(String code) {
         dtmForItemDetailTable.setRowCount(0);
     }
-}
+    
+    //--------------------------------------------------------------------------------------------------------
+    
+    }
