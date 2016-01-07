@@ -14,6 +14,7 @@ import com.d2s2.spade.controllers.item.RouterCutterController;
 import com.d2s2.spade.controllers.item.SilverSoleController;
 import com.d2s2.spade.controllers.item.TipController;
 import com.d2s2.spade.controllers.item.WheelController;
+import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Brand;
 import com.d2s2.spade.models.Cutter;
 import com.d2s2.spade.models.Item;
@@ -23,14 +24,17 @@ import com.d2s2.spade.models.PlanerBlade;
 import com.d2s2.spade.models.Plux;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
+import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -46,10 +50,12 @@ public class UpdateItemForm extends javax.swing.JDialog {
     private ArrayList<ItemCategory> allCategories;
     private AddItemCategoryForm addItemCategoryForm;
     private AddBrandForm brandForm;
+    private ArrayList<Supplier> allSuppliers;
 
     public UpdateItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
         try {
             getAllBrands();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -61,15 +67,42 @@ public class UpdateItemForm extends javax.swing.JDialog {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        try {
+            getAllSuppliers();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        disableSelectedTab();
 
 
 
 
 
+    }
 
+    UpdateItemForm(ViewItemForm aThis, boolean b) {
+        super(aThis, b);
+        initComponents();
 
+        try {
+            getAllBrands();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        try {
+            getAllItemCategories();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            getAllSuppliers();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UpdateItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        disableSelectedTab();
     }
 
     /**
@@ -177,6 +210,11 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001", "S-0002" }));
         supplierCombo.setEnabled(false);
+        supplierCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                supplierComboItemStateChanged(evt);
+            }
+        });
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         brandCombo.setEnabled(false);
@@ -219,7 +257,6 @@ public class UpdateItemForm extends javax.swing.JDialog {
         brandTextField.setEditable(false);
         brandTextField.setBackground(new java.awt.Color(255, 255, 255));
 
-        codeTextField.setBackground(new java.awt.Color(255, 255, 255));
         codeTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         codeTextField.setForeground(new java.awt.Color(51, 51, 255));
         codeTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -696,8 +733,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(salesTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(salesTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -831,7 +867,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
         if (selectedIndex != -1) {
             itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
 
-            setCode();
+//            setCode();
 
 
 
@@ -842,13 +878,6 @@ public class UpdateItemForm extends javax.swing.JDialog {
         int selectedIndex = brandCombo.getSelectedIndex();
         if (selectedIndex != -1) {
             brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
-
-
-
-            //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
-            if (!itemCategoryIdTextField.getText().isEmpty()) {
-                setCode();
-            }
 
         }
     }//GEN-LAST:event_brandComboItemStateChanged
@@ -865,7 +894,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addKiyath) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     //generateId();
-                    setCode();
+                    // setCode();
 
                 }
             }
@@ -884,7 +913,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addRouterCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     //generateId();
-                    setCode();
+                    // setCode();
 
                 }
             }
@@ -903,7 +932,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addPlanerBlade) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     //generateId();
-                    setCode();
+                    //setCode();
 
                 }
             }
@@ -922,7 +951,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addCutter) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     //generateId();
-                    setCode();
+                    //setCode();
 
                 }
             }
@@ -941,7 +970,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addTip) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     // generateId();
-                    setCode();
+                    //setCode();
 
                 }
             }
@@ -960,7 +989,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addwheel) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     //  generateId();
-                    setCode();
+                    //setCode();
 
                 }
             }
@@ -979,7 +1008,7 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 if (addSilverSole) {
                     JOptionPane.showMessageDialog(this, "New item added successfully");
                     // generateId();
-                    setCode();
+                    //setCode();
 
                 }
             }
@@ -1004,6 +1033,21 @@ public class UpdateItemForm extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Unable to load details due to " + ex.getMessage());
         }
     }//GEN-LAST:event_codeTextFieldActionPerformed
+
+    private void supplierComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_supplierComboItemStateChanged
+        int selectedIndex = supplierCombo.getSelectedIndex();
+        if (selectedIndex != -1) {
+            supplierIdTextField.setText(allSuppliers.get(selectedIndex).getSupplierId());
+
+
+
+
+            //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
+            if (!itemCategoryIdTextField.getText().isEmpty()) {
+                //setCode();
+            }
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierComboItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1165,30 +1209,14 @@ public class UpdateItemForm extends javax.swing.JDialog {
             itemCategoryCombo.addItem(itemCategory.getCategory());
         }
 
-
-
     }
 
-    private void setCode() {
-
-        try {
-            String itemCode = itemCategoryIdTextField.getText();
-            String brandId = brandTextField.getText();
-            String supplierId = supplierIdTextField.getText();
-            String subId = subIdTextField.getText();
-
-            itemCode = itemCode.substring(2);
-            brandId = brandId.substring(2);
-            supplierId = supplierId.substring(2);
-            subId = subId.substring(3);
-
-            codeTextField.setText(itemCode + ":" + brandId + ":" + supplierId + ":" + subId);
-        } catch (Exception e) {
-            codeTextField.setText("invalid");
-//            jPanel1.setEnabled(false);
+    private void getAllSuppliers() throws ClassNotFoundException, SQLException {
+        allSuppliers = SupplierController.getAllSuppliers();
+        supplierCombo.removeAllItems();
+        for (Supplier supplier : allSuppliers) {
+            supplierCombo.addItem(supplier.getName());
         }
-
-
     }
 
     //---------------------------------------------------------------------------------------------------------------
@@ -1313,20 +1341,19 @@ public class UpdateItemForm extends javax.swing.JDialog {
     }
 
     //-------------------------------------------------------------------------------------------------------------------------
+    
     private void getItemDetails() throws ClassNotFoundException, SQLException {
         String code = codeTextField.getText();
         String[] splitCode = code.split(":");
-
-        String itemCode = "C-" + splitCode[0];
-        String brand = "B-" + splitCode[1];
-        String supplier = "S-" + splitCode[2];
-        String subId = "SB-" + splitCode[3];
 
         boolean exists = ItemController.checkExistence(code);
 
         if (exists) {
             if (splitCode.length == 4) {
-
+                String itemCode = "C-" + splitCode[0];
+                String brand = "B-" + splitCode[1];
+                String supplier = "S-" + splitCode[2];
+                String subId = "SB-" + splitCode[3];
                 for (ItemCategory itemCategory : allCategories) {
                     if (itemCategory.equals(itemCode)) {
                         itemCategoryCombo.setSelectedItem(itemCategory.getCategory());
@@ -1341,13 +1368,15 @@ public class UpdateItemForm extends javax.swing.JDialog {
 
 
                 //set supplier
-//                for (Suppleir sp : ) {
-//                    
-//                }
+                for (Supplier sp : allSuppliers) {
+                    if (sp.equals(supplier)) {
+                        supplierCombo.setSelectedItem(sp.getName());
+                    }
+                }
 
                 subIdTextField.setText(subId);
-                
-                String category=itemCategoryCombo.getSelectedItem().toString();
+
+                String category = itemCategoryCombo.getSelectedItem().toString();
 
 
                 if (category.equals(Kiyath.class.getSimpleName())) {
@@ -1365,18 +1394,38 @@ public class UpdateItemForm extends javax.swing.JDialog {
                 } else if (category.equals(Wheel.WHEEL)) {
                     Wheel detailsOfItem = WheelController.getDetailsOfItem(code);
                 } else if (category.equals(Plux.PLUX)) {
-                   
                 }
 
 
-
-
-
-
+                enableSelectedTab();
 
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Could not find item with " + code);
+            disableSelectedTab();
+
+
         }
 
 
     }
+
+    private void disableSelectedTab() {
+        for (Component component : ((JPanel) itemDetailsTab.getSelectedComponent()).getComponents()) {
+            component.setEnabled(false);
+        }
+    }
+
+    private void enableSelectedTab() {
+        for (Component component : ((JPanel) itemDetailsTab.getSelectedComponent()).getComponents()) {
+            component.setEnabled(true);
+        }
+    }
+    
+    
+    public void setCodeToGetDetails(String code) throws ClassNotFoundException, SQLException{
+        codeTextField.setText(code);
+        getItemDetails();
+    }
+    
 }

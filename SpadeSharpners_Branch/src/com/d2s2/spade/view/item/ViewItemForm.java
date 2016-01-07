@@ -55,6 +55,7 @@ public class ViewItemForm extends javax.swing.JDialog {
      */
     private TableRowSorter<TableModel> sorter;
     private final DefaultTableModel dtmForItemDetailTable;
+    private UpdateItemForm updateItemDetail;
 
     public ViewItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -120,6 +121,7 @@ public class ViewItemForm extends javax.swing.JDialog {
         keywordSearchPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         searchTextField = new org.jdesktop.swingx.JXSearchField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -159,6 +161,7 @@ public class ViewItemForm extends javax.swing.JDialog {
                 "Code", "Category", "Brand", "Supplier", "Supplier Name", "Description"
             }
         ));
+        itemTable.setEditable(false);
         itemTable.setShowGrid(true);
         itemTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -377,6 +380,13 @@ public class ViewItemForm extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -386,10 +396,6 @@ public class ViewItemForm extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(itemPane)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(keywordSerachRadioButton)
                             .addComponent(keywordSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -397,7 +403,15 @@ public class ViewItemForm extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(advanceSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(advancedSearchButton))
-                        .addGap(0, 163, Short.MAX_VALUE)))
+                        .addGap(0, 163, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(165, 165, 165)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -422,7 +436,10 @@ public class ViewItemForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(detailPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
 
@@ -466,7 +483,7 @@ public class ViewItemForm extends javax.swing.JDialog {
     }//GEN-LAST:event_searchTextFieldActionPerformed
 
     private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
-        
+
         filterTableInkeywordSearch();
 
 
@@ -477,7 +494,7 @@ public class ViewItemForm extends javax.swing.JDialog {
 
     private void searchAdvanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAdvanceButtonActionPerformed
 
-       filterDetailsInAdvancedSearch();
+        filterDetailsInAdvancedSearch();
         // TODO add your handling code here:
     }//GEN-LAST:event_searchAdvanceButtonActionPerformed
 
@@ -514,6 +531,20 @@ public class ViewItemForm extends javax.swing.JDialog {
     private void itemTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_itemTablePropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_itemTablePropertyChange
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (itemTable.getSelectedRow() != -1) {
+            if (updateItemDetail == null) {
+                updateItemDetail = new UpdateItemForm(this, true);
+            }
+            try {
+                updateItemDetail.setCodeToGetDetails(itemTable.getValueAt(itemTable.getSelectedRow(), 0).toString());
+            } catch (    ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(ViewItemForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            updateItemDetail.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -568,6 +599,7 @@ public class ViewItemForm extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXTable itemDetailTable;
     private javax.swing.JScrollPane itemPane;
     private org.jdesktop.swingx.JXTable itemTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -659,8 +691,6 @@ public class ViewItemForm extends javax.swing.JDialog {
         }
     }
 
-    
-    
     private void setCancelActionToSearchTextField() {
         searchTextField.setCancelAction(new ActionListener() {
             @Override
@@ -685,13 +715,9 @@ public class ViewItemForm extends javax.swing.JDialog {
 //        });
 //
 //    }
-    
-    
-    
     //------------------------------filter table -------------------------------------------------------------
-
     private void filterDetailsInAdvancedSearch() {
-         try {
+        try {
 
             ArrayList<RowFilter<Object, Object>> rfs = new ArrayList<RowFilter<Object, Object>>(2);
 
@@ -713,8 +739,8 @@ public class ViewItemForm extends javax.swing.JDialog {
 
             sorter.setRowFilter(af);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "error occured during filtering due to "+e.getMessage());
-        }  
+            JOptionPane.showMessageDialog(this, "error occured during filtering due to " + e.getMessage());
+        }
     }
 
     private void filterTableInkeywordSearch() {
@@ -726,13 +752,9 @@ public class ViewItemForm extends javax.swing.JDialog {
             sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text));
         }
     }
-    
-    
+
     //-----------------------------------------------------------------------------------------------------------------------
-
-    
     //--------------------------------------------disable/enable fields according to search type--------------------- 
-
     private void keywordSearch() {
         if (keywordSerachRadioButton.isSelected()) {
             sorter.setRowFilter(null);
@@ -761,15 +783,9 @@ public class ViewItemForm extends javax.swing.JDialog {
         }
 
     }
-    
-    
-    //-------------------------------------------------------------------------------------------------------------------------------------
-    
-    
-    
-    
-    //---------------------------------------------set item details---------------------------------------------
 
+    //-------------------------------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------set item details---------------------------------------------
     private void setItemDetails() throws ClassNotFoundException, SQLException {
         if (itemTable.getSelectedRow() != -1) {
             String category = itemTable.getValueAt(itemTable.getSelectedRow(), 1).toString();
@@ -855,7 +871,5 @@ public class ViewItemForm extends javax.swing.JDialog {
     private void setPluxDetails(String code) {
         dtmForItemDetailTable.setRowCount(0);
     }
-    
     //--------------------------------------------------------------------------------------------------------
-    
-    }
+}

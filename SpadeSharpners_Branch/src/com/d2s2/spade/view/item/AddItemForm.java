@@ -14,6 +14,7 @@ import com.d2s2.spade.controllers.item.RouterCutterController;
 import com.d2s2.spade.controllers.item.SilverSoleController;
 import com.d2s2.spade.controllers.item.TipController;
 import com.d2s2.spade.controllers.item.WheelController;
+import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Brand;
 import com.d2s2.spade.models.Cutter;
 import com.d2s2.spade.models.Item;
@@ -22,6 +23,7 @@ import com.d2s2.spade.models.Kiyath;
 import com.d2s2.spade.models.PlanerBlade;
 import com.d2s2.spade.models.RouterCutter;
 import com.d2s2.spade.models.SilverSole;
+import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.Tip;
 import com.d2s2.spade.models.Wheel;
 import java.awt.Component;
@@ -49,6 +51,7 @@ public class AddItemForm extends javax.swing.JDialog {
     private ArrayList<ItemCategory> allCategories;
     private AddItemCategoryForm addItemCategoryForm;
     private AddBrandForm brandForm;
+    private ArrayList<Supplier> allSuppliers;
 
     public AddItemForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -64,6 +67,12 @@ public class AddItemForm extends javax.swing.JDialog {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        try {
+            getAllSuppliers();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
         try {
             generateId();
@@ -75,7 +84,7 @@ public class AddItemForm extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
             }
         }
-        
+
 //        final JTextField editorComponent = (JTextField) itemCategoryCombo.getEditor().getEditorComponent(); 
 //        editorComponent.addKeyListener(new KeyAdapter() {
 //
@@ -86,7 +95,7 @@ public class AddItemForm extends javax.swing.JDialog {
 //            }
 //        
 //        });
-        
+
 
 
 
@@ -204,6 +213,11 @@ public class AddItemForm extends javax.swing.JDialog {
         subIdTextField.setEditable(false);
 
         supplierCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "S-0001", "S-0002" }));
+        supplierCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                supplierComboItemStateChanged(evt);
+            }
+        });
 
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         brandCombo.addItemListener(new java.awt.event.ItemListener() {
@@ -834,19 +848,19 @@ public class AddItemForm extends javax.swing.JDialog {
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
         int selectedIndex = itemCategoryCombo.getSelectedIndex();
         try {
-            int indexOfTab=itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
-            if(indexOfTab!=-1){
+            int indexOfTab = itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
+            if (indexOfTab != -1) {
                 itemDetailsTab.setSelectedIndex(indexOfTab);
-            }else{
+            } else {
                 itemDetailsTab.setSelectedIndex(itemDetailsTab.indexOfTab("Other"));
             }
             itemDetailsTab.setEnabled(false);
-            
-            
+
+
         } catch (Exception e) {
         }
-        
-        
+
+
         if (selectedIndex != -1) {
             itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
 
@@ -900,8 +914,8 @@ public class AddItemForm extends javax.swing.JDialog {
 
     private void brandAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandAddButtonActionPerformed
 
-        if(brandForm==null){
-            brandForm=new AddBrandForm(this, true);       
+        if (brandForm == null) {
+            brandForm = new AddBrandForm(this, true);
         }
         brandForm.setVisible(true);
     }//GEN-LAST:event_brandAddButtonActionPerformed
@@ -1041,24 +1055,50 @@ public class AddItemForm extends javax.swing.JDialog {
 
     private void itemCategoryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoryAddButtonActionPerformed
 
-        
-        if(addItemCategoryForm==null){
-            addItemCategoryForm=new AddItemCategoryForm(this, true); 
-        }       
+
+        if (addItemCategoryForm == null) {
+            addItemCategoryForm = new AddItemCategoryForm(this, true);
+        }
         addItemCategoryForm.setVisible(true);
     }//GEN-LAST:event_itemCategoryAddButtonActionPerformed
 
     private void itemCategoryComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemCategoryComboKeyReleased
-        
     }//GEN-LAST:event_itemCategoryComboKeyReleased
 
     private void supplierIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIdTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_supplierIdTextFieldActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void supplierComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_supplierComboItemStateChanged
+        int selectedIndex = supplierCombo.getSelectedIndex();
+        if (selectedIndex != -1) {
+            supplierIdTextField.setText(allSuppliers.get(selectedIndex).getSupplierId());
+
+
+            try {
+                generateId();
+            } catch (ClassNotFoundException | SQLException ex) {
+
+                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
+                    subIdTextField.setText("SB-0001");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
+                }
+            }
+
+            //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
+            if (!itemCategoryIdTextField.getText().isEmpty()) {
+                setCode();
+            }
+        }
+            // TODO add your handling code here:
+    }//GEN-LAST:event_supplierComboItemStateChanged
+
+        /**
+         * @param args the command line arguments
+         */
+    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1218,8 +1258,14 @@ public class AddItemForm extends javax.swing.JDialog {
             itemCategoryCombo.addItem(itemCategory.getCategory());
         }
 
+    }
 
-
+    private void getAllSuppliers() throws ClassNotFoundException, SQLException {
+        allSuppliers = SupplierController.getAllSuppliers();
+        supplierCombo.removeAllItems();
+        for (Supplier supplier : allSuppliers) {
+            supplierCombo.addItem(supplier.getName());
+        }
     }
 
     private void generateId() throws ClassNotFoundException, SQLException {
