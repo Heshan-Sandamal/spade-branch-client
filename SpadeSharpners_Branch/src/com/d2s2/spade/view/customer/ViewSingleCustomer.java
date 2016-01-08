@@ -30,7 +30,7 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
     private JScrollPane scrollpane;
     private JTable phonenumberTable;
     private DefaultTableModel defaulttablemodel;
-    private ArrayList<String> newtelephoneNoList;
+    private ArrayList<String> newTelephoneNoList;
     /**
      * Creates new form ViewSingleCustomer
      */
@@ -120,6 +120,11 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +209,19 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         saveToDB();
         
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            deleteCustomer();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to delete due to CLASS deleteButton "+ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to delete due to SQL deleteButton "+ex.getMessage());
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,14 +330,31 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
     }
     
     private void saveToDB(){
+        newTelephoneNoList = new ArrayList<>();
         String updatedName = NameTextField.getText();
         String updatedAddress = AddressTextField.getText();
         for (int i = 0; i < defaulttablemodel.getRowCount(); i++) {
-            defaulttablemodel.getValueAt(i, 0);
+            if (defaulttablemodel.getValueAt(i, 0).toString()!=null){
+               newTelephoneNoList.add(defaulttablemodel.getValueAt(i, 0).toString());  
+            }      
+        }
+        if (addNewPhonTextbox.getText()!=null){
+            newTelephoneNoList.add(addNewPhonTextbox.getText());
         }
         
-        System.out.println(phonenumberTable.getEditingColumn());
+        System.out.println(phonenumberTable.getEditingColumn());    
+    }
+    
+    private void deleteCustomer()throws ClassNotFoundException, SQLException{
+        boolean dbChanged = false;
+        dbChanged = CustomerController.deleteCustomer(customer);
         
+        if (dbChanged==true) {
+            JOptionPane.showMessageDialog(this, "Delete "+customer.getCustomerId()+"successfully");
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Unable to delete deleteCustomer");
+        }
     }
 
 }

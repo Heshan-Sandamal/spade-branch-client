@@ -74,4 +74,8 @@ public class DBQueryGenerator {
         return a+" WHERE " +beforeequal+"=?" ;
     }
     
+    public static String deleteQuery(String tablename, String columnName){
+        return "DELETE FROM " +tablename+ " WHERE " +columnName+ "=?";
+    }
+    
 }
