@@ -8,12 +8,15 @@ package com.d2s2.spade.view.supplier;
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.SupplierTelephone;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -71,14 +74,15 @@ public class ViewSupplier extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Keyword"));
 
+        idSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                idSearchFieldKeyReleased(evt);
+            }
+        });
+
         IDrequestLabel.setText("Type keyword here");
 
         searchButton.setText("Search");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,7 +143,7 @@ public class ViewSupplier extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -181,13 +185,13 @@ public class ViewSupplier extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(227, 227, 227)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(89, 89, 89)
                         .addComponent(jLabel1)))
-                .addContainerGap(802, Short.MAX_VALUE))
+                .addContainerGap(1011, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,8 +207,8 @@ public class ViewSupplier extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -213,7 +217,7 @@ public class ViewSupplier extends javax.swing.JDialog {
 
     private void mouseClickHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClickHandler
         
-        System.out.println("Action");
+        
     }//GEN-LAST:event_mouseClickHandler
 
     private void supplierDetailsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierDetailsTableMouseClicked
@@ -229,12 +233,14 @@ public class ViewSupplier extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        setTableSorter();
+       
     }//GEN-LAST:event_supplierDetailsTableMouseClicked
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchButtonActionPerformed
+    private void idSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idSearchFieldKeyReleased
+        filterTableInkeywordSearch();
+        
+    }//GEN-LAST:event_idSearchFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -304,6 +310,7 @@ public class ViewSupplier extends javax.swing.JDialog {
     private Object row[]  = new Object[4];
     private DefaultTableModel contactModel = new DefaultTableModel();
     private DefaultTableModel model = new DefaultTableModel();
+    private TableRowSorter<TableModel> sorter;
     private void setModel(DefaultTableModel newmodel){
         supplierDetailsTable.setModel(model);
 
@@ -331,6 +338,21 @@ public class ViewSupplier extends javax.swing.JDialog {
         }
         return model;
     }
+       private void filterTableInkeywordSearch() {
+        String text = idSearchField.getText();
+         setTableSorter();
+       if (text.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(sorter.getRowFilter().regexFilter("^(?i)" + text));
+        }
+    }
+        private void setTableSorter() {
+        sorter = new TableRowSorter<>(supplierDetailsTable.getModel());
+        supplierDetailsTable.setRowSorter(sorter);
+    }
+      
+
    
     
 }
