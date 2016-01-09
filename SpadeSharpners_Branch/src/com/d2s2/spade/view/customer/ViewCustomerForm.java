@@ -58,7 +58,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         phoneNoTableModel.setColumnIdentifiers(phoneNoTableHeders);
         phoneNumberTable.setModel(phoneNoTableModel);
         phoneNoTableModel.addRow(new Object[]{""});
-        phoneNoTableModel.addRow(new Object[]{""});
+        //phoneNoTableModel.addRow(new Object[]{""});
         
         tableHeaders = new String[]{"CustomerID", "Name", "Balance"};
         defaulttablemodel = new DefaultTableModel(0, 0);
@@ -84,7 +84,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
-                    customerTableMouseClicked();
+                    customerTableMouseClicked(evt);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
                     
@@ -426,11 +426,15 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         selectedRow = -1;
     }
     
-    private void customerTableMouseClicked() throws ClassNotFoundException, SQLException{
+    private void customerTableMouseClicked(java.awt.event.MouseEvent evt) throws ClassNotFoundException, SQLException{
         //phoneNoTableModel.removeRow(phoneNoTableModel.getRowCount());
-        for (int i = 0; i < phoneNoTableModel.getRowCount(); i++) {
+        for (int i = phoneNoTableModel.getRowCount()-1; i>=0 ; i--) {
             phoneNoTableModel.removeRow(i);
         }
+        
+        
+        
+        
         String selectedId = customerTable.getValueAt(customerTable.getSelectedRow(), 0).toString();
         Customer selectedCustomer = null;        
         for (int i = 0; i < customerList.size(); i++) {
@@ -457,6 +461,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         for (String tp: telephoneListString){
             phoneNoTableModel.addRow(new Object[]{tp});
         }
+        
     }
 
     private void setTableSorter() {
