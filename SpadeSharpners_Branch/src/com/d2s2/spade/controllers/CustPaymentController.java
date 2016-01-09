@@ -33,15 +33,17 @@ public class CustPaymentController {
         Connection connection = DBConnection.getDBConnection().getConnection();  
         String paymentId=custPayment.getPaymentId();
         String customerId=custPayment.getCustomerId();
-        paymentType type=custPayment.getType();
+        String type=custPayment.getType();
         double discount=custPayment.getDiscount();
         double amount=custPayment.getAmount();
-        Date date=custPayment.getDate();
+        String date=custPayment.getDate();
+        
+        System.out.println(type);
         
         try{
             connection.setAutoCommit(false);
             String sqlAddPayment=DBQueryGenerator.insertQuery(CustPayment.class.getSimpleName(), 6);
-            int rowsAffected=DBHandler.setData(connection, sqlAddPayment, new Object[]{paymentId,customerId,type,discount,amount,date});    
+            int rowsAffected=DBHandler.setData(connection, sqlAddPayment, new Object[]{paymentId,customerId,type,amount,discount,date});    
             if (rowsAffected>0) {
                 // Success
                 connection.commit();
