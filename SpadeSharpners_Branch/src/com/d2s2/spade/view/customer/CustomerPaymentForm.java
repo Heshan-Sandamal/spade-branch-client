@@ -46,21 +46,21 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
         try {
             getAllCustomerDataBasic();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             setpaymentId();
         } catch (ClassNotFoundException | SQLException ex) {
-            
-            if(ex.getMessage().equals("Illegal operation on empty result set.")){
+
+            if (ex.getMessage().equals("Illegal operation on empty result set.")) {
                 paymentIdTextField.setText("P-00001");
-            }else{
-                JOptionPane.showMessageDialog(this,"Error in cce"+ex.getMessage());
+            } else {
+                JOptionPane.showMessageDialog(this, "Error in cce" + ex.getMessage());
             }
         }
         configureRadioButtons();
@@ -204,6 +204,8 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             }
         });
 
+        chequeNoTextField.setEnabled(false);
+
         jLabel11.setText("cheque No:");
 
         jLabel12.setText("Bank:");
@@ -212,9 +214,16 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
         jLabel14.setText("exp Date:");
 
+        statusTextField.setEnabled(false);
+
         jLabel15.setText("status:");
 
+        issueDatePicker.setEnabled(false);
+
+        expiryDatePicker.setEnabled(false);
+
         BankComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        BankComboBox.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -647,15 +656,15 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
     private void confirmPayment() {
         // if the input data is validated then the form is submitted
-        CustPayment custPayment=prepareCustPayment();
-        CustDebt custDebt=prepareCustDebt();
+        CustPayment custPayment = prepareCustPayment();
+        CustDebt custDebt = prepareCustDebt();
         try {
-            CustPaymentController.addPaymentInfo(custPayment);
+            //CustPaymentController.addPaymentInfo(custPayment);
             CustDebtController.updateDebtInfo(custDebt);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private void calculateFinalPayment() {
@@ -669,7 +678,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             }
             double discountPercentage = Double.valueOf((String.valueOf(discountSpinner.getValue())));
             double netAmount = grossAmount - grossAmount * (discountPercentage / 100);
-            grossAmountTextField.setText(String.valueOf(netAmount));
+            netAmountTextField.setText(String.valueOf(netAmount));
             System.out.println(netAmount);
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -729,21 +738,32 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         paymentIdTextField.setText(newId);
 
     }
-    private CustPayment prepareCustPayment(){
-        CustPayment custPayment=new CustPayment();
+
+    private CustPayment prepareCustPayment() {
+        CustPayment custPayment = new CustPayment();
         custPayment.setAmount(Double.parseDouble(netAmountTextField.getText()));
         custPayment.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
-        custPayment.setDate((Date) paymentDatePicker.getDate());
-        custPayment.setDiscount(Double.parseDouble((String) discountSpinner.getValue()));
-        custPayment.setType(paymentType.csh);
+        custPayment.setDate(getSQLdate());
+        custPayment.setDiscount(Double.parseDouble(String.valueOf( discountSpinner.getValue())));
+        custPayment.setType(paymentType.cs);
         custPayment.setPaymentId(paymentIdTextField.getText());
         return custPayment;
     }
 
     private CustDebt prepareCustDebt() {
-        CustDebt custDebt=new CustDebt();
+        CustDebt custDebt = new CustDebt();
         custDebt.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
-        custDebt.setDebt(Double.valueOf(debtAmountTextField.getText())-Double.valueOf(netAmountTextField.getText()));
+        custDebt.setDebt(Double.valueOf(debtAmountTextField.getText()) - Double.valueOf(netAmountTextField.getText()));
         return custDebt;
     }
+
+    private String getSQLdate() {
+
+        java.text.SimpleDateFormat sdf
+                = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String date = sdf.format(paymentDatePicker.getDate());
+        return date;
+    }
+
 }

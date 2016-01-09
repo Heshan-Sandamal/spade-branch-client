@@ -9,6 +9,7 @@ package com.d2s2.spade.models;
  *
  * @author Sineth
  */
-public enum paymentType {
-    csh,chq;
+public class paymentType {
+    public static final String cs="cs";
+    public static final String cq="cq";
 }

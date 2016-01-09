@@ -15,10 +15,10 @@ import com.d2s2.spade.models.paymentType;
 public class CustPayment {
     private String paymentId;
     private String customerId;
-    private paymentType type;
+    private String type;
     private double discount;
     private double amount;
-    private Date date;
+    private String date;
     
     public static final String PAYMENTID="paymentId";
     public static final String CUSTOMERID="customerId"; 
@@ -43,11 +43,11 @@ public class CustPayment {
         this.customerId = customerId;
     }
 
-    public paymentType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(paymentType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -67,11 +67,11 @@ public class CustPayment {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     
