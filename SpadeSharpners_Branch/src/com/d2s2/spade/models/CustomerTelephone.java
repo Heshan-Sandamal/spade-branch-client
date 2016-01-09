@@ -11,6 +11,9 @@ package com.d2s2.spade.models;
 public class CustomerTelephone {
     private String customerId;
     private String telNo;
+    
+    public static final String CUSTOMERID = "customerId";
+    public static final String TELNO = "telNo";
 
     public CustomerTelephone(String customerId, String telNo) {
         this.customerId = customerId;

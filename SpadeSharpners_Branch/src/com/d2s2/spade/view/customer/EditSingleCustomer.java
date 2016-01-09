@@ -23,7 +23,7 @@ import org.jdesktop.swingx.JXTable;
  *
  * @author tdiluksha
  */
-public class ViewSingleCustomer extends javax.swing.JDialog {
+public class EditSingleCustomer extends javax.swing.JDialog {
     
     private Customer customer;
     private ArrayList<String> telephoneNo;
@@ -34,7 +34,7 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
     /**
      * Creates new form ViewSingleCustomer
      */
-    public ViewSingleCustomer(java.awt.Dialog parent, boolean modal, Customer customer) {
+    public EditSingleCustomer(java.awt.Dialog parent, boolean modal, Customer customer) {
         super(parent, modal);
         initComponents();
         this.customer = customer;
@@ -66,15 +66,15 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         try {
             showPhoneNo();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Unable to view due to CLASS "+ex.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Unable to view due to SQL "+ex.getMessage());
         }
     }
     
-    public ViewSingleCustomer(java.awt.Frame parent, boolean modal, Customer customer) {
+    public EditSingleCustomer(java.awt.Frame parent, boolean modal, Customer customer) {
     
         super(parent, modal);
         initComponents();
@@ -215,10 +215,10 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
             // TODO add your handling code here:
             deleteCustomer();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Unable to delete due to CLASS deleteButton "+ex.getMessage());
         } catch (SQLException ex) {
-            Logger.getLogger(ViewSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Unable to delete due to SQL deleteButton "+ex.getMessage());
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -240,13 +240,13 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditSingleCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -254,6 +254,20 @@ public class ViewSingleCustomer extends javax.swing.JDialog {
         /*java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ViewSingleCustomer dialog = new ViewSingleCustomer(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                EditSingleCustomer dialog = new EditSingleCustomer(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
