@@ -3,29 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/ViewCustomerForm.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBQueryGenerator.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustDebtController.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBHandler.java</file>
-            <file>file:/media/tdiluksha/626047056046E001/Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/ViewSingleCustomer.java</file>
-=======
-<<<<<<< HEAD
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBHandler.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/DeleteSupplier.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/item/ViewItemForm.java</file>
-            <file>file:/D:/D2S2_Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/ViewSupplier.java</file>
-=======
-            <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBQueryGenerator.java</file>
             <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/CustomerPaymentForm.java</file>
+            <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/paymentType.java</file>
             <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustPaymentController.java</file>
             <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/CustPayment.java</file>
+            <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
             <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBHandler.java</file>
             <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustDebtController.java</file>
-            <file>file:/E:/Junk/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
->>>>>>> 2029eabdefb3b2131d8decd0fc7ba443d0db4f24
->>>>>>> a0d7a3e15066b3ce4498887ee11155ad15452663
         </group>
     </open-files>
 </project-private>
