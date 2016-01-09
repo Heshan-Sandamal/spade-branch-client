@@ -131,4 +131,19 @@ public class CustomerController {
         return resultSet.getString("paymentId");
     }
     
+    public static boolean deleteCustomer(Customer customer) throws ClassNotFoundException, SQLException{
+        int executed = 0;
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.deleteQuery("Customer", "customerId");
+        executed = DBHandler.deleteData(connection, sql, new Object[]{ customer.getCustomerId()});
+        
+        if (executed==0){
+            return false;
+        }
+        else{
+            return true;
+        }
+        
+    }
+    
 }

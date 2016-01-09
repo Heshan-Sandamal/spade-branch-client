@@ -32,6 +32,15 @@ public class DBHandler {
         return res;        
     }
     
+    /*public static int deleteData(Connection connection, String query, Object[] ob)throws SQLException{
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (int i = 0; i < ob.length; i++) {
+            preparedStatement.setObject(i+1, ob[i]);
+        }
+        int res = preparedStatement.executeUpdate();
+        return res;
+    }*/
+    
     public static ResultSet getData(Connection connection,String query,Object[] ob) throws SQLException{
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         for (int i = 0; i < ob.length; i++) {
@@ -68,5 +77,14 @@ public class DBHandler {
         int res = preparedStatement.executeUpdate();
         return res;
     }
-    
+    public static int deleteData(Connection connection,String query, Object[] ob) throws SQLException{
+        PreparedStatement preparedStatement = 
+                        connection.prepareStatement(query);
+        for (int i = 0; i < ob.length; i++) {
+            preparedStatement.setObject(i+1, ob[i]);
+        }
+        System.out.println(query);
+        int res = preparedStatement.executeUpdate();
+        return res;
+    }
 }
