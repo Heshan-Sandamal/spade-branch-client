@@ -434,7 +434,6 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         
         
         
-        
         String selectedId = customerTable.getValueAt(customerTable.getSelectedRow(), 0).toString();
         Customer selectedCustomer = null;        
         for (int i = 0; i < customerList.size(); i++) {
