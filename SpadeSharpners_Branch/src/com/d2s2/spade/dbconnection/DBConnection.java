@@ -28,6 +28,7 @@ public class DBConnection {
        connection = DriverManager.getConnection("jdbc:mysql://localhost/spadeBranchDB", "root", "19930417");
 
 
+
         
     }
 

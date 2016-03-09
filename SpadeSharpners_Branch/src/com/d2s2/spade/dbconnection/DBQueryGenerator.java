@@ -81,4 +81,5 @@ public class DBQueryGenerator {
         return "DELETE FROM " +tablename+ " WHERE " +columnName+ "=?";
     }
     
+    
 }

@@ -6,7 +6,6 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -25,6 +24,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="126" max="32767" attributes="0"/>
+<<<<<<< HEAD
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jButton4" max="32767" attributes="0"/>
                   <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
@@ -35,6 +35,20 @@
                   <Component id="addSupplierButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="viewSupplierButton" max="32767" attributes="0"/>
                   <Component id="jButton3" max="32767" attributes="0"/>
+=======
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jButton4" max="32767" attributes="0"/>
+                      <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jButton6" alignment="0" max="32767" attributes="0"/>
+                      <Component id="viewCustomerButton" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="addSupplierButton" alignment="0" max="32767" attributes="0"/>
+                      <Component id="viewSupplierButton" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="supplierOrderButtion" min="-2" pref="112" max="-2" attributes="0"/>
+>>>>>>> e60542d119aa155ded9adb475f7d0524cad4152e
               </Group>
               <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
           </Group>
@@ -59,9 +73,15 @@
               <Component id="jButton5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="viewSupplierButton" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
               <EmptySpace pref="11" max="32767" attributes="0"/>
               <Component id="jButton3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+=======
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="supplierOrderButtion" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+>>>>>>> e60542d119aa155ded9adb475f7d0524cad4152e
           </Group>
       </Group>
     </DimensionLayout>
@@ -131,6 +151,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewSupplierButtonActionPerformed"/>
       </Events>
     </Component>
+<<<<<<< HEAD
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Update Payment"/>
@@ -138,6 +159,12 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
       </Events>
+=======
+    <Component class="javax.swing.JButton" name="supplierOrderButtion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Supplier Order"/>
+      </Properties>
+>>>>>>> e60542d119aa155ded9adb475f7d0524cad4152e
     </Component>
   </SubComponents>
 </Form>

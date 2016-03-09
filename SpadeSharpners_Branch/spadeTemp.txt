@@ -67,18 +67,11 @@ CREATE TABLE SupplierBranch(
 	branchId int NOT NULL AUTO_INCREMENT,
 	branchName varchar(15),
 	address varchar(50),
-	UNIQUE KEY  F2(supplierId,branchName),
-	PRIMARY KEY(branchId),
-	FOREIGN KEY F1(supplierId) REFERENCES Supplier(supplierId) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-
-CREATE TABLE SupplierBranchTelephone(
-	branchId int,
 	contactName varchar(10),
 	telNo varchar(10) NOT NULL,
-	PRIMARY KEY(branchId,contactName),
-	FOREIGN KEY F1(branchId) REFERENCES SupplierBranch(branchId) ON DELETE CASCADE ON UPDATE CASCADE
+	UNIQUE KEY  F2(supplierId,branchName,contactName),
+	PRIMARY KEY(branchId),
+	FOREIGN KEY F1(supplierId) REFERENCES Supplier(supplierId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
