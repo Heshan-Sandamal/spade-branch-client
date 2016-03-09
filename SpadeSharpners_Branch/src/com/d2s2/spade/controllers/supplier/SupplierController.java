@@ -11,7 +11,7 @@ import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.CustomerTelephone;
 import com.d2s2.spade.models.Item;
-import com.d2s2.spade.models.SupplierBranchTelephone;
+import com.d2s2.spade.models.SupplierBranch;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,33 +22,36 @@ import java.util.ArrayList;
  * @author Dimuth Tharaka
  */
 public class SupplierController {
-    public static boolean addSupplier(Supplier supplier,ArrayList<SupplierBranchTelephone> supplierTelephoneList) throws ClassNotFoundException, SQLException{
+    public static boolean addSupplier(Supplier supplier,ArrayList<SupplierBranch> supplierTelephoneList) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();       //get connection from singleton dbConnection class
         
         String supplierId=supplier.getSupplierId();
+        
         String name=supplier.getName();
-        String address=supplier.getAddress();
+        
         String email = supplier.getEmail();
-        ArrayList<SupplierBranchTelephone> telList = supplierTelephoneList;
+        ArrayList<SupplierBranch> telList = supplierTelephoneList;
         
         try{
             connection.setAutoCommit(false);  
-            String sqlSupplier=DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 4);
+            String sqlSupplier=DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 3);
+            
        
-            int setData = DBHandler.setData(connection, sqlSupplier,new Object[]{supplierId,name,address,email});
+            int setData = DBHandler.setData(connection, sqlSupplier,new Object[]{supplierId,name,email});
             
             if(setData>0){              //check customer data is added
                 
-                for (SupplierBranchTelephone supplierTelephone : telList) {
+                for (SupplierBranch supplierTelephone : telList) {
                     
                     
-                    String sqlTelephone=DBQueryGenerator.insertQuery(SupplierBranchTelephone.class.getSimpleName(), 3);       //use this way to get db table name.because model name is same as db table name
+                    String sqlTelephone=DBQueryGenerator.insertQuery(SupplierBranch.class.getSimpleName(), 6);       //use this way to get db table name.because model name is same as db table name
                     
                     //add data using prepared statements.refer handler class
-                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{1,supplierTelephone.getSupplierId(),
-                        supplierTelephone.getContactName(),supplierTelephone.getTelNo()});
+                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{supplierTelephone.getSupplierId(),1,supplierTelephone.getBranchName(),
                         
-                    
+                        supplierTelephone.getAddress(),supplierTelephone.getContactName(),supplierTelephone.getTelNo()});
+                        
+                    System.out.println("Here");
                     if(addedTel<=0){            //check customer telephone data is added
                         connection.rollback();      //if error then rool back
                         return false;
@@ -89,17 +92,17 @@ public class SupplierController {
             
             String supplierId=resultSet.getString(Supplier.SUPPLIERID);
             String name=resultSet.getString(Supplier.NAME);
-            String adress=resultSet.getString(Supplier.ADDRESS);
+            
             String email = resultSet.getString(Supplier.EMAIL);
          
-            supplierList.add(new Supplier(supplierId,name,adress,email));
+            supplierList.add(new Supplier(supplierId,name,email));
             
             //itemList.add(new Item(code,itemCode,subId,brandId,supplierId,salesType));     
         }
         
         return supplierList;
     }
-    public static ArrayList<SupplierBranchTelephone> getSupplierContactInfo(String iDValue) throws ClassNotFoundException, SQLException{
+    public static ArrayList<SupplierBranch> getSupplierContactInfo(String iDValue) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();
         String[] colums ={"contactName","telNo"};
         String tableName="supplierTelephone";
@@ -109,10 +112,10 @@ public class SupplierController {
         
         String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(colums,tableName,beforeEquals);
         ResultSet resultSet=DBHandler.getData(connection, sql,ob);
-        ArrayList<SupplierBranchTelephone> contactList=new ArrayList<SupplierBranchTelephone>();
+        ArrayList<SupplierBranch> contactList=new ArrayList<SupplierBranch>();
         while(resultSet.next()){
             
-            SupplierBranchTelephone supplierTelephone =new SupplierBranchTelephone();
+            SupplierBranch supplierTelephone =new SupplierBranch();
             supplierTelephone.setContactName(resultSet.getString("contactName"));
             supplierTelephone.setTelNo(resultSet.getString("telNo"));
             contactList.add(supplierTelephone);
@@ -137,6 +140,25 @@ public class SupplierController {
             connection.setAutoCommit(true);
         }
     }
+    public static int getLastSupplierId() throws ClassNotFoundException, SQLException{
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = "SELECT supplierId FROM supplier ORDER BY supplierId DESC LIMIT 1";
+        ResultSet resultSet = DBHandler.getData(connection, sql);
+        resultSet.next();
+        System.out.println(resultSet.getRow());
+        if(resultSet.next()){
+             String str = resultSet.getString("supplierId");
+             int lastId= Integer.parseInt(str);
+                return lastId;
+        }
+       
+        else{
+            return 1;
+        }
+       
+        
+    }
+    
     
         
         
