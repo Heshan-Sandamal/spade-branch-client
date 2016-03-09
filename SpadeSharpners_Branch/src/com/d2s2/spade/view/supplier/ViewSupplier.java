@@ -7,7 +7,7 @@ package com.d2s2.spade.view.supplier;
 
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
-import com.d2s2.spade.models.SupplierTelephone;
+import com.d2s2.spade.models.SupplierBranchTelephone;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -331,8 +331,8 @@ public class ViewSupplier extends javax.swing.JDialog {
         return model;
     }
     private DefaultTableModel getSpecificSupplierDetails(String ID, DefaultTableModel model) throws ClassNotFoundException, SQLException{
-        ArrayList<SupplierTelephone> supplierContactList = SupplierController.getSupplierContactInfo(ID);
-        for (SupplierTelephone contact : supplierContactList) {
+        ArrayList<SupplierBranchTelephone> supplierContactList = SupplierController.getSupplierContactInfo(ID);
+        for (SupplierBranchTelephone contact : supplierContactList) {
             model.addRow(new Object[]{ID,contact.getContactName(),contact.getTelNo()});
             System.out.println("Contact Name="+ contact.getContactName()+contact.getTelNo());
         }

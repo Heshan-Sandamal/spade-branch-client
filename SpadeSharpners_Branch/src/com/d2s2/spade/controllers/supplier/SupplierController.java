@@ -11,7 +11,7 @@ import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Supplier;
 import com.d2s2.spade.models.CustomerTelephone;
 import com.d2s2.spade.models.Item;
-import com.d2s2.spade.models.SupplierTelephone;
+import com.d2s2.spade.models.SupplierBranchTelephone;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,30 +22,32 @@ import java.util.ArrayList;
  * @author Dimuth Tharaka
  */
 public class SupplierController {
-    public static boolean addSupplier(Supplier supplier,ArrayList<SupplierTelephone> supplierTelephoneList) throws ClassNotFoundException, SQLException{
+    public static boolean addSupplier(Supplier supplier,ArrayList<SupplierBranchTelephone> supplierTelephoneList) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();       //get connection from singleton dbConnection class
         
         String supplierId=supplier.getSupplierId();
         String name=supplier.getName();
         String address=supplier.getAddress();
         String email = supplier.getEmail();
-        ArrayList<SupplierTelephone> telList = supplierTelephoneList;
+        ArrayList<SupplierBranchTelephone> telList = supplierTelephoneList;
         
         try{
             connection.setAutoCommit(false);  
             String sqlSupplier=DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 4);
+       
             int setData = DBHandler.setData(connection, sqlSupplier,new Object[]{supplierId,name,address,email});
             
             if(setData>0){              //check customer data is added
                 
-                for (SupplierTelephone supplierTelephone : telList) {
+                for (SupplierBranchTelephone supplierTelephone : telList) {
                     
                     
-                    String sqlTelephone=DBQueryGenerator.insertQuery(SupplierTelephone.class.getSimpleName(), 3);       //use this way to get db table name.because model name is same as db table name
+                    String sqlTelephone=DBQueryGenerator.insertQuery(SupplierBranchTelephone.class.getSimpleName(), 3);       //use this way to get db table name.because model name is same as db table name
                     
                     //add data using prepared statements.refer handler class
-                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{supplierTelephone.getSupplierId(),
+                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{1,supplierTelephone.getSupplierId(),
                         supplierTelephone.getContactName(),supplierTelephone.getTelNo()});
+                        
                     
                     if(addedTel<=0){            //check customer telephone data is added
                         connection.rollback();      //if error then rool back
@@ -62,6 +64,7 @@ public class SupplierController {
             return true;
             
         } catch (Exception e) {
+            
             connection.rollback();      //if error then rool back
             throw e;
         }finally{
@@ -96,7 +99,7 @@ public class SupplierController {
         
         return supplierList;
     }
-    public static ArrayList<SupplierTelephone> getSupplierContactInfo(String iDValue) throws ClassNotFoundException, SQLException{
+    public static ArrayList<SupplierBranchTelephone> getSupplierContactInfo(String iDValue) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();
         String[] colums ={"contactName","telNo"};
         String tableName="supplierTelephone";
@@ -106,10 +109,10 @@ public class SupplierController {
         
         String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(colums,tableName,beforeEquals);
         ResultSet resultSet=DBHandler.getData(connection, sql,ob);
-        ArrayList<SupplierTelephone> contactList=new ArrayList<SupplierTelephone>();
+        ArrayList<SupplierBranchTelephone> contactList=new ArrayList<SupplierBranchTelephone>();
         while(resultSet.next()){
             
-            SupplierTelephone supplierTelephone =new SupplierTelephone();
+            SupplierBranchTelephone supplierTelephone =new SupplierBranchTelephone();
             supplierTelephone.setContactName(resultSet.getString("contactName"));
             supplierTelephone.setTelNo(resultSet.getString("telNo"));
             contactList.add(supplierTelephone);

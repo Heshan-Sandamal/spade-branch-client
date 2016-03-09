@@ -5,7 +5,7 @@ package com.d2s2.spade.models;
  *
  * @author Dimuth Tharaka
  */
-public class SupplierTelephone {
+public class SupplierBranchTelephone {
     String supplierId ;
     String contactName ;
     String telNo ;
