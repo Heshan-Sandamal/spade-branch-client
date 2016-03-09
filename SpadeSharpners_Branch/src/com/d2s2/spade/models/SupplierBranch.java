@@ -7,6 +7,15 @@ package com.d2s2.spade.models;
  */
 public class SupplierBranch {
     String supplierId ;
+    int branchId;
+
+    public int getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
+    }
     String branchName;
     String address;
     String contactName ;

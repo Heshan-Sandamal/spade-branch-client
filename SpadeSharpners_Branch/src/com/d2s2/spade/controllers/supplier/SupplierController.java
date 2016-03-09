@@ -47,6 +47,7 @@ public class SupplierController {
                     String sqlTelephone=DBQueryGenerator.insertQueryBranch(SupplierBranch.class.getSimpleName());       //use this way to get db table name.because model name is same as db table name
                     
                     //add data using prepared statements.refer handler class
+                    System.out.println(supplierTelephone.getAddress());
                     int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{supplierTelephone.getSupplierId(),supplierTelephone.getBranchName(),
                         
                         supplierTelephone.getAddress(),supplierTelephone.getContactName(),supplierTelephone.getTelNo()});
@@ -104,9 +105,10 @@ public class SupplierController {
     }
     public static ArrayList<SupplierBranch> getSupplierContactInfo(String iDValue) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();
-        String[] colums ={"contactName","telNo"};
-        String tableName="supplierTelephone";
+        String[] colums ={"branchName","BranchID","address","contactName","telNo"};
+        String tableName="SupplierBranch";
         String beforeEquals="supplierID";
+        
         String afterEquals=iDValue;
         Object[] ob={afterEquals};
         
@@ -114,11 +116,15 @@ public class SupplierController {
         ResultSet resultSet=DBHandler.getData(connection, sql,ob);
         ArrayList<SupplierBranch> contactList=new ArrayList<SupplierBranch>();
         while(resultSet.next()){
+            System.out.println(resultSet.getString(1));
+            SupplierBranch supplierBranch =new SupplierBranch();
             
-            SupplierBranch supplierTelephone =new SupplierBranch();
-            supplierTelephone.setContactName(resultSet.getString("contactName"));
-            supplierTelephone.setTelNo(resultSet.getString("telNo"));
-            contactList.add(supplierTelephone);
+            supplierBranch.setAddress(resultSet.getString("address"));
+            supplierBranch.setBranchName(resultSet.getString("branchName"));
+            supplierBranch.setContactName(resultSet.getString("contactName"));
+            supplierBranch.setTelNo(resultSet.getString("telNo"));
+            supplierBranch.setBranchId(resultSet.getInt("branchId"));
+            contactList.add(supplierBranch);
         }
         return contactList;
     }

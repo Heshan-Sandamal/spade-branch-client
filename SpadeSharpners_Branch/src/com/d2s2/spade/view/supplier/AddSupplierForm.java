@@ -404,7 +404,7 @@ public class AddSupplierForm extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXTable jXTable2;
     private javax.swing.JTextField telephoneNumberField;
     // End of variables declaration//GEN-END:variables
-    private Object row[]  = new Object[4];
+    private Object row[]  = new Object[5];
     private DefaultTableModel model = new DefaultTableModel();
     
 
@@ -419,7 +419,7 @@ public  boolean addSupplierToDB() throws ClassNotFoundException, SQLException{
             SupplierBranch supplierBranch = new SupplierBranch();
             supplierBranch.setSupplierId(IdField.getText());
             supplierBranch.setBranchName((String) model.getValueAt(count,0));
-            supplierBranch.setTelNo((String) model.getValueAt(count,1));
+            supplierBranch.setAddress((String) model.getValueAt(count,1));
             supplierBranch.setContactName((String) model.getValueAt(count,2));
             supplierBranch.setTelNo((String) model.getValueAt(count,3));
             supplierBranchList.add(supplierBranch);

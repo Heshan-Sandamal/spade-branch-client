@@ -136,7 +136,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         updateButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        searchByCombobox = new javax.swing.JComboBox<>();
+        searchByCombobox = new javax.swing.JComboBox<String>();
         searchTextBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         addressLable = new javax.swing.JLabel();
