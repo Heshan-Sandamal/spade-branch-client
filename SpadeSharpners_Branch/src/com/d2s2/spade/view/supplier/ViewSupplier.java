@@ -74,6 +74,11 @@ public class ViewSupplier extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Keyword"));
 
+        idSearchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idSearchFieldActionPerformed(evt);
+            }
+        });
         idSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 idSearchFieldKeyReleased(evt);
@@ -241,6 +246,10 @@ public class ViewSupplier extends javax.swing.JDialog {
         filterTableInkeywordSearch();
         
     }//GEN-LAST:event_idSearchFieldKeyReleased
+
+    private void idSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idSearchFieldActionPerformed
+        
+    }//GEN-LAST:event_idSearchFieldActionPerformed
 
     /**
      * @param args the command line arguments

@@ -176,6 +176,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         });
 
         jButton2.setText("cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -487,6 +492,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         updateTextFieldsWithDiscount();
     }//GEN-LAST:event_discountSpinnerKeyTyped
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        closeDialog();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -659,10 +669,13 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         CustPayment custPayment = prepareCustPayment();
         CustDebt custDebt = prepareCustDebt();
         try {
-            //CustPaymentController.addPaymentInfo(custPayment);
+            CustPaymentController.addPaymentInfo(custPayment);
             CustDebtController.updateDebtInfo(custDebt);
+            JOptionPane.showMessageDialog(this, "Success", "Successfully added transaction", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Failed", "Failed to create transaction", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -740,14 +753,21 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     }
 
     private CustPayment prepareCustPayment() {
-        CustPayment custPayment = new CustPayment();
-        custPayment.setAmount(Double.parseDouble(netAmountTextField.getText()));
-        custPayment.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
-        custPayment.setDate(getSQLdate());
-        custPayment.setDiscount(Double.parseDouble(String.valueOf( discountSpinner.getValue())));
-        custPayment.setType(paymentType.cs);
-        custPayment.setPaymentId(paymentIdTextField.getText());
-        return custPayment;
+        CustPayment custPayment = null;
+        try{
+            custPayment = new CustPayment();
+            custPayment.setAmount(Double.parseDouble(netAmountTextField.getText()));
+            custPayment.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
+            custPayment.setDate(getSQLdate());
+            custPayment.setDiscount(Double.parseDouble(String.valueOf( discountSpinner.getValue())));
+            custPayment.setType(paymentType.cs);
+            custPayment.setPaymentId(paymentIdTextField.getText());
+            return custPayment;
+        
+        }catch(NumberFormatException numberFormatException){
+           JOptionPane.showMessageDialog(this, "Invalid input data for gross amount or the discount", "Error in data", JOptionPane.ERROR_MESSAGE);
+        }
+         return custPayment;
     }
 
     private CustDebt prepareCustDebt() {
@@ -766,4 +786,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         return date;
     }
 
+    private void closeDialog() {
+        this.dispose();
+    }
 }

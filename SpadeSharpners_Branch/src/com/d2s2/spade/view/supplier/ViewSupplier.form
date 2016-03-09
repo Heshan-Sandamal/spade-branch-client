@@ -115,6 +115,7 @@
       <SubComponents>
         <Component class="org.jdesktop.swingx.JXSearchField" name="idSearchField">
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idSearchFieldActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="idSearchFieldKeyReleased"/>
           </Events>
         </Component>
