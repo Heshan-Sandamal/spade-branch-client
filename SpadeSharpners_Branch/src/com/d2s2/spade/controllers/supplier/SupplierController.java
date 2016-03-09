@@ -44,10 +44,10 @@ public class SupplierController {
                 for (SupplierBranch supplierTelephone : telList) {
                     
                     
-                    String sqlTelephone=DBQueryGenerator.insertQuery(SupplierBranch.class.getSimpleName(), 6);       //use this way to get db table name.because model name is same as db table name
+                    String sqlTelephone=DBQueryGenerator.insertQueryBranch(SupplierBranch.class.getSimpleName());       //use this way to get db table name.because model name is same as db table name
                     
                     //add data using prepared statements.refer handler class
-                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{supplierTelephone.getSupplierId(),1,supplierTelephone.getBranchName(),
+                    int addedTel = DBHandler.setData(connection, sqlTelephone,new Object[]{supplierTelephone.getSupplierId(),supplierTelephone.getBranchName(),
                         
                         supplierTelephone.getAddress(),supplierTelephone.getContactName(),supplierTelephone.getTelNo()});
                         
@@ -142,17 +142,19 @@ public class SupplierController {
     }
     public static int getLastSupplierId() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = "SELECT supplierId FROM supplier ORDER BY supplierId DESC LIMIT 1";
+        String sql = "SELECT branchId FROM supplierbranch ORDER BY branchId DESC LIMIT 1";
         ResultSet resultSet = DBHandler.getData(connection, sql);
-        resultSet.next();
-        System.out.println(resultSet.getRow());
-        if(resultSet.next()){
-             String str = resultSet.getString("supplierId");
+        
+        
+        boolean s=resultSet.next();
+        if(s){
+             String str = resultSet.getString("branchid");
              int lastId= Integer.parseInt(str);
-                return lastId;
+                return lastId+1;
         }
        
         else{
+            System.out.println(s);
             return 1;
         }
        
