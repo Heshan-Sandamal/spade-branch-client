@@ -9,6 +9,7 @@ import com.d2s2.spade.view.item.ViewItemForm;
 import com.d2s2.spade.view.supplier.AddSupplierForm;
 import com.d2s2.spade.view.customer.ViewCustomerForm;
 import com.d2s2.spade.view.item.UpdateItemForm;
+import com.d2s2.spade.view.order.supplier.SupplierOrderForm;
 import com.d2s2.spade.view.supplier.ViewSupplier;
 /**
  *
@@ -25,6 +26,7 @@ public class MainInterface extends javax.swing.JFrame {
     private UpdateItemForm updateItemForm;
     private ViewSupplier viewSupplier;
     private UpdateCustPayment updateCustPayment;
+    private SupplierOrderForm supplierOrderForm;
     /**
      * Creates new form MainInterface
      */
@@ -114,6 +116,11 @@ public class MainInterface extends javax.swing.JFrame {
         });
 
         supplierOrderButtion.setText("Supplier Order");
+        supplierOrderButtion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierOrderButtionActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Update Payment");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -251,6 +258,10 @@ public class MainInterface extends javax.swing.JFrame {
         }
         updateCustPayment.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void supplierOrderButtionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierOrderButtionActionPerformed
+        
+    }//GEN-LAST:event_supplierOrderButtionActionPerformed
 
     /**
      * @param args the command line arguments
