@@ -282,10 +282,13 @@ public class ViewSupplier extends javax.swing.JDialog {
             supplierBranch.setContactName((String) contactModel.getValueAt(count,3));
             supplierBranch.setTelNo((String) contactModel.getValueAt(count,4));
             supplierBranchList.add(supplierBranch);
+        }
+        supplier.setBranchContactList(supplierBranchList);
         this.dispose();
         JFrame supplierUpdate=null;
+        
             try {
-                supplierUpdate = new UpdateSupplier(supplier,supplierBranchList);
+                supplierUpdate = new UpdateSupplier(supplier);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -293,7 +296,7 @@ public class ViewSupplier extends javax.swing.JDialog {
             }
         supplierUpdate.setVisible(true);
         
-        } 
+        
     }//GEN-LAST:event_updateSupplierButtonActionPerformed
 
     /**

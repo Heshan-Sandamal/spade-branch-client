@@ -485,8 +485,9 @@ public  boolean addSupplierToDB() throws ClassNotFoundException, SQLException{
             supplierBranchList.add(supplierBranch);
             
         }
+        supplier.setBranchContactList(supplierBranchList);
         try {
-            added = SupplierController.addSupplier(supplier,supplierBranchList);
+            added = SupplierController.addSupplier(supplier);
         } catch (ClassNotFoundException ex) {
             System.out.println("Class not found");
         } catch (SQLException ex) {

@@ -25,9 +25,9 @@ public class UpdateSupplier extends javax.swing.JFrame {
     /**
      * Creates new form UpdateSupplier
      */
-    public UpdateSupplier(Supplier supplier,ArrayList<SupplierBranch> supplierBranchList) throws ClassNotFoundException, SQLException {
+    public UpdateSupplier(Supplier supplier) throws ClassNotFoundException, SQLException {
         initComponents();
-        this.supplierBranchList=supplierBranchList;
+        this.supplierBranchList=supplier.getBranchContactList();
         this.supplier=supplier;
         
         this.IdField.setText(supplier.getSupplierId());
@@ -337,7 +337,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
         branchAddressField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 1));
         contactNameField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 2));
         telephoneNumberField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 3));
-        model.removeRow(selectedRow);
+        contactModel.removeRow(selectedRow);
     }//GEN-LAST:event_editSelectedRowButtonActionPerformed
 
     /**
@@ -371,7 +371,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new UpdateSupplier(supplier,supplierBranchList).setVisible(true);
+                    new UpdateSupplier(supplier).setVisible(true);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(UpdateSupplier.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
