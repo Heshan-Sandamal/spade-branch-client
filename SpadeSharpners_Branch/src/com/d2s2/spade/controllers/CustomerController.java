@@ -80,9 +80,10 @@ public class CustomerController {
             connection.setAutoCommit(false);        //disabling the autocommiting feature
             String deletesql = DBQueryGenerator.deleteQuery("Customer", "customerId"); // build delete query
             String sqlCustomer = DBQueryGenerator.insertQuery(Customer.class.getSimpleName(), 3);             //build insert query
-            int deleteData = DBHandler.deleteData(connection, deletesql, new Object[]{oldCustomer.getCustomerId()});
+            int deleteData = 0;
+            deleteData = DBHandler.deleteData(connection, deletesql, new Object[]{oldCustomer.getCustomerId()});
 
-            if (deleteData > 0) {
+            if (deleteData != 0) {
                 int setData = DBHandler.setData(connection, sqlCustomer, new Object[]{customerId, name, address});           //set data to customerTable
 
                 if (setData > 0) {              //check customer data is added

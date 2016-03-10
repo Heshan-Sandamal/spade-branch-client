@@ -208,7 +208,7 @@ public class EditSingleCustomer extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Unable to update Customer due to " + ex.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to update Customer due to " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to update Customer due to sql" + ex.getMessage());
         }
 
     }//GEN-LAST:event_saveButtonActionPerformed

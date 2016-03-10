@@ -128,14 +128,15 @@ public class SupplierController {
         }
         return contactList;
     }
-    public static void removeSupplier(String ID) throws ClassNotFoundException, SQLException{
+    public static boolean removeSupplier(String ID) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();
+        boolean removeData= false;
         try{
             String sql =DBQueryGenerator.deleteWhereQuery("supplier", "supplierID");
             connection.setAutoCommit(false);
-            int removeData=DBHandler.deleteData(connection, sql, new String[] {ID});
-            if(removeData>0){
-                System.out.println("sUCESSFULL");
+            //removeData=DBHandler.deleteData(connection, sql, new String[] {ID});
+            if(removeData){
+                System.out.println("Successfull");
             }
         }
         catch(Exception e){
@@ -145,6 +146,7 @@ public class SupplierController {
         finally{
             connection.setAutoCommit(true);
         }
+        return removeData;
     }
     public static int getLastSupplierId() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
