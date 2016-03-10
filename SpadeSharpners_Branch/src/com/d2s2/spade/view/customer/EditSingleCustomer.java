@@ -42,20 +42,20 @@ public class EditSingleCustomer extends javax.swing.JDialog {
         this.NameTextField.setText(this.customer.getName());
         this.AddressTextField.setText(this.customer.getAddress());
         IDTextfield.setEditable(false);
-        NameTextField.setEditable(false);
-        AddressTextField.setEditable(false);
-        saveButton.setEnabled(false);
-        saveButton.setVisible(false);
-        addNewPhonTextbox.setEnabled(false);
-        addNewPhonTextbox.setVisible(false);
-        addNewPhoneLable.setVisible(false);
+        NameTextField.setEditable(true);
+        AddressTextField.setEditable(true);
+        saveButton.setEnabled(true);
+        saveButton.setVisible(true);
+        addNewPhonTextbox.setEnabled(true);
+        addNewPhonTextbox.setVisible(true);
+        addNewPhoneLable.setVisible(true);
         /* creating customer table with specified properties*/
         phonenumberTable = new JTable() /*{
         @Override
         public boolean isCellEditable(int row, int column) {                
                 return false;               
         };}*/;
-        phonenumberTable.setEnabled(false);
+        phonenumberTable.setEnabled(true);
         
         scrollpane = new JScrollPane();
         scrollpane.setBounds(150, 200, 100, 100);
@@ -96,7 +96,6 @@ public class EditSingleCustomer extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         NameTextField = new javax.swing.JTextField();
         AddressTextField = new javax.swing.JTextField();
-        updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         addNewPhoneLable = new javax.swing.JLabel();
@@ -111,13 +110,6 @@ public class EditSingleCustomer extends javax.swing.JDialog {
         jLabel3.setText("Address");
 
         NameTextField.setPreferredSize(new java.awt.Dimension(12, 30));
-
-        updateButton.setText("Update");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButtonActionPerformed(evt);
-            }
-        });
 
         deleteButton.setText("Delete");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -156,13 +148,12 @@ public class EditSingleCustomer extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(383, 383, 383)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(updateButton)
                     .addComponent(deleteButton)
                     .addComponent(saveButton))
                 .addGap(39, 39, 39))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {deleteButton, saveButton, updateButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {deleteButton, saveButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,9 +174,7 @@ public class EditSingleCustomer extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addNewPhoneLable)
                     .addComponent(addNewPhonTextbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(39, 39, 39)
                 .addComponent(saveButton)
                 .addGap(10, 10, 10)
                 .addComponent(deleteButton)
@@ -199,11 +188,6 @@ public class EditSingleCustomer extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
-        enableUpdate();
-    }//GEN-LAST:event_updateButtonActionPerformed
-
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         saveToDB();
@@ -213,7 +197,14 @@ public class EditSingleCustomer extends javax.swing.JDialog {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         try {
             // TODO add your handling code here:
-            deleteCustomer();
+            int res = JOptionPane.showConfirmDialog(null, "Are you sure??", null,JOptionPane.YES_NO_OPTION);
+            if(res == JOptionPane.YES_OPTION) {
+                deleteCustomer();
+            }
+            else if(res == JOptionPane.NO_OPTION) {
+                
+            }
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Unable to delete due to CLASS deleteButton "+ex.getMessage());
@@ -290,7 +281,6 @@ public class EditSingleCustomer extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton saveButton;
-    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 
     private void showPhoneNo() throws ClassNotFoundException, SQLException {
@@ -324,23 +314,6 @@ public class EditSingleCustomer extends javax.swing.JDialog {
         scrollpane.setViewportView(phonenumberTable);
         add(scrollpane);
         
-    }
-    
-    private void enableUpdate(){
-        IDTextfield.setEditable(false);
-        NameTextField.setEditable(true);
-        AddressTextField.setEditable(true);
-        saveButton.setEnabled(true);
-        saveButton.setVisible(true);
-        deleteButton.setEnabled(false);
-        deleteButton.setVisible(false);
-        updateButton.setEnabled(false);
-        updateButton.setVisible(false);
-        phonenumberTable.setEnabled(true);
-        defaulttablemodel.addTableModelListener(phonenumberTable);
-        addNewPhonTextbox.setEnabled(true);
-        addNewPhonTextbox.setVisible(true);
-        addNewPhoneLable.setVisible(true);
     }
     
     private void saveToDB(){

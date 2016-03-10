@@ -25,7 +25,7 @@ import javax.swing.event.DocumentListener;
  * @author Heshan Sandamal
  */
 public class AddCustomerForm extends javax.swing.JDialog {
-    
+
     String name;
     String address;
     String phoneNo;
@@ -43,7 +43,7 @@ public class AddCustomerForm extends javax.swing.JDialog {
      */
     public AddCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         initComponents();
         name = null;
         address = null;
@@ -209,26 +209,47 @@ public class AddCustomerForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
+        name = NameText.getText();
+        address = AddressText.getText();
+        phoneNo = PhoneText.getText();
+        /*if (NameText.getText() == null || AddressText.getText() == null || PhoneText.getText() == null) {
+
+            JOptionPane.showMessageDialog(this, "Please Insert a Customer Name, PhoneNo and Address");
+        }*/
+        if (name.isEmpty() || address.isEmpty() || phoneNo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Insert a Customer Name, PhoneNo and Address");
+        } else {
+            addCustomer();
+        }
+
+    }//GEN-LAST:event_addCustomerButtonActionPerformed
+
+    private void addCustomer() {
         try {
+
             boolean addCustomerToDB = addCustomerToDB();
-            if(addCustomerToDB){
+            if (addCustomerToDB) {
                 JOptionPane.showMessageDialog(this, "Added Successfully");
-            }else{
+                NameText.setText("");
+                AddressText.setText("");
+                PhoneText.setText("");
+                CustomerId.setText("");
+                
+            } else {
                 JOptionPane.showMessageDialog(this, "Faild to add.");
             }
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Unable to add due to "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to add due to " + ex.getMessage());
         }
-        
-    }//GEN-LAST:event_addCustomerButtonActionPerformed
+    }
 
     private void PhoneTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PhoneTextActionPerformed
         // TODO add your handling code here:
         this.phoneNo = PhoneText.getText();
     }//GEN-LAST:event_PhoneTextActionPerformed
 
-    
+
     private void NameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameTextActionPerformed
         // TODO add your handling code here:
         this.name = NameText.getText();
@@ -281,21 +302,6 @@ public class AddCustomerForm extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        
-       /*java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AddCustomerForm dialog = new AddCustomerForm(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                
-                dialog.setVisible(true);
-            }
-        }); */
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddanotherPhoneButton;
@@ -312,90 +318,72 @@ public class AddCustomerForm extends javax.swing.JDialog {
     private javax.swing.JButton removeExtraPhoneTextboxButton;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    
-    
     //----------------------------------------------------------------------
     //methods of contructor
-    
-    
-    
-    
     //--------------------------------------------------------------------
-    
-    
     //----------------------------------------------------------------------
     //validation of elemets
-    
-    
     //--------------------------------------------------------------------
-    
-    
-    
-    
     //-------------------------------------------------------------------------------------
     //methods calls for controllers
-    
     private boolean addCustomerToDB() throws ClassNotFoundException, SQLException {
         //fetch details from view
-        ArrayList<CustomerTelephone> lt=new ArrayList<>();
+        ArrayList<CustomerTelephone> lt = new ArrayList<>();
         lt.add(new CustomerTelephone(CustomerId.getText(), PhoneText.getText()));
-        for(int i=0;i<count;i++){
+        for (int i = 0; i < count; i++) {
             lt.add(new CustomerTelephone(CustomerId.getText(), extratextboxArray.get(i).getText()));
         }
-        Customer customer=new Customer(CustomerId.getText(),NameText.getText(),AddressText.getText(), lt);
-        
+        Customer customer = new Customer(CustomerId.getText(), NameText.getText(), AddressText.getText(), lt);
+
         return CustomerController.addCustomer(customer);
     }
-    
-    private void addPhoneTextBox(){
+
+    private void addPhoneTextBox() {
         tfield = new JTextField();
-        tfield.setName(nameTField+count);
-        
+        tfield.setName(nameTField + count);
+
         extratextboxArray.add(tfield);
-        if (count>=1){
-            extranoY+=40;
+        if (count >= 1) {
+            extranoY += 40;
         }
-        
-        if (count>=3){
+
+        if (count >= 3) {
             AddanotherPhoneButton.setEnabled(false);
         }
-        
+
         count++;
-        tfield.setBounds(PhoneText.getX(), PhoneText.getY()+extranoY, PhoneText.getWidth(), PhoneText.getHeight());
+        tfield.setBounds(PhoneText.getX(), PhoneText.getY() + extranoY, PhoneText.getWidth(), PhoneText.getHeight());
         add(tfield);
-        
+
         revalidate();
         repaint();
         pack();
         removeExtraPhoneTextboxButton.setVisible(true);
         removeExtraPhoneTextboxButton.setEnabled(true);
-        System.out.println(nameTField+count);
-        
+        System.out.println(nameTField + count);
+
     }
-    
-    private void removeExtraPhno(){
-        
+
+    private void removeExtraPhno() {
+
         count--;
-        if (count==0){
+        if (count == 0) {
             removeExtraPhoneTextboxButton.setVisible(false);
-            removeExtraPhoneTextboxButton.setEnabled(false); 
-            extranoY+=40;
+            removeExtraPhoneTextboxButton.setEnabled(false);
+            extranoY += 40;
         }
-        
+
         extratextboxArray.get(count).setVisible(false);
         extratextboxArray.get(count).setEnabled(false);
-        
+
         remove(extratextboxArray.get(count));
-        extratextboxArray.remove(extratextboxArray.size()-1);
-        
-        extranoY-=40;
-        
-        if (count<4){
+        extratextboxArray.remove(extratextboxArray.size() - 1);
+
+        extranoY -= 40;
+
+        if (count < 4) {
             AddanotherPhoneButton.setEnabled(true);
         }
     }
-    
-   
+
 }
