@@ -5,6 +5,17 @@
  */
 package com.d2s2.spade.view.customer;
 
+import com.d2s2.spade.controllers.CustChequeController;
+import com.d2s2.spade.controllers.CustPaymentController;
+import com.d2s2.spade.models.CustCheque;
+import com.d2s2.spade.models.CustPayment;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Sineth
@@ -14,9 +25,19 @@ public class UpdateCustPayment extends javax.swing.JDialog {
     /**
      * Creates new form UpdateCustPayment
      */
+    private DefaultTableModel dtm;
+    private DefaultTableModel model;
+
     public UpdateCustPayment(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        try {
+            fetchPaymentData();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -28,6 +49,7 @@ public class UpdateCustPayment extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jXButton4 = new org.jdesktop.swingx.JXButton();
         jXPanel1 = new org.jdesktop.swingx.JXPanel();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
         jXRadioGroup1 = new org.jdesktop.swingx.JXRadioGroup();
@@ -37,13 +59,15 @@ public class UpdateCustPayment extends javax.swing.JDialog {
         jXSearchField1 = new org.jdesktop.swingx.JXSearchField();
         jXPanel2 = new org.jdesktop.swingx.JXPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jXTable1 = new org.jdesktop.swingx.JXTable();
+        mainPaymentTable = new org.jdesktop.swingx.JXTable();
         jXPanel3 = new org.jdesktop.swingx.JXPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jXTable2 = new org.jdesktop.swingx.JXTable();
+        chequeDetailsTable = new org.jdesktop.swingx.JXTable();
         jXButton1 = new org.jdesktop.swingx.JXButton();
         jXButton2 = new org.jdesktop.swingx.JXButton();
         jXButton3 = new org.jdesktop.swingx.JXButton();
+
+        jXButton4.setText("jXButton4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -90,12 +114,9 @@ public class UpdateCustPayment extends javax.swing.JDialog {
 
         jXPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Payment Details"));
 
-        jXTable1.setModel(new javax.swing.table.DefaultTableModel(
+        mainPaymentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Payment ID", "Customer ID", "Customer Name", "Payment Method", "Amount", "Discount", "Date"
@@ -116,9 +137,13 @@ public class UpdateCustPayment extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jXTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jXTable1);
-        jXTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        mainPaymentTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mainPaymentTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(mainPaymentTable);
+        mainPaymentTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout jXPanel2Layout = new javax.swing.GroupLayout(jXPanel2);
         jXPanel2.setLayout(jXPanel2Layout);
@@ -139,12 +164,9 @@ public class UpdateCustPayment extends javax.swing.JDialog {
 
         jXPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cheque Details"));
 
-        jXTable2.setModel(new javax.swing.table.DefaultTableModel(
+        chequeDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Payment ID", "Cheque No.", "Bank", "Expiry Date", "Issue Date", "Status"
@@ -165,7 +187,7 @@ public class UpdateCustPayment extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jXTable2);
+        jScrollPane2.setViewportView(chequeDetailsTable);
 
         jXButton1.setText("Update");
         jXButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +261,15 @@ public class UpdateCustPayment extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jXButton1ActionPerformed
 
+    private void mainPaymentTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainPaymentTableMouseClicked
+        try {
+            // TODO add your handling code here:
+            rowSelected();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_mainPaymentTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -282,6 +313,7 @@ public class UpdateCustPayment extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdesktop.swingx.JXTable chequeDetailsTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
@@ -292,13 +324,35 @@ public class UpdateCustPayment extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXButton jXButton1;
     private org.jdesktop.swingx.JXButton jXButton2;
     private org.jdesktop.swingx.JXButton jXButton3;
+    private org.jdesktop.swingx.JXButton jXButton4;
     private org.jdesktop.swingx.JXLabel jXLabel1;
     private org.jdesktop.swingx.JXPanel jXPanel1;
     private org.jdesktop.swingx.JXPanel jXPanel2;
     private org.jdesktop.swingx.JXPanel jXPanel3;
     private org.jdesktop.swingx.JXRadioGroup jXRadioGroup1;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
-    private org.jdesktop.swingx.JXTable jXTable1;
-    private org.jdesktop.swingx.JXTable jXTable2;
+    private org.jdesktop.swingx.JXTable mainPaymentTable;
     // End of variables declaration//GEN-END:variables
+
+    private void fetchPaymentData() throws ClassNotFoundException, SQLException {
+        ArrayList<CustPayment> paymentInfo = CustPaymentController.getPaymentInfo();
+        dtm=(DefaultTableModel) mainPaymentTable.getModel();
+        for (CustPayment cp : paymentInfo) {
+            dtm.addRow(new Object[]{cp.getPaymentId(), cp.getCustomerId(), cp.getCustomerId(), cp.getType(), cp.getAmount(), cp.getDiscount(), cp.getDate()});
+        }
+        mainPaymentTable.setModel(dtm);
+    }
+
+    private void rowSelected() throws ClassNotFoundException, SQLException {
+        int selectedRow = mainPaymentTable.getSelectedRow();
+        model = (DefaultTableModel) chequeDetailsTable.getModel();
+        if (selectedRow != -1) {
+            
+            CustCheque chequeDetails = CustChequeController.getChequeDetails(dtm.getValueAt(selectedRow, 0).toString());
+            model.addRow(new Object[]{chequeDetails.getPaymentId(),chequeDetails.getChequeNo(),
+                chequeDetails.getBank(),chequeDetails.getExpiryDate(),chequeDetails.getIssueDate(),chequeDetails.getStatus()
+            });
+            
+        }chequeDetailsTable.setModel(model);
+    }
 }

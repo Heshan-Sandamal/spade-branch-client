@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,12 +24,33 @@ import java.sql.SQLException;
 public class CustPaymentController {
     public static double getCustomerDebt(String customerID) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectwhereQuery(CustDebt.class.getSimpleName(), CustDebt.CUSTOMERID);
+        String sql = DBQueryGenerator.selectAllQuery(CustDebt.class.getSimpleName());
         ResultSet resultSet = DBHandler.getData(connection, sql,new Object[]{customerID});
         resultSet.next();
         return resultSet.getInt(CustDebt.AMOUNT);
     }
 
+    public static ArrayList<CustPayment> getPaymentInfo() throws ClassNotFoundException, SQLException{
+        ArrayList<CustPayment> CustPayment=new ArrayList<>();
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.selectAllQuery("CustPayment");
+        ResultSet data = DBHandler.getData(connection, sql);
+        data.next();
+        CustPayment cp;
+        while(data.next()){
+            cp=new CustPayment();
+            cp.setPaymentId(data.getString("paymentId"));
+            cp.setAmount(data.getDouble("amount"));
+            cp.setDate(data.getDate("date").toString());
+            cp.setDiscount(data.getFloat("discount"));
+            cp.setType(data.getString("type"));
+            cp.setCustomerId(data.getString("customerId"));
+            CustPayment.add(cp);
+        }
+        
+        return CustPayment;
+        
+    }
     public static boolean addPaymentInfo(CustPayment custPayment) throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();  
         String paymentId=custPayment.getPaymentId();
