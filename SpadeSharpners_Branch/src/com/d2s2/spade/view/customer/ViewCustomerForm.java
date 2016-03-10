@@ -50,76 +50,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     public ViewCustomerForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        customerList = new ArrayList<>();
-        
-        
-        phoneNoTableHeders = new String[]{"Phone Numbers"};
-        phoneNoTableModel = new DefaultTableModel(0, 0);
-        phoneNoTableModel.setColumnIdentifiers(phoneNoTableHeders);
-        phoneNumberTable.setModel(phoneNoTableModel);
-        phoneNoTableModel.addRow(new Object[]{""});
-        //phoneNoTableModel.addRow(new Object[]{""});
-        
-        tableHeaders = new String[]{"CustomerID", "Name", "Balance"};
-        defaulttablemodel = new DefaultTableModel(0, 0);
-        defaulttablemodel.setColumnIdentifiers(tableHeaders);
-        customerTable.setModel(defaulttablemodel);
-      
-        //searchByCombobox.addActionListener(searchByCombobox);//
-        /* creating customer table with specified properties*/
-        /*customerTable = new JXTable() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };*/
-        //customerTable.enableInputMethods(false);
-        customerTable.setCellSelectionEnabled(false);
-        customerTable.setSelectionMode(0);
-        customerTable.setRowSelectionAllowed(true);
-        customerTable.setDragEnabled(false);
-        customerTable.getTableHeader().setReorderingAllowed(false);
-        customerTable.getTableHeader().setResizingAllowed(false);
-        //customerTable.addKeyListener(l);
-        customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                try {
-                    customerTableMouseClicked(evt);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-                    
-                } catch (SQLException ex) {
-                    Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-                    
-                }
-            }
-        });
-
-        try {
-            telephoneList = CustomerTelephoneController.getCustomersTelephoneNo();
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS " + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to SQL " + ex.getMessage());
-        }
-        try {
-            TableInit();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS " + ex.getMessage());
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to SQL " + ex.getMessage());
-        }
-        
-        
-        setTableSorter();
-        
-        searchByCombobox.addItem("CustomerID");
-        searchByCombobox.addItem("Name");
-        searchByCombobox.addItem("Balance");
+        loadView();
 
     }
 
@@ -134,7 +65,6 @@ public class ViewCustomerForm extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
-        editButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         searchByCombobox = new javax.swing.JComboBox<String>();
         searchTextBox = new javax.swing.JTextField();
@@ -156,15 +86,18 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         jLabel1.setText("  Customers");
 
         updateButton.setText("Update");
-
-        editButton.setText("Edit");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         searchByCombobox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -258,9 +191,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(searchTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
+                        .addGap(125, 125, 125)
                         .addComponent(updateButton)
                         .addGap(42, 42, 42)
                         .addComponent(deleteButton)))
@@ -299,7 +230,6 @@ public class ViewCustomerForm extends javax.swing.JDialog {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editButton)
                     .addComponent(updateButton)
                     .addComponent(deleteButton))
                 .addGap(30, 30, 30))
@@ -308,19 +238,68 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        // TODO add your handling code here:
+    private void loadView(){
+        customerList = new ArrayList<>();
+        phoneNoTableHeders = new String[]{"Phone Numbers"};
+        phoneNoTableModel = new DefaultTableModel(0, 0);
+        phoneNoTableModel.setColumnIdentifiers(phoneNoTableHeders);
+        phoneNumberTable.setModel(phoneNoTableModel);
+        phoneNoTableModel.addRow(new Object[]{""});
+        //phoneNoTableModel.addRow(new Object[]{""});
+        
+        tableHeaders = new String[]{"CustomerID", "Name", "Balance"};
+        defaulttablemodel = new DefaultTableModel(0, 0);
+        defaulttablemodel.setColumnIdentifiers(tableHeaders);
+        customerTable.setModel(defaulttablemodel);
+        customerTable.setCellSelectionEnabled(false);
+        customerTable.setSelectionMode(0);
+        customerTable.setRowSelectionAllowed(true);
+        customerTable.setDragEnabled(false);
+        customerTable.getTableHeader().setReorderingAllowed(false);
+        customerTable.getTableHeader().setResizingAllowed(false);
+        //customerTable.addKeyListener(l);
+        customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    customerTableMouseClicked(evt);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                }
+            }
+        });
+
         try {
-            editCustomer();
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Select a customer");
-        } catch (IndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Select a customer");
+            telephoneList = CustomerTelephoneController.getCustomersTelephoneNo();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS " + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to SQL " + ex.getMessage());
         }
-
-
-    }//GEN-LAST:event_editButtonActionPerformed
-
+        try {
+            TableInit();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS " + ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to view due to SQL " + ex.getMessage());
+        }
+        
+        
+        setTableSorter();
+        
+        searchByCombobox.addItem("CustomerID");
+        searchByCombobox.addItem("Name");
+        searchByCombobox.addItem("Balance");
+    
+    
+    }
     private void searchByComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByComboboxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchByComboboxActionPerformed
@@ -333,6 +312,38 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         searchTextBox.setText(""); 
         sorter.setRowFilter(null);// TODO add your handling code here:
     }//GEN-LAST:event_searchByComboboxItemStateChanged
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            updateCustomer();
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Select a customer");
+        } catch (IndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, "Select a customer");
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE??", null,JOptionPane.YES_NO_OPTION);
+            if(res == JOptionPane.YES_OPTION) {
+                deleteCustomer();
+            }
+            else if(res == JOptionPane.NO_OPTION) {
+                
+            }
+            
+        } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewCustomerForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,7 +392,6 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private javax.swing.JTextField addressTextField;
     private javax.swing.JTable customerTable;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -408,7 +418,35 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         //add(scrollpane);
     }
 
-    private void editCustomer() throws ArrayIndexOutOfBoundsException, IndexOutOfBoundsException {
+    private void deleteCustomer() throws ArrayIndexOutOfBoundsException, IndexOutOfBoundsException, ClassNotFoundException, SQLException {
+        int selectedRow = customerTable.getSelectedRow();
+        String selectedId = customerTable.getValueAt(selectedRow, 0).toString();
+        System.out.println(selectedId);
+        Customer selectedCustomer = null;
+        for (int i = 0; i < customerList.size(); i++) {
+            if (customerList.get(i).getCustomerId() == selectedId) {
+                selectedCustomer = customerList.get(i);
+            } else {
+                //selectedCustomer
+            }
+
+        }
+        
+        boolean dbChanged = false;
+        dbChanged = CustomerController.deleteCustomer(selectedCustomer);
+        
+        if (dbChanged==true) {
+            //JOptionPane.showMessageDialog(this, "Delete "+customer.getCustomerId()+"successfully");
+            JOptionPane.showMessageDialog(this, "Delete "+selectedId+"successfully");
+            loadView();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Unable to delete deleteCustomer");
+            TableInit();
+        }
+        
+    }
+    private void updateCustomer()throws ArrayIndexOutOfBoundsException, IndexOutOfBoundsException{
         int selectedRow = customerTable.getSelectedRow();
         String selectedId = customerTable.getValueAt(selectedRow, 0).toString();
         System.out.println(selectedId);
@@ -425,15 +463,11 @@ public class ViewCustomerForm extends javax.swing.JDialog {
         editSinglecustomer.setVisible(true);
         selectedRow = -1;
     }
-    
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) throws ClassNotFoundException, SQLException{
         //phoneNoTableModel.removeRow(phoneNoTableModel.getRowCount());
         for (int i = phoneNoTableModel.getRowCount()-1; i>=0 ; i--) {
             phoneNoTableModel.removeRow(i);
         }
-        
-        
-        
         
         String selectedId = customerTable.getValueAt(customerTable.getSelectedRow(), 0).toString();
         Customer selectedCustomer = null;        

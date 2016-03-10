@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/Spade%20Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/MainInterface.java</file>
             <file>file:/E:/Spade%20Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/UpdateCustPayment.java</file>
             <file>file:/E:/Spade%20Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/UpdatePayment.java</file>
@@ -12,6 +13,21 @@
             <file>file:/E:/Spade%20Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBHandler.java</file>
             <file>file:/E:/Spade%20Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/CustomerPaymentForm.java</file>
             <file>file:/E:/Spade%20Project/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/ViewCustomerForm.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/DeleteSupplier.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/ViewSupplier.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/AddSupplierForm.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/UpdateSupplier.java</file>
+=======
+            <file>file:/media/tdiluksha/626047056046E001/Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/Customer.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/AddCustomerForm.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/CustomerTelephone.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/ViewCustomerForm.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/EditSingleCustomer.java</file>
+            <file>file:/media/tdiluksha/626047056046E001/Projects/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
+>>>>>>> 026204aa5382589e5869d60f4fcdac8ab583fc80
+>>>>>>> 38e5045d825ced61ceb7144f24f7932f3c1de8f7
         </group>
     </open-files>
 </project-private>
