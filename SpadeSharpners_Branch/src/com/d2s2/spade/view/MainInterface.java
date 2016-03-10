@@ -9,6 +9,7 @@ import com.d2s2.spade.view.item.ViewItemForm;
 import com.d2s2.spade.view.supplier.AddSupplierForm;
 import com.d2s2.spade.view.customer.ViewCustomerForm;
 import com.d2s2.spade.view.item.UpdateItemForm;
+import com.d2s2.spade.view.supplier.DeleteSupplier;
 import com.d2s2.spade.view.supplier.ViewSupplier;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -28,6 +29,7 @@ public class MainInterface extends javax.swing.JFrame {
     private UpdateItemForm updateItemForm;
     private ViewSupplier viewSupplier;
     private UpdateCustPayment updateCustPayment;
+    private DeleteSupplier  deleteSupplier;
     /**
      * Creates new form MainInterface
      */
@@ -57,6 +59,7 @@ public class MainInterface extends javax.swing.JFrame {
         viewSupplierButton = new javax.swing.JButton();
         supplierOrderButtion = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        deleteSupplierButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,6 +128,13 @@ public class MainInterface extends javax.swing.JFrame {
             }
         });
 
+        deleteSupplierButton.setText("Delete Supplier");
+        deleteSupplierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteSupplierButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +156,9 @@ public class MainInterface extends javax.swing.JFrame {
                             .addComponent(addSupplierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(viewSupplierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deleteSupplierButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
@@ -161,8 +173,13 @@ public class MainInterface extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(jButton3)))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(deleteSupplierButton)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
@@ -261,6 +278,13 @@ public class MainInterface extends javax.swing.JFrame {
         updateCustPayment.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void deleteSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSupplierButtonActionPerformed
+        if(deleteSupplier==null){
+            deleteSupplier = new DeleteSupplier(this,true);
+        }
+        deleteSupplier.setVisible(true);
+    }//GEN-LAST:event_deleteSupplierButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +321,7 @@ public class MainInterface extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSupplierButton;
+    private javax.swing.JButton deleteSupplierButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
