@@ -7,7 +7,7 @@ package com.d2s2.spade.view.supplier;
 
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
-import com.d2s2.spade.models.SupplierTelephone;
+import com.d2s2.spade.models.SupplierBranch;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,6 +74,11 @@ public class ViewSupplier extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Keyword"));
 
+        idSearchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idSearchFieldActionPerformed(evt);
+            }
+        });
         idSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 idSearchFieldKeyReleased(evt);
@@ -154,7 +159,7 @@ public class ViewSupplier extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Contact Name ", "Telephone Number"
+                "Contact Name ", "Telephone Number", "Address", "Branch Name", "Branch ID"
             }
         ));
         jScrollPane2.setViewportView(contactTable);
@@ -164,9 +169,9 @@ public class ViewSupplier extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGap(63, 63, 63)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +196,7 @@ public class ViewSupplier extends javax.swing.JDialog {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(89, 89, 89)
                         .addComponent(jLabel1)))
-                .addContainerGap(1011, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,6 +247,10 @@ public class ViewSupplier extends javax.swing.JDialog {
         
     }//GEN-LAST:event_idSearchFieldKeyReleased
 
+    private void idSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idSearchFieldActionPerformed
+        
+    }//GEN-LAST:event_idSearchFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -284,12 +293,12 @@ public class ViewSupplier extends javax.swing.JDialog {
         });
     }
     public void createModel(){
-        Object[] columns={"ID","Name", "Adress", "Email"};
+        Object[] columns={"ID","Name", "Address", "Email"};
         model.setColumnIdentifiers(columns);
         setModel(model);
     }
      public void createContactModel(){
-        Object[] columns={"Contact Name","Telephone Number"};
+        Object[] columns={"Branch Name","Branch ID","Address","Contact Name","Contact No","Supplier ID"};
         contactModel.setColumnIdentifiers(columns);
         setContactModel(contactModel);
     }
@@ -325,16 +334,16 @@ public class ViewSupplier extends javax.swing.JDialog {
       
         
         for (Supplier spl : supplierList) {
-             System.out.println(spl.getSupplierId()+spl.getName()+spl.getAddress()+spl.getEmail());
-             newModel.addRow(new Object[]{spl.getSupplierId(),spl.getName(),spl.getAddress(),spl.getEmail()});
+             System.out.println(spl.getSupplierId()+spl.getName()+spl.getEmail());
+             newModel.addRow(new Object[]{spl.getSupplierId(),spl.getName(),spl.getEmail()});
         }
         return model;
     }
     private DefaultTableModel getSpecificSupplierDetails(String ID, DefaultTableModel model) throws ClassNotFoundException, SQLException{
-        ArrayList<SupplierTelephone> supplierContactList = SupplierController.getSupplierContactInfo(ID);
-        for (SupplierTelephone contact : supplierContactList) {
-            model.addRow(new Object[]{ID,contact.getContactName(),contact.getTelNo()});
-            System.out.println("Contact Name="+ contact.getContactName()+contact.getTelNo());
+        ArrayList<SupplierBranch> supplierContactList = SupplierController.getSupplierContactInfo(ID);
+        for (SupplierBranch contact : supplierContactList) {
+            model.addRow(new Object[]{contact.getBranchName(),contact.getBranchId(),contact.getAddress(),contact.getContactName(),contact.getTelNo()});
+            
         }
         return model;
     }

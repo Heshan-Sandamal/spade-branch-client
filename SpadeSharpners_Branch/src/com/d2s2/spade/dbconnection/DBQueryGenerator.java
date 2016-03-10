@@ -80,5 +80,12 @@ public class DBQueryGenerator {
     public static String deleteQuery(String tablename, String columnName){
         return "DELETE FROM " +tablename+ " WHERE " +columnName+ "=?";
     }
+    public static String insertQueryBranch(String tableName){
+        String sql="INSERT INTO "+tableName +" (supplierId,branchName,address,contactName,telNo)Values("+"?,"+"?,"+"?,"+"?,"+"?)";
+        return sql;
+        
+    }
+    
+    
     
 }

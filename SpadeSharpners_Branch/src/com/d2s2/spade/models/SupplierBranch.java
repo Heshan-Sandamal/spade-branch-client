@@ -5,8 +5,19 @@ package com.d2s2.spade.models;
  *
  * @author Dimuth Tharaka
  */
-public class SupplierTelephone {
+public class SupplierBranch {
     String supplierId ;
+    int branchId;
+
+    public int getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
+    }
+    String branchName;
+    String address;
     String contactName ;
     String telNo ;
 
@@ -16,6 +27,22 @@ public class SupplierTelephone {
 
     public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branhcName) {
+        this.branchName = branhcName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getContactName() {
@@ -33,6 +60,8 @@ public class SupplierTelephone {
     public void setTelNo(String telNo) {
         this.telNo = telNo;
     }
+    
+
     
     
 }

@@ -17,13 +17,17 @@ public class CustCheque {
     private String bank;
     private Date expiryDate;
     private Date issueDate;
-    
+    private String status;
     public static final String PAYMENTID="paymentId";
     public static final String CHEQUENO="chequeNo";
     public static final String BANK="bank";
-    public static final String EXPIRYDATE="expiryDate";
+    public static final String EXPIRYDATE="expDate";
     public static final String ISSUEDATE="issueDate";
-    
+    public static final String STATUS="status";
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     public String getPaymentId() {
         return paymentId;
     }
@@ -62,6 +66,10 @@ public class CustCheque {
 
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
+    }
+
+    public String getStatus() {
+       return status;
     }
     
     
