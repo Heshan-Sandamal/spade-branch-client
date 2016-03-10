@@ -43,7 +43,6 @@
           <Group type="102" attributes="0">
               <EmptySpace min="383" pref="383" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="updateButton" linkSize="4" min="-2" max="-2" attributes="0"/>
                   <Component id="deleteButton" linkSize="4" min="-2" max="-2" attributes="0"/>
                   <Component id="saveButton" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -74,9 +73,7 @@
                   <Component id="addNewPhoneLable" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="addNewPhonTextbox" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="updateButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Component id="saveButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
@@ -111,14 +108,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="AddressTextField">
-    </Component>
-    <Component class="javax.swing.JButton" name="updateButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Update"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="deleteButton">
       <Properties>

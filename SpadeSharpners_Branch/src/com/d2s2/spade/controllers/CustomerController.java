@@ -120,9 +120,6 @@ public class CustomerController {
         return telephoneNoList;
     }
 
-    
-    
-    
     public static String getLastPaymentId() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
         String sql = "SELECT paymentId FROM custpayment ORDER BY paymentId DESC LIMIT 1";
