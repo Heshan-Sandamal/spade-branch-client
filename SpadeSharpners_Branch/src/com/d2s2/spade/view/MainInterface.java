@@ -9,7 +9,11 @@ import com.d2s2.spade.view.item.ViewItemForm;
 import com.d2s2.spade.view.supplier.AddSupplierForm;
 import com.d2s2.spade.view.customer.ViewCustomerForm;
 import com.d2s2.spade.view.item.UpdateItemForm;
+import com.d2s2.spade.view.order.supplier.SupplierOrderForm;
 import com.d2s2.spade.view.supplier.ViewSupplier;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Heshan Sandamal
@@ -25,6 +29,7 @@ public class MainInterface extends javax.swing.JFrame {
     private UpdateItemForm updateItemForm;
     private ViewSupplier viewSupplier;
     private UpdateCustPayment updateCustPayment;
+    private SupplierOrderForm supplierOrderForm;
     /**
      * Creates new form MainInterface
      */
@@ -114,6 +119,11 @@ public class MainInterface extends javax.swing.JFrame {
         });
 
         supplierOrderButtion.setText("Supplier Order");
+        supplierOrderButtion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierOrderButtionActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Update Payment");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -197,7 +207,13 @@ public class MainInterface extends javax.swing.JFrame {
 
     private void addSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSupplierButtonActionPerformed
         if (addSupplierForm == null) {
-            addSupplierForm = new AddSupplierForm(this, true);
+            try {
+                addSupplierForm = new AddSupplierForm(this, true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         addSupplierForm.setVisible(true);
@@ -251,6 +267,14 @@ public class MainInterface extends javax.swing.JFrame {
         }
         updateCustPayment.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void supplierOrderButtionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierOrderButtionActionPerformed
+        if (supplierOrderForm == null) {
+            supplierOrderForm = new SupplierOrderForm(this, true);
+        }
+        
+        supplierOrderForm.setVisible(true);
+    }//GEN-LAST:event_supplierOrderButtionActionPerformed
 
     /**
      * @param args the command line arguments
