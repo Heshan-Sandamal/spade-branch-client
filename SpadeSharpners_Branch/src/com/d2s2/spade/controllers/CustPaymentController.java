@@ -8,6 +8,7 @@ package com.d2s2.spade.controllers;
 import com.d2s2.spade.dbconnection.DBConnection;
 import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
+import com.d2s2.spade.models.CustCheque;
 import com.d2s2.spade.models.CustDebt;
 import com.d2s2.spade.models.CustPayment;
 import com.d2s2.spade.models.paymentType;
@@ -22,14 +23,7 @@ import java.util.ArrayList;
  * @author Dimuth Tharaka
  */
 public class CustPaymentController {
-    public static double getCustomerDebt(String customerID) throws ClassNotFoundException, SQLException {
-        Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectAllQuery(CustDebt.class.getSimpleName());
-        ResultSet resultSet = DBHandler.getData(connection, sql,new Object[]{customerID});
-        resultSet.next();
-        return resultSet.getInt(CustDebt.AMOUNT);
-    }
-
+    
     public static ArrayList<CustPayment> getPaymentInfo() throws ClassNotFoundException, SQLException{
         ArrayList<CustPayment> CustPayment=new ArrayList<>();
         Connection connection = DBConnection.getDBConnection().getConnection();
@@ -83,4 +77,20 @@ public class CustPaymentController {
         }
         
     }   
+    public static boolean deletePayment(String paymentId) throws ClassNotFoundException, SQLException{
+        int executedPayment = 0;
+        int executedCheque = 0;
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sqlPayment = DBQueryGenerator.deleteQuery(CustPayment.class.getSimpleName(), CustPayment.PAYMENTID);
+        String sqlCheque = DBQueryGenerator.deleteQuery(CustCheque.class.getSimpleName(), CustCheque.PAYMENTID);
+        executedPayment = DBHandler.deleteData(connection, sqlPayment, new Object[]{ paymentId});
+        //executedCheque=DBHandler.deleteData(connection, sqlCheque, new Object[]{paymentId});
+        if (executedPayment==0){
+            return false;
+        }
+        else{
+            return true;
+        }
+        
+    }
 }

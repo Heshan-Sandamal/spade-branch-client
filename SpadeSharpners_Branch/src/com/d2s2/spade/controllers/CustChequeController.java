@@ -27,11 +27,9 @@ public class CustChequeController {
     public static CustCheque getChequeDetails(String paymentID) throws ClassNotFoundException, SQLException {
         CustCheque custCheque=null;
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{CustCheque.BANK, CustCheque.CHEQUENO, CustCheque.EXPIRYDATE,
-            CustCheque.ISSUEDATE, CustCheque.PAYMENTID, CustCheque.STATUS}, CustCheque.class.getSimpleName(), CustCheque.PAYMENTID);
-        ResultSet resultSet = DBHandler.getData(connection, sql, new Object[]{paymentID});
-        resultSet.next();
-        
+        String sql = DBQueryGenerator.selectwhereQuery("CustCheque","paymentId");
+        ResultSet resultSet = DBHandler.getData(connection,sql,new Object[]{paymentID});
+
         if (resultSet.next()) {
             custCheque = new CustCheque();
             custCheque.setBank(resultSet.getString(CustCheque.BANK));
@@ -42,6 +40,7 @@ public class CustChequeController {
             custCheque.setIssueDate(Date.valueOf(resultSet.getString(CustCheque.ISSUEDATE)));
             custCheque.setPaymentId(resultSet.getString(CustCheque.PAYMENTID));
             custCheque.setStatus(resultSet.getString(CustCheque.STATUS));
+            System.out.println("Bank"+custCheque.getBank());
         }
         return custCheque;
     }
