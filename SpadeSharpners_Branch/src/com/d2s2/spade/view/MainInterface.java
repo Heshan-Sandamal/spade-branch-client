@@ -269,7 +269,11 @@ public class MainInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void supplierOrderButtionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierOrderButtionActionPerformed
+        if (supplierOrderForm == null) {
+            supplierOrderForm = new SupplierOrderForm(this, true);
+        }
         
+        supplierOrderForm.setVisible(true);
     }//GEN-LAST:event_supplierOrderButtionActionPerformed
 
     /**
