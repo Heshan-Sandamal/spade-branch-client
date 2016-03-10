@@ -58,7 +58,7 @@ CREATE TABLE CustDebt(
 CREATE TABLE Supplier(
 	supplierId varchar(10),
 	name varchar(30),
-	email varchar(15),
+	email varchar(30),
 	PRIMARY KEY(supplierId)
 );
 
