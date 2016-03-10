@@ -24,13 +24,14 @@ import org.jdesktop.swingx.JXTable;
  * @author tdiluksha
  */
 public class EditSingleCustomer extends javax.swing.JDialog {
-    
+
     private Customer customer;
     private ArrayList<String> telephoneNo;
     private JScrollPane scrollpane;
     private JTable phonenumberTable;
     private DefaultTableModel defaulttablemodel;
     private ArrayList<String> newTelephoneNoList;
+
     /**
      * Creates new form ViewSingleCustomer
      */
@@ -56,29 +57,26 @@ public class EditSingleCustomer extends javax.swing.JDialog {
                 return false;               
         };}*/;
         phonenumberTable.setEnabled(true);
-        
+
         scrollpane = new JScrollPane();
         scrollpane.setBounds(150, 200, 100, 100);
-        
-        
-        
-        
+
         try {
             showPhoneNo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to view due to CLASS " + ex.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to view due to SQL "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to view due to SQL " + ex.getMessage());
         }
     }
-    
+
     public EditSingleCustomer(java.awt.Frame parent, boolean modal, Customer customer) {
-    
+
         super(parent, modal);
         initComponents();
-    
+
     }
 
     /**
@@ -189,17 +187,17 @@ public class EditSingleCustomer extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-        saveToDB();
-        
-    }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         try {
             // TODO add your handling code here:
-            int res = JOptionPane.showConfirmDialog(null, "Are you sure??", null,JOptionPane.YES_NO_OPTION);
+            int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to update??", null,JOptionPane.YES_NO_OPTION);
             if(res == JOptionPane.YES_OPTION) {
-                deleteCustomer();
+                if (NameTextField.getText().isEmpty() || AddressTextField.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Please insert correct values for Name and Address");
+                }
+                else{
+                  saveToDB();  
+                }
+                
             }
             else if(res == JOptionPane.NO_OPTION) {
                 
@@ -207,10 +205,30 @@ public class EditSingleCustomer extends javax.swing.JDialog {
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to delete due to CLASS deleteButton "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to update Customer due to " + ex.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to delete due to SQL deleteButton "+ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Unable to update Customer due to " + ex.getMessage());
+        }
+
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE??", null, JOptionPane.YES_NO_OPTION);
+            if (res == JOptionPane.YES_OPTION) {
+                deleteCustomer();
+            } else if (res == JOptionPane.NO_OPTION) {
+
+            }
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to delete due to CLASS deleteButton " + ex.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(EditSingleCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to delete due to SQL deleteButton " + ex.getMessage());
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -241,33 +259,6 @@ public class EditSingleCustomer extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ViewSingleCustomer dialog = new ViewSingleCustomer(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditSingleCustomer dialog = new EditSingleCustomer(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -284,23 +275,22 @@ public class EditSingleCustomer extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void showPhoneNo() throws ClassNotFoundException, SQLException {
-        
-        defaulttablemodel = new DefaultTableModel(0,0);
-        String[] tableHeaders = new String[] {"Telephone Numbers"};
+
+        defaulttablemodel = new DefaultTableModel(0, 0);
+        String[] tableHeaders = new String[]{"Telephone Numbers"};
         defaulttablemodel.setColumnIdentifiers(tableHeaders);
         phonenumberTable.setModel(defaulttablemodel);
-        
+
         telephoneNo = CustomerController.viewCustomerPhone("CustomerTelephone", customer.getCustomerId());
-        
+
         /* customer table data */
-        for (int i=0; i<telephoneNo.size();i++){
+        for (int i = 0; i < telephoneNo.size(); i++) {
             Vector<Object> telno = new Vector<Object>();
             telno.add(telephoneNo.get(i));
-            
+
             defaulttablemodel.addRow(telno);
         }
-        
-        
+
         /*for (int i=0; i<50; i++){
             Vector<Object> data = new Vector<Object>();
             data.add("000"+i);
@@ -308,38 +298,54 @@ public class EditSingleCustomer extends javax.swing.JDialog {
             data.add("Balance"+i);
             defaulttablemodel.addRow(data);
         }*/
-        
-        
-
         scrollpane.setViewportView(phonenumberTable);
         add(scrollpane);
-        
+
     }
-    
-    private void saveToDB(){
+
+    private void saveToDB() throws ClassNotFoundException, SQLException {
+
         newTelephoneNoList = new ArrayList<>();
         String updatedName = NameTextField.getText();
         String updatedAddress = AddressTextField.getText();
         for (int i = 0; i < defaulttablemodel.getRowCount(); i++) {
-            if (defaulttablemodel.getValueAt(i, 0).toString()!=null){
-               newTelephoneNoList.add(defaulttablemodel.getValueAt(i, 0).toString());  
-            }      
+            if (defaulttablemodel.getValueAt(i, 0).toString() != null) {
+                newTelephoneNoList.add(defaulttablemodel.getValueAt(i, 0).toString());
+            }
         }
-        if (addNewPhonTextbox.getText()!=null){
+        if (addNewPhonTextbox.getText() != null) {
             newTelephoneNoList.add(addNewPhonTextbox.getText());
         }
-        
-        System.out.println(phonenumberTable.getEditingColumn());    
+
+        System.out.println(phonenumberTable.getEditingColumn());
+        ArrayList<CustomerTelephone> editedCustomerTelephone = new ArrayList<CustomerTelephone>();
+
+        for (int i = 0; i < newTelephoneNoList.size(); i++) {
+            //Object object = newTelephoneNoList[i];
+            editedCustomerTelephone.add(new CustomerTelephone(IDTextfield.getText(), newTelephoneNoList.get(i)));
+        }
+        //CustomerTelephone editedCustomerTelephone = new CustomerTelephone(IDTextfield.getText(), newTelephoneNoList);
+        Customer newEditedCustomer = new Customer(IDTextfield.getText(), updatedName, updatedAddress, editedCustomerTelephone);
+
+        boolean updated = CustomerController.updateCustomer(customer, newEditedCustomer);
+
+        if (updated) {
+            JOptionPane.showMessageDialog(this, "Update " + customer.getCustomerId() + "successfully");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Unable to update Customer");
+        }
+
     }
-    
-    private void deleteCustomer()throws ClassNotFoundException, SQLException{
+
+    private void deleteCustomer() throws ClassNotFoundException, SQLException {
         boolean dbChanged = false;
         dbChanged = CustomerController.deleteCustomer(customer);
-        
-        if (dbChanged==true) {
-            JOptionPane.showMessageDialog(this, "Delete "+customer.getCustomerId()+"successfully");
-        }
-        else {
+
+        if (dbChanged == true) {
+            JOptionPane.showMessageDialog(this, "Delete " + customer.getCustomerId() + "successfully");
+            this.dispose();
+        } else {
             JOptionPane.showMessageDialog(this, "Unable to delete deleteCustomer");
         }
     }

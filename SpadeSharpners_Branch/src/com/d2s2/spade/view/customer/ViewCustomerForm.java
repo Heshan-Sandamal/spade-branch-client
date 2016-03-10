@@ -328,7 +328,7 @@ public class ViewCustomerForm extends javax.swing.JDialog {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         try {
             // TODO add your handling code here:
-            int res = JOptionPane.showConfirmDialog(null, "Are you sure??", null,JOptionPane.YES_NO_OPTION);
+            int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE??", null,JOptionPane.YES_NO_OPTION);
             if(res == JOptionPane.YES_OPTION) {
                 deleteCustomer();
             }
