@@ -5,9 +5,14 @@
  */
 package com.d2s2.spade.view.customer;
 
+import com.d2s2.spade.controllers.CustChequeController;
+import com.d2s2.spade.controllers.CustPaymentController;
 import com.d2s2.spade.models.CustCheque;
 import com.d2s2.spade.models.CustPayment;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -42,7 +47,7 @@ public class UpdatePayment extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        paymentIDText = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         chequeRadioButton = new javax.swing.JRadioButton();
         cashRadioButton = new javax.swing.JRadioButton();
@@ -75,8 +80,8 @@ public class UpdatePayment extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Update Payment Info for ");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Payment ID");
+        paymentIDText.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        paymentIDText.setText("Payment ID");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Payment Type"));
 
@@ -193,6 +198,11 @@ public class UpdatePayment extends javax.swing.JDialog {
         jXLabel3.setText("Date");
 
         jXButton1.setText("Update");
+        jXButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXButton1ActionPerformed(evt);
+            }
+        });
 
         jXButton2.setText("Cancel");
         jXButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -236,7 +246,7 @@ public class UpdatePayment extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addGap(113, 113, 113))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(paymentIDText)
                         .addGap(177, 177, 177))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jXButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,7 +260,7 @@ public class UpdatePayment extends javax.swing.JDialog {
                 .addGap(48, 48, 48)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(paymentIDText)
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
@@ -301,6 +311,19 @@ public class UpdatePayment extends javax.swing.JDialog {
     private void jXButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jXButton2ActionPerformed
+
+    private void jXButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton1ActionPerformed
+        try {
+            CustPaymentController.deletePayment(this.custPayment.getPaymentId());
+            CustChequeController.deleteCheque(this.custPayment.getPaymentId());
+            CustPaymentController.addPaymentInfo(getUpdatedPayment());
+            CustChequeController.addCheque(getUpdatedCheque());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UpdatePayment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdatePayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jXButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,7 +381,6 @@ public class UpdatePayment extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -368,6 +390,7 @@ public class UpdatePayment extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXLabel jXLabel1;
     private org.jdesktop.swingx.JXLabel jXLabel2;
     private org.jdesktop.swingx.JXLabel jXLabel3;
+    private javax.swing.JLabel paymentIDText;
     private javax.swing.JTextField statusTextField;
     // End of variables declaration//GEN-END:variables
 
@@ -377,6 +400,7 @@ public class UpdatePayment extends javax.swing.JDialog {
         discountText.setText(String.valueOf(custPayment.getDiscount()));
         date.setDate(Date.valueOf(custPayment.getDate()));
         if (custCheque!=null) {
+            paymentIDText.setText(custPayment.getPaymentId());
             chequeRadioButton.setSelected(true);
             chequeRadioButton.setEnabled(true);
             cashRadioButton.setSelected(false);
@@ -393,5 +417,31 @@ public class UpdatePayment extends javax.swing.JDialog {
             statusTextField.setEnabled(true);
             
         }
+    }
+
+    private CustPayment getUpdatedPayment() {
+        CustPayment cp=new CustPayment();
+        cp.setPaymentId(paymentIDText.getText());
+        
+        if (custCheque==null) {
+            cp.setType("csh");
+        }else{
+            cp.setType("cs");
+        }
+        cp.setDiscount(Double.valueOf(discountText.getText()));
+        cp.setCustomerId(this.custPayment.getCustomerId());
+        cp.setDate(date.getDate().toString());
+        
+        return cp;
+    }
+    private CustCheque getUpdatedCheque(){
+        CustCheque cc=new CustCheque();
+        cc.setBank((String) BankComboBox.getSelectedItem());
+        cc.setChequeNo(chequeNoTextField.getText());
+        cc.setExpiryDate((Date) expiryDatePicker.getDate());
+        cc.setIssueDate((Date) issueDatePicker.getDate());
+        cc.setPaymentId(this.custPayment.getPaymentId());
+        cc.setStatus(statusTextField.getText());
+        return cc;
     }
 }

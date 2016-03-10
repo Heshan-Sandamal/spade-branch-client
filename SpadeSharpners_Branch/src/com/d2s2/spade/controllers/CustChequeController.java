@@ -44,4 +44,21 @@ public class CustChequeController {
         }
         return custCheque;
     }
+    
+    public static boolean addCheque(CustCheque cc) throws ClassNotFoundException, SQLException{
+        
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String insertQuery = DBQueryGenerator.insertQuery(CustCheque.class.getSimpleName(), 6);
+        int affectedRows = DBHandler.setData(connection, insertQuery,new Object[]{cc.getPaymentId(),cc.getChequeNo(),cc.getBank(),cc.getExpiryDate(),cc.getIssueDate(),cc.getStatus()});
+        return affectedRows!=0;
+        
+    }
+    public static boolean deleteCheque(String paymenntID) throws ClassNotFoundException, SQLException{
+        
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String deleteQuery = DBQueryGenerator.deleteQuery(CustCheque.class.getSimpleName(), CustCheque.PAYMENTID);
+        int deleteData = DBHandler.deleteData(connection, deleteQuery, new Object[]{paymenntID});
+        return deleteData!=0;
+    }
+
 }
