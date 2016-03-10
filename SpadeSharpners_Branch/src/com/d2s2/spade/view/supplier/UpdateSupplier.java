@@ -5,7 +5,13 @@
  */
 package com.d2s2.spade.view.supplier;
 
+import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
+import com.d2s2.spade.models.SupplierBranch;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,16 +20,29 @@ import javax.swing.table.DefaultTableModel;
  * @author Dimuth Tharaka
  */
 public class UpdateSupplier extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form UpdateSupplier
      */
-    public UpdateSupplier(Supplier supplier) {
+    public UpdateSupplier(Supplier supplier,ArrayList<SupplierBranch> supplierBranchList) throws ClassNotFoundException, SQLException {
         initComponents();
+        this.supplierBranchList=supplierBranchList;
+        this.supplier=supplier;
+        
+        this.IdField.setText(supplier.getSupplierId());
+        this.NameField.setText(supplier.getName());
+        this.EmailField.setText(supplier.getEmail());
+        
+        createContactModel();
+        contactModel=getTableModel(contactModel,supplierBranchList);
     }
-    public UpdateSupplier() {
-        initComponents();
+     public void createContactModel(){
+        Object[] columns={"Branch Name","Address","Contact Name","Contact No"};
+        contactModel.setColumnIdentifiers(columns);
+        setContactModel(contactModel);
     }
+    
 
 
     /**
@@ -301,7 +320,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
         }
         else{
 
-            model.addRow(row);
+            contactModel.addRow(row);
             clearBranchInputFields();
         }
 
@@ -351,7 +370,13 @@ public class UpdateSupplier extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UpdateSupplier().setVisible(true);
+                try {
+                    new UpdateSupplier(supplier,supplierBranchList).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(UpdateSupplier.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UpdateSupplier.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -379,9 +404,11 @@ public class UpdateSupplier extends javax.swing.JFrame {
     private javax.swing.JButton removeFromTableButton;
     private javax.swing.JTextField telephoneNumberField;
     // End of variables declaration//GEN-END:variables
-private Object row[]  = new Object[5];
+    private static Supplier supplier;
+    private  DefaultTableModel contactModel= new DefaultTableModel();
+    private Object row[]  = new Object[5];
     private DefaultTableModel model = new DefaultTableModel();
-
+    private static ArrayList<SupplierBranch> supplierBranchList;
     private void clearBranchInputFields() {
         branchField.setText(null);
         branchAddressField.setText(null);
@@ -389,5 +416,22 @@ private Object row[]  = new Object[5];
         telephoneNumberField.setText(null);
         
     }
+    
+    
+     private void setContactModel(DefaultTableModel newmodel){
+        contactDetailTable.setModel(contactModel);
+
+    }
+     private DefaultTableModel getTableModel(DefaultTableModel model,ArrayList<SupplierBranch> supplierContactList) throws ClassNotFoundException, SQLException{
+        
+        for (SupplierBranch contact : supplierContactList) {
+           
+            
+            contactModel.addRow(new Object[]{contact.getBranchName(),contact.getAddress(),contact.getContactName(),contact.getTelNo()});
+            
+        }
+        return contactModel;
+    }
+    
 }
 

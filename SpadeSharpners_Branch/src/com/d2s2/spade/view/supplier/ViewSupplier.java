@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -61,7 +62,7 @@ public class ViewSupplier extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         supplierDetailsTable = new org.jdesktop.swingx.JXTable();
-        jButton1 = new javax.swing.JButton();
+        updateSupplierButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         contactTable = new org.jdesktop.swingx.JXTable();
@@ -136,7 +137,12 @@ public class ViewSupplier extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(supplierDetailsTable);
 
-        jButton1.setText("Update Supplier Details");
+        updateSupplierButton.setText("Update Supplier Details");
+        updateSupplierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateSupplierButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -149,7 +155,7 @@ public class ViewSupplier extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(updateSupplierButton)
                         .addGap(23, 23, 23))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -158,7 +164,7 @@ public class ViewSupplier extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addComponent(updateSupplierButton))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Contact Information"));
@@ -220,7 +226,7 @@ public class ViewSupplier extends javax.swing.JDialog {
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 375, Short.MAX_VALUE))
                 .addGap(76, 76, 76))
         );
 
@@ -257,6 +263,38 @@ public class ViewSupplier extends javax.swing.JDialog {
         setTableSorter();
 
     }//GEN-LAST:event_supplierDetailsTableMouseClicked
+
+    private void updateSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSupplierButtonActionPerformed
+        Supplier supplier = new Supplier();
+        int clickedRow =supplierDetailsTable.getSelectedRow();   
+        
+        System.out.println(clickedRow);
+        supplier.setSupplierId((String) supplierDetailsTable.getValueAt(clickedRow, 0));
+        supplier.setName((String) supplierDetailsTable.getValueAt(clickedRow, 1));
+        supplier.setEmail((String) supplierDetailsTable.getValueAt(clickedRow, 2));
+        ArrayList<SupplierBranch> supplierBranchList = new ArrayList<SupplierBranch>();
+        for (int count = 0; count < model.getRowCount(); count++){
+            SupplierBranch supplierBranch = new SupplierBranch();
+            supplierBranch.setSupplierId((String) supplierDetailsTable.getValueAt(clickedRow, 0));
+            supplierBranch.setBranchName((String) contactModel.getValueAt(count,0));
+            supplierBranch.setBranchId((int) contactModel.getValueAt(count,1));
+            supplierBranch.setAddress((String) contactModel.getValueAt(count,2));
+            supplierBranch.setContactName((String) contactModel.getValueAt(count,3));
+            supplierBranch.setTelNo((String) contactModel.getValueAt(count,4));
+            supplierBranchList.add(supplierBranch);
+        this.dispose();
+        JFrame supplierUpdate=null;
+            try {
+                supplierUpdate = new UpdateSupplier(supplier,supplierBranchList);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ViewSupplier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        supplierUpdate.setVisible(true);
+        
+        } 
+    }//GEN-LAST:event_updateSupplierButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,7 +352,6 @@ public class ViewSupplier extends javax.swing.JDialog {
     private javax.swing.JLabel IDrequestLabel;
     private org.jdesktop.swingx.JXTable contactTable;
     private org.jdesktop.swingx.JXSearchField idSearchField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -323,6 +360,7 @@ public class ViewSupplier extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton searchButton;
     private org.jdesktop.swingx.JXTable supplierDetailsTable;
+    private javax.swing.JButton updateSupplierButton;
     // End of variables declaration//GEN-END:variables
     private Object row[]  = new Object[4];
     private DefaultTableModel contactModel = new DefaultTableModel();
