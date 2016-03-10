@@ -57,8 +57,10 @@ public class AddSupplierForm extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         branchAddressField = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jXTable2 = new org.jdesktop.swingx.JXTable();
+        contactDetailTable = new org.jdesktop.swingx.JXTable();
         addToTableButton = new javax.swing.JButton();
+        removeFromTableButton = new javax.swing.JButton();
+        editSelectedRowButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -106,7 +108,7 @@ public class AddSupplierForm extends javax.swing.JDialog {
             }
         });
 
-        jXTable2.setModel(new javax.swing.table.DefaultTableModel(
+        contactDetailTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -123,12 +125,26 @@ public class AddSupplierForm extends javax.swing.JDialog {
                 "Branch", "Telephone Number", "Contact Name", "Address"
             }
         ));
-        jScrollPane2.setViewportView(jXTable2);
+        jScrollPane2.setViewportView(contactDetailTable);
 
         addToTableButton.setText("Add to Table");
         addToTableButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addToTableButtonActionPerformed(evt);
+            }
+        });
+
+        removeFromTableButton.setText("Remove From Table");
+        removeFromTableButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFromTableButtonActionPerformed(evt);
+            }
+        });
+
+        editSelectedRowButton.setText("Edit Selected row");
+        editSelectedRowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSelectedRowButtonActionPerformed(evt);
             }
         });
 
@@ -138,33 +154,40 @@ public class AddSupplierForm extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(addToTableButton)
-                            .addGap(36, 36, 36))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(branchAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(43, 43, 43))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(telephoneNumberField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                                    .addComponent(contactNameField, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                                .addComponent(branchField, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, Short.MAX_VALUE)))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(addToTableButton)
+                                    .addGap(36, 36, 36))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(branchAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(43, 43, 43))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(telephoneNumberField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                                            .addComponent(contactNameField, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                                        .addComponent(branchField, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, Short.MAX_VALUE)))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(editSelectedRowButton)
+                        .addGap(47, 47, 47)
+                        .addComponent(removeFromTableButton)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -192,7 +215,14 @@ public class AddSupplierForm extends javax.swing.JDialog {
                             .addComponent(jLabel7))
                         .addGap(26, 26, 26)
                         .addComponent(addToTableButton)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(removeFromTableButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(editSelectedRowButton)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -268,7 +298,7 @@ public class AddSupplierForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(EmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -284,13 +314,19 @@ public class AddSupplierForm extends javax.swing.JDialog {
     
     private void createSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSupplierButtonActionPerformed
         try {
-            boolean addSupplierToDB = addSupplierToDB();
+            if(contactDetailTable.getRowCount()==0 || IdField.getText().isEmpty() || NameField.getText().isEmpty() || EmailField.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please Fill all the information Before adding to database");
+            }
+            else{
+                boolean addSupplierToDB = addSupplierToDB();
             if(addSupplierToDB){
                 JOptionPane.showMessageDialog(this, "Added Successfully");
             }else{
                 JOptionPane.showMessageDialog(this, "Faild to add.");
             }
             this.dispose();
+            }
+            
 
         }
         catch (ClassNotFoundException | SQLException ex) {
@@ -309,9 +345,17 @@ public class AddSupplierForm extends javax.swing.JDialog {
         row[2]=contactNameField.getText();
         row[3]=telephoneNumberField.getText();
         
-        System.out.println(row);
+        if(row[0].equals("") || row[1].equals("") ||row[2].equals("") || row[3].equals("")){
+            JOptionPane.showMessageDialog(this, "Please fill all details to add to table");
+        }
+        else{
+            
+            model.addRow(row);
+            clearBranchInputFields();
+        }
         
-        model.addRow(row);
+        
+        
 
     }//GEN-LAST:event_addToTableButtonActionPerformed
 
@@ -330,6 +374,20 @@ public class AddSupplierForm extends javax.swing.JDialog {
     private void branchAddressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_branchAddressFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_branchAddressFieldActionPerformed
+
+    private void removeFromTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromTableButtonActionPerformed
+        int selectedRow =contactDetailTable.getSelectedRow();
+        model.removeRow(selectedRow);
+    }//GEN-LAST:event_removeFromTableButtonActionPerformed
+
+    private void editSelectedRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSelectedRowButtonActionPerformed
+       int selectedRow =contactDetailTable.getSelectedRow();
+       branchField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 0));
+       branchAddressField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 1));
+       contactNameField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 2));
+       telephoneNumberField.setText((String) contactDetailTable.getModel().getValueAt(selectedRow, 3));
+       model.removeRow(selectedRow);
+    }//GEN-LAST:event_editSelectedRowButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,8 +446,10 @@ public class AddSupplierForm extends javax.swing.JDialog {
     private javax.swing.JButton addToTableButton;
     private javax.swing.JTextField branchAddressField;
     private javax.swing.JTextField branchField;
+    private org.jdesktop.swingx.JXTable contactDetailTable;
     private javax.swing.JTextField contactNameField;
     private javax.swing.JToggleButton createSupplierButton;
+    private javax.swing.JButton editSelectedRowButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -401,7 +461,7 @@ public class AddSupplierForm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToggleButton jToggleButton2;
-    private org.jdesktop.swingx.JXTable jXTable2;
+    private javax.swing.JButton removeFromTableButton;
     private javax.swing.JTextField telephoneNumberField;
     // End of variables declaration//GEN-END:variables
     private Object row[]  = new Object[5];
@@ -436,8 +496,15 @@ public  boolean addSupplierToDB() throws ClassNotFoundException, SQLException{
         
 }
  private void setModel(DefaultTableModel model){
-        jXTable2.setModel(model);
+        contactDetailTable.setModel(model);
 
+    }
+
+    private void clearBranchInputFields() {
+        branchField.setText(null);
+        branchAddressField.setText(null);
+        contactNameField.setText(null);
+        telephoneNumberField.setText(null);
     }
 }
 
