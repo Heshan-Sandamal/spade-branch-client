@@ -230,10 +230,11 @@ public class AddCustomerForm extends javax.swing.JDialog {
             boolean addCustomerToDB = addCustomerToDB();
             if (addCustomerToDB) {
                 JOptionPane.showMessageDialog(this, "Added Successfully");
-                NameText.setText("");
+                this.dispose();
+                /*NameText.setText("");
                 AddressText.setText("");
                 PhoneText.setText("");
-                CustomerId.setText("");
+                CustomerId.setText("");*/
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Faild to add.");

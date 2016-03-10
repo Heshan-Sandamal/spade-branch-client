@@ -233,7 +233,7 @@ public class DeleteSupplier extends javax.swing.JDialog {
     }//GEN-LAST:event_supplierDetailsTableMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        boolean removed=false;
+        int removed=0;
         try {
             removed=removeFromDatabase(iDField.getText());
         } catch (ClassNotFoundException ex) {
@@ -241,7 +241,7 @@ public class DeleteSupplier extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(DeleteSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(removed){
+        if(removed==0){
             JOptionPane.showMessageDialog(null, "Deleted Susseccfully", "Deleted", JOptionPane.WARNING_MESSAGE);
             
         }
@@ -249,9 +249,9 @@ public class DeleteSupplier extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Deleting process cannot complete", "Process not complete", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    public  boolean removeFromDatabase(String ID) throws ClassNotFoundException, SQLException{
+    public  int removeFromDatabase(String ID) throws ClassNotFoundException, SQLException{
     
-        boolean removed = false;
+        int removed = 0;
         SupplierController.removeSupplier(ID);
         
         try {

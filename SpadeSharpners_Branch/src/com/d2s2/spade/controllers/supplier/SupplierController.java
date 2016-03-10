@@ -128,14 +128,14 @@ public class SupplierController {
         }
         return contactList;
     }
-    public static boolean removeSupplier(String ID) throws ClassNotFoundException, SQLException{
+    public static int removeSupplier(String ID) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();
-        boolean removeData= false;
+        int removeData= 0;
         try{
             String sql =DBQueryGenerator.deleteWhereQuery("supplier", "supplierID");
             connection.setAutoCommit(false);
             removeData=DBHandler.deleteData(connection, sql, new String[] {ID});
-            if(removeData){
+            if(removeData>0){
                 System.out.println("Successfull");
             }
         }
