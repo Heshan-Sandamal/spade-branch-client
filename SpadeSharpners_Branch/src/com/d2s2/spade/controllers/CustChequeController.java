@@ -27,11 +27,9 @@ public class CustChequeController {
     public static CustCheque getChequeDetails(String paymentID) throws ClassNotFoundException, SQLException {
         CustCheque custCheque=null;
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{CustCheque.BANK, CustCheque.CHEQUENO, CustCheque.EXPIRYDATE,
-            CustCheque.ISSUEDATE, CustCheque.PAYMENTID, CustCheque.STATUS}, CustCheque.class.getSimpleName(), CustCheque.PAYMENTID);
-        ResultSet resultSet = DBHandler.getData(connection, sql, new Object[]{paymentID});
-        resultSet.next();
-        
+        String sql = DBQueryGenerator.selectwhereQuery("CustCheque","paymentId");
+        ResultSet resultSet = DBHandler.getData(connection,sql,new Object[]{paymentID});
+
         if (resultSet.next()) {
             custCheque = new CustCheque();
             custCheque.setBank(resultSet.getString(CustCheque.BANK));
@@ -42,7 +40,25 @@ public class CustChequeController {
             custCheque.setIssueDate(Date.valueOf(resultSet.getString(CustCheque.ISSUEDATE)));
             custCheque.setPaymentId(resultSet.getString(CustCheque.PAYMENTID));
             custCheque.setStatus(resultSet.getString(CustCheque.STATUS));
+            System.out.println("Bank"+custCheque.getBank());
         }
         return custCheque;
     }
+    
+    public static boolean addCheque(CustCheque cc) throws ClassNotFoundException, SQLException{
+        
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String insertQuery = DBQueryGenerator.insertQuery(CustCheque.class.getSimpleName(), 6);
+        int affectedRows = DBHandler.setData(connection, insertQuery,new Object[]{cc.getPaymentId(),cc.getChequeNo(),cc.getBank(),cc.getExpiryDate(),cc.getIssueDate(),cc.getStatus()});
+        return affectedRows!=0;
+        
+    }
+    public static boolean deleteCheque(String paymenntID) throws ClassNotFoundException, SQLException{
+        
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String deleteQuery = DBQueryGenerator.deleteQuery(CustCheque.class.getSimpleName(), CustCheque.PAYMENTID);
+        int deleteData = DBHandler.deleteData(connection, deleteQuery, new Object[]{paymenntID});
+        return deleteData!=0;
+    }
+
 }

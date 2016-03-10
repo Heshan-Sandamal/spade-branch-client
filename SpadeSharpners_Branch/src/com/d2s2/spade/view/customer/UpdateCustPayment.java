@@ -7,14 +7,16 @@ package com.d2s2.spade.view.customer;
 
 import com.d2s2.spade.controllers.CustChequeController;
 import com.d2s2.spade.controllers.CustPaymentController;
+import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.models.CustCheque;
 import com.d2s2.spade.models.CustPayment;
+import java.awt.Frame;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -27,12 +29,19 @@ public class UpdateCustPayment extends javax.swing.JDialog {
      */
     private DefaultTableModel dtm;
     private DefaultTableModel model;
+    private ArrayList<CustPayment> paymentInfo;
+    private UpdatePayment updatePayment;
 
     public UpdateCustPayment(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         try {
             fetchPaymentData();
+            dtm = (DefaultTableModel) mainPaymentTable.getModel();
+            for (CustPayment cp : paymentInfo) {
+                dtm.addRow(new Object[]{cp.getPaymentId(), cp.getCustomerId(), cp.getCustomerId(), cp.getType(), cp.getAmount(), cp.getDiscount(), cp.getDate()});
+            }
+            mainPaymentTable.setModel(dtm);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -63,9 +72,9 @@ public class UpdateCustPayment extends javax.swing.JDialog {
         jXPanel3 = new org.jdesktop.swingx.JXPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         chequeDetailsTable = new org.jdesktop.swingx.JXTable();
-        jXButton1 = new org.jdesktop.swingx.JXButton();
-        jXButton2 = new org.jdesktop.swingx.JXButton();
         jXButton3 = new org.jdesktop.swingx.JXButton();
+        updateButton = new org.jdesktop.swingx.JXButton();
+        deleteButton = new org.jdesktop.swingx.JXButton();
 
         jXButton4.setText("jXButton4");
 
@@ -74,6 +83,8 @@ public class UpdateCustPayment extends javax.swing.JDialog {
         jXPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Search"));
 
         jXLabel1.setText("Select Search Parameters ");
+
+        jXRadioGroup1.setLayout(new javax.swing.BoxLayout(jXRadioGroup1, javax.swing.BoxLayout.LINE_AXIS));
 
         jRadioButton1.setText("By Name");
         jXRadioGroup1.add(jRadioButton1);
@@ -189,16 +200,23 @@ public class UpdateCustPayment extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(chequeDetailsTable);
 
-        jXButton1.setText("Update");
-        jXButton1.addActionListener(new java.awt.event.ActionListener() {
+        jXButton3.setText("Cancel");
+
+        updateButton.setText("Update Payment");
+        updateButton.setEnabled(false);
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jXButton1ActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
 
-        jXButton2.setText("Delete");
-
-        jXButton3.setText("Cancel");
+        deleteButton.setText("Delete Payment");
+        deleteButton.setEnabled(false);
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jXPanel3Layout = new javax.swing.GroupLayout(jXPanel3);
         jXPanel3.setLayout(jXPanel3Layout);
@@ -206,28 +224,28 @@ public class UpdateCustPayment extends javax.swing.JDialog {
             jXPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jXPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jXPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jXPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jXButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jXButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jXButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jXPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jXButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13))
         );
         jXPanel3Layout.setVerticalGroup(
             jXPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jXPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jXPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jXButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jXButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jXButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -249,26 +267,43 @@ public class UpdateCustPayment extends javax.swing.JDialog {
                 .addComponent(jXPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jXPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jXPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jXPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jXButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jXButton1ActionPerformed
-
     private void mainPaymentTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainPaymentTableMouseClicked
         try {
             // TODO add your handling code here:
             rowSelected();
+            updateButton.setEnabled(true);
+            deleteButton.setEnabled(true);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_mainPaymentTableMouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (updatePayment == null) {
+            try {
+                updatePayment = new UpdatePayment((Frame) this.getParent(), true,paymentInfo.get(getSelectedRow()), fetchChequeData(getSelectedRow()));
+                updatePayment.setVisible(true);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            deletePayment();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UpdateCustPayment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,15 +349,12 @@ public class UpdateCustPayment extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXTable chequeDetailsTable;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private org.jdesktop.swingx.JXButton deleteButton;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private org.jdesktop.swingx.JXButton jXButton1;
-    private org.jdesktop.swingx.JXButton jXButton2;
     private org.jdesktop.swingx.JXButton jXButton3;
     private org.jdesktop.swingx.JXButton jXButton4;
     private org.jdesktop.swingx.JXLabel jXLabel1;
@@ -332,27 +364,61 @@ public class UpdateCustPayment extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXRadioGroup jXRadioGroup1;
     private org.jdesktop.swingx.JXSearchField jXSearchField1;
     private org.jdesktop.swingx.JXTable mainPaymentTable;
+    private org.jdesktop.swingx.JXButton updateButton;
     // End of variables declaration//GEN-END:variables
 
     private void fetchPaymentData() throws ClassNotFoundException, SQLException {
-        ArrayList<CustPayment> paymentInfo = CustPaymentController.getPaymentInfo();
-        dtm=(DefaultTableModel) mainPaymentTable.getModel();
-        for (CustPayment cp : paymentInfo) {
-            dtm.addRow(new Object[]{cp.getPaymentId(), cp.getCustomerId(), cp.getCustomerId(), cp.getType(), cp.getAmount(), cp.getDiscount(), cp.getDate()});
-        }
-        mainPaymentTable.setModel(dtm);
+        paymentInfo = CustPaymentController.getPaymentInfo();
+//        dtm = (DefaultTableModel) mainPaymentTable.getModel();
+//        for (CustPayment cp : paymentInfo) {
+//            dtm.addRow(new Object[]{cp.getPaymentId(), cp.getCustomerId(), cp.getCustomerId(), cp.getType(), cp.getAmount(), cp.getDiscount(), cp.getDate()});
+//        }
+//        mainPaymentTable.setModel(dtm);
     }
 
     private void rowSelected() throws ClassNotFoundException, SQLException {
         int selectedRow = mainPaymentTable.getSelectedRow();
         model = (DefaultTableModel) chequeDetailsTable.getModel();
         if (selectedRow != -1) {
-            
-            CustCheque chequeDetails = CustChequeController.getChequeDetails(dtm.getValueAt(selectedRow, 0).toString());
-            model.addRow(new Object[]{chequeDetails.getPaymentId(),chequeDetails.getChequeNo(),
-                chequeDetails.getBank(),chequeDetails.getExpiryDate(),chequeDetails.getIssueDate(),chequeDetails.getStatus()
+            System.out.println(dtm.getValueAt(selectedRow, 0).toString());
+            fetchChequeData(selectedRow);
+        }
+        CustCheque chequeDetails = fetchChequeData(selectedRow);
+        if (chequeDetails != null) {
+            model.addRow(new Object[]{chequeDetails.getPaymentId(), chequeDetails.getChequeNo(),
+                chequeDetails.getBank(), chequeDetails.getExpiryDate(), chequeDetails.getIssueDate(), chequeDetails.getStatus()
             });
-            
-        }chequeDetailsTable.setModel(model);
+            chequeDetailsTable.setModel(model);
+        }
     }
+
+    private void deletePayment() throws ClassNotFoundException, SQLException {
+        boolean success = CustPaymentController.deletePayment((String) dtm.getValueAt(mainPaymentTable.getSelectedRow(), 0));
+        if (success) {
+            fetchPaymentData();
+            fetchChequeData(getSelectedRow());
+            JOptionPane.showMessageDialog(this, "Success", "Successfully deleted transaction", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed", "Something went wrong", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private CustCheque fetchChequeData(int selectedRow) throws ClassNotFoundException, SQLException {
+        CustCheque chequeDetails = CustChequeController.getChequeDetails(dtm.getValueAt(selectedRow, 0).toString());
+        if (chequeDetails != null) {
+//            model.addRow(new Object[]{chequeDetails.getPaymentId(), chequeDetails.getChequeNo(),
+//                chequeDetails.getBank(), chequeDetails.getExpiryDate(), chequeDetails.getIssueDate(), chequeDetails.getStatus()
+//            });
+//            chequeDetailsTable.setModel(model);
+            return chequeDetails;
+        }
+        return null;
+
+    }
+
+    public int getSelectedRow() {
+        return mainPaymentTable.getSelectedRow();
+    }
+
 }

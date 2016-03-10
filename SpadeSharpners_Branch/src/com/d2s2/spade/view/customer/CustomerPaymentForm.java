@@ -428,16 +428,14 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         pack();
@@ -594,7 +592,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             customerNameComboBox.addItem(customer.getName());
 
         }
-        debtAmountTextField.setText(String.valueOf(CustPaymentController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
+        debtAmountTextField.setText(String.valueOf(CustDebtController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
     }
 
     /**
@@ -607,7 +605,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             try {
                 Customer customer = customersBasicInfo.get(selectedIndex);
                 customerNameComboBox.setSelectedItem(customer.getName());
-                System.out.println(String.valueOf(CustPaymentController.getCustomerDebt(customer.getCustomerId())));
+                System.out.println(String.valueOf(CustDebtController.getCustomerDebt(customer.getCustomerId())));
                 //debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
 
             } catch (ClassNotFoundException | SQLException ex) {
@@ -627,7 +625,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             Customer customer = customersBasicInfo.get(selectedIndex);
             customerNameComboBox.setSelectedItem(customer.getCustomerId());
             try {
-                debtAmountTextField.setText(String.valueOf(CustPaymentController.getCustomerDebt(customer.getCustomerId())));
+                debtAmountTextField.setText(String.valueOf(CustDebtController.getCustomerDebt(customer.getCustomerId())));
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
             }
