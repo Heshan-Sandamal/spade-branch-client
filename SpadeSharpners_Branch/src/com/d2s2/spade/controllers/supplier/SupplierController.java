@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @author Dimuth Tharaka
  */
 public class SupplierController {
-    public static boolean addSupplier(Supplier supplier,ArrayList<SupplierBranch> supplierTelephoneList) throws ClassNotFoundException, SQLException{
+    public static boolean addSupplier(Supplier supplier) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();       //get connection from singleton dbConnection class
         
         String supplierId=supplier.getSupplierId();
@@ -30,7 +30,7 @@ public class SupplierController {
         String name=supplier.getName();
         
         String email = supplier.getEmail();
-        ArrayList<SupplierBranch> telList = supplierTelephoneList;
+        ArrayList<SupplierBranch> telList = supplier.getBranchContactList();
         
         try{
             connection.setAutoCommit(false);  
@@ -128,14 +128,15 @@ public class SupplierController {
         }
         return contactList;
     }
-    public static void removeSupplier(String ID) throws ClassNotFoundException, SQLException{
+    public static int removeSupplier(String ID) throws ClassNotFoundException, SQLException{
         Connection connection=DBConnection.getDBConnection().getConnection();
+        int removeData= 0;
         try{
             String sql =DBQueryGenerator.deleteWhereQuery("supplier", "supplierID");
             connection.setAutoCommit(false);
-            int removeData=DBHandler.deleteData(connection, sql, new String[] {ID});
+            removeData=DBHandler.deleteData(connection, sql, new String[] {ID});
             if(removeData>0){
-                System.out.println("sUCESSFULL");
+                System.out.println("Successfull");
             }
         }
         catch(Exception e){
@@ -145,6 +146,7 @@ public class SupplierController {
         finally{
             connection.setAutoCommit(true);
         }
+        return removeData;
     }
     public static int getLastSupplierId() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();

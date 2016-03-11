@@ -38,9 +38,8 @@ public class CustomerController {
             if (setData > 0) {              //check customer data is added
 
                 for (CustomerTelephone customerTelephone : telList) {
-                    
-                   // CustomerTelephoneController.addCustomerTelephone(customerTelephone)
 
+                    CustomerTelephoneController.addCustomerTelephone(customerTelephone);
                     String sqlTelephone = DBQueryGenerator.insertQuery(CustomerTelephone.class.getSimpleName(), 2);       //use this way to get db table name.because model name is same as db table name
 
                     //add data using prepared statements.refer handler class
@@ -57,6 +56,60 @@ public class CustomerController {
                 return false;
             }
 
+            connection.commit();        //when no error commit 
+            return true;
+
+        } catch (Exception e) {
+            connection.rollback();      //if error then rool back
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);     //enabling auto commit
+        }
+
+    }
+
+    public static boolean updateCustomer(Customer oldCustomer, Customer customer) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();       //get connection from singleton dbConnection class
+
+        String customerId = customer.getCustomerId();
+        String name = customer.getName();
+        String address = customer.getAddress();
+        ArrayList<CustomerTelephone> telList = customer.getTelNoList();
+
+        try {
+            connection.setAutoCommit(false);        //disabling the autocommiting feature
+            String deletesql = DBQueryGenerator.deleteQuery("Customer", "customerId"); // build delete query
+            String sqlCustomer = DBQueryGenerator.insertQuery(Customer.class.getSimpleName(), 3);             //build insert query
+            int deleteData = 0;
+            deleteData = DBHandler.deleteData(connection, deletesql, new Object[]{oldCustomer.getCustomerId()});
+
+            if (deleteData != 0) {
+                int setData = DBHandler.setData(connection, sqlCustomer, new Object[]{customerId, name, address});           //set data to customerTable
+
+                if (setData > 0) {              //check customer data is added
+
+                    for (CustomerTelephone customerTelephone : telList) {
+
+                        // CustomerTelephoneController.addCustomerTelephone(customerTelephone)
+                        String sqlTelephone = DBQueryGenerator.insertQuery(CustomerTelephone.class.getSimpleName(), 2);       //use this way to get db table name.because model name is same as db table name
+
+                        //add data using prepared statements.refer handler class
+                        int addedTel = DBHandler.setData(connection, sqlTelephone, new Object[]{customerTelephone.getCustomerId(), customerTelephone.getTelNo()});
+
+                        if (addedTel <= 0) {            //check customer telephone data is added
+                            connection.rollback();      //if error then rool back
+                            return false;
+                        }
+                    }
+
+                } else {
+                    connection.rollback();      //if error in adding data then rool back
+                    return false;
+                }
+            } else {
+                connection.rollback();      //if error in deleting then rool back
+                return false;
+            }
             connection.commit();        //when no error commit 
             return true;
 
@@ -108,7 +161,7 @@ public class CustomerController {
 
     public static ArrayList<String> viewCustomerPhone(String tableName, String customerId) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectwhereQuery(tableName,"customerId");
+        String sql = DBQueryGenerator.selectwhereQuery(tableName, "customerId");
         ResultSet resultSet = DBHandler.getData(connection, sql, new Object[]{customerId});
         ArrayList<String> telephoneNoList = new ArrayList<>();
 
@@ -119,32 +172,27 @@ public class CustomerController {
 
         return telephoneNoList;
     }
-    
 
-    
-    
-    
-    public static String getLastPaymentId() throws ClassNotFoundException, SQLException{
+    public static String getLastPaymentId() throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
         String sql = "SELECT paymentId FROM custpayment ORDER BY paymentId DESC LIMIT 1";
         ResultSet resultSet = DBHandler.getData(connection, sql);
         resultSet.next();
         return resultSet.getString("paymentId");
     }
-    
-    public static boolean deleteCustomer(Customer customer) throws ClassNotFoundException, SQLException{
+
+    public static boolean deleteCustomer(Customer customer) throws ClassNotFoundException, SQLException {
         int executed = 0;
         Connection connection = DBConnection.getDBConnection().getConnection();
         String sql = DBQueryGenerator.deleteQuery("Customer", "customerId");
-        executed = DBHandler.deleteData(connection, sql, new Object[]{ customer.getCustomerId()});
-        
-        if (executed==0){
+        executed = DBHandler.deleteData(connection, sql, new Object[]{customer.getCustomerId()});
+
+        if (executed == 0) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
-        
+
     }
-    
+
 }
