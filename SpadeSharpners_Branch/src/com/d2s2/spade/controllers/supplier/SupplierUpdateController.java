@@ -24,22 +24,22 @@ public class SupplierUpdateController {
         try {
             connection.setAutoCommit(false);        //disabling the autocommiting feature
             String deletesql = DBQueryGenerator.deleteQuery(Supplier.class.getSimpleName(), "supplierId"); // build delete query
-            String sqlCustomer = DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 3);             //build insert query
+            String sqlSupplier = DBQueryGenerator.insertQuery(Supplier.class.getSimpleName(), 3);             //build insert query
             int deleteData = 0;
             deleteData = DBHandler.deleteData(connection, deletesql, new Object[]{oldSupplier.getSupplierId()});
 
             if (deleteData != 0) {
-                int setData = DBHandler.setData(connection, sqlCustomer, new Object[]{supplierId, name,email });           //set data to customerTable
+                int setData = DBHandler.setData(connection, sqlSupplier, new Object[]{supplierId, name,email });           //set data to customerTable
 
                 if (setData > 0) {              //check customer data is added
 
                     for (SupplierBranch supplierBranch : telList) {
 
                         // CustomerTelephoneController.addCustomerTelephone(customerTelephone)
-                        String sqlTelephone = DBQueryGenerator.insertQuery(SupplierBranch.class.getSimpleName(), 4);       //use this way to get db table name.because model name is same as db table name
+                        String sqlContact = DBQueryGenerator.insertQueryBranch(SupplierBranch.class.getSimpleName());       //use this way to get db table name.because model name is same as db table name
 
                         //add data using prepared statements.refer handler class
-                        int addedTel = DBHandler.setData(connection, sqlTelephone, new Object[]{ supplierBranch.getBranchName(),supplierBranch.getAddress(),supplierBranch.getContactName(),supplierBranch.getTelNo()});
+                        int addedTel = DBHandler.setData(connection, sqlContact, new Object[]{ supplierBranch.getSupplierId(),supplierBranch.getBranchName(),supplierBranch.getAddress(),supplierBranch.getContactName(),supplierBranch.getTelNo()});
 
                         if (addedTel <= 0) {            //check customer telephone data is added
                             connection.rollback();      //if error then rool back

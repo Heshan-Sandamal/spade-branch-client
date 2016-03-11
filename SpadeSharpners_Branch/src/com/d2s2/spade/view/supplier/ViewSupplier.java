@@ -127,7 +127,7 @@ public class ViewSupplier extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Name", "Address", "Email"
+                "ID", "Name", "Email"
             }
         ));
         supplierDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -341,7 +341,7 @@ public class ViewSupplier extends javax.swing.JDialog {
         });
     }
     public void createModel(){
-        Object[] columns={"ID","Name", "Address", "Email"};
+        Object[] columns={"ID","Name", "Email"};
         model.setColumnIdentifiers(columns);
         setModel(model);
     }
