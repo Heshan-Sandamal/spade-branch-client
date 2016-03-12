@@ -8,6 +8,7 @@ import com.d2s2.spade.dbconnection.DBConnection;
 import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.Item;
+import com.d2s2.spade.models.ItemCategory;
 import com.d2s2.spade.models.Kiyath;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -88,6 +89,50 @@ public class ItemController {
         
         
         return DBHandler.setData(connection, sql,ob)>0 ? true:false;
+    }
+
+    public static ArrayList<ItemCategory> getSupplierItems(String supplierId) throws ClassNotFoundException, SQLException{
+        
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{"Distinct "+Item.ITEMCODE},Item.class.getSimpleName(),Item.SUPPLIERID);
+        
+        ResultSet resultSet=DBHandler.getData(connection, sql,new Object[]{supplierId});
+        
+        ArrayList<ItemCategory> itemList=new ArrayList<>();
+        
+        while(resultSet.next()){
+            
+
+            //final String brandId=resultSet.getString(Item.BRANDID);
+            final String itemCode=resultSet.getString(Item.ITEMCODE);
+            
+            itemList.add(new ItemCategory(){{setItemCode(itemCode);
+            }});     
+        }
+        
+        return itemList;
+    }
+
+    public static ArrayList<Item> getSupplierItems(String supplierId, String categoryId) throws ClassNotFoundException, SQLException{
+        
+        Connection connection=DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQuery(new String[]{"Distinct "+Item.BRANDID},Item.class.getSimpleName(),new String[]{Item.SUPPLIERID,Item.ITEMCODE});
+        System.out.println(sql);
+        ResultSet resultSet=DBHandler.getData(connection, sql,new Object[]{supplierId,categoryId});
+        
+        ArrayList<Item> itemList=new ArrayList<>();
+        
+        while(resultSet.next()){
+            
+
+            //final String brandId=resultSet.getString(Item.BRANDID);
+            final String brand=resultSet.getString(Item.BRANDID);
+            
+            itemList.add(new Item(){{setBrandId(brand);
+            }});     
+        }
+        
+        return itemList;
     }
     
 }

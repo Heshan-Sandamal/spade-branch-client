@@ -58,15 +58,17 @@ public class SupplierOrderForm extends javax.swing.JDialog {
     private ArrayList<Supplier> allSuppliers;
     private int times;
     DefaultTableModel dtmForTable;
+    private ArrayList<ItemCategory> supplierItems;
+    private ArrayList<Item> brandItems;
 
     public SupplierOrderForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
 
         initComponents();
-        
+
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        dtmForTable=(DefaultTableModel) itemTable.getModel();
-        
+        dtmForTable = (DefaultTableModel) itemTable.getModel();
+
         try {
             getAllBrands();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -138,10 +140,10 @@ public class SupplierOrderForm extends javax.swing.JDialog {
         itemDetailsTab = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox();
+        kiyathSizeCombo = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         kiyathAddButton = new javax.swing.JButton();
-        jComboBox6 = new javax.swing.JComboBox();
+        kiyathTipesCombo = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jComboBox7 = new javax.swing.JComboBox();
@@ -205,8 +207,6 @@ public class SupplierOrderForm extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         batchTextFiled = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        qtyTextField = new javax.swing.JTextField();
-        priceTextField = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         itemTable = new org.jdesktop.swingx.JXTable();
@@ -215,8 +215,10 @@ public class SupplierOrderForm extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        qtyTextField1 = new javax.swing.JTextField();
+        totAmountTestField = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
+        qtySpinner = new javax.swing.JSpinner();
+        priceSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -240,6 +242,13 @@ public class SupplierOrderForm extends javax.swing.JDialog {
         supplierCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 supplierComboItemStateChanged(evt);
+            }
+        });
+        supplierCombo.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                supplierComboInputMethodTextChanged(evt);
             }
         });
 
@@ -283,7 +292,17 @@ public class SupplierOrderForm extends javax.swing.JDialog {
 
         jLabel9.setText("Size");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        kiyathSizeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4", "large" }));
+        kiyathSizeCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                kiyathSizeComboItemStateChanged(evt);
+            }
+        });
+        kiyathSizeCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kiyathSizeComboActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("No: of tips/cogs");
 
@@ -294,7 +313,12 @@ public class SupplierOrderForm extends javax.swing.JDialog {
             }
         });
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        kiyathTipesCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "10", "Item 1", "Item 2", "Item 3", "Item 4" }));
+        kiyathTipesCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kiyathTipesComboActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -310,8 +334,8 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(kiyathSizeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kiyathTipesCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(714, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -320,11 +344,11 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kiyathSizeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kiyathTipesCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(kiyathAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -817,19 +841,10 @@ public class SupplierOrderForm extends javax.swing.JDialog {
 
         jLabel7.setText("Batch");
 
-        batchTextFiled.setBackground(new java.awt.Color(255, 255, 255));
         batchTextFiled.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         batchTextFiled.setForeground(new java.awt.Color(51, 51, 255));
 
         jLabel11.setText("Qty");
-
-        qtyTextField.setBackground(new java.awt.Color(255, 255, 255));
-        qtyTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        qtyTextField.setForeground(new java.awt.Color(51, 51, 255));
-
-        priceTextField.setBackground(new java.awt.Color(255, 255, 255));
-        priceTextField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        priceTextField.setForeground(new java.awt.Color(51, 51, 255));
 
         jLabel30.setText("Price");
 
@@ -859,8 +874,8 @@ public class SupplierOrderForm extends javax.swing.JDialog {
 
         jButton3.setText("cancel");
 
-        qtyTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        qtyTextField1.setForeground(new java.awt.Color(51, 51, 255));
+        totAmountTestField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        totAmountTestField.setForeground(new java.awt.Color(51, 51, 255));
 
         jLabel31.setText("Total amount");
 
@@ -884,13 +899,13 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                         .addComponent(batchTextFiled, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(qtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(qtySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(98, 98, 98)
+                        .addComponent(priceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(120, 120, 120)
                         .addComponent(jButton1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -937,9 +952,9 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                         .addGap(21, 21, 21))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel31)
-                .addGap(18, 18, 18)
-                .addComponent(qtyTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totAmountTestField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -957,8 +972,8 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                     .addComponent(supplierIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(codeTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -978,15 +993,15 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(batchTextFiled, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(qtyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(qtySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(qtyTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totAmountTestField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1002,6 +1017,8 @@ public class SupplierOrderForm extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void itemCategoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCategoryComboItemStateChanged
+
+        //set select the tab
         int selectedIndex = itemCategoryCombo.getSelectedIndex();
         try {
             int indexOfTab = itemDetailsTab.indexOfTab(itemCategoryCombo.getSelectedItem().toString());
@@ -1016,24 +1033,17 @@ public class SupplierOrderForm extends javax.swing.JDialog {
         } catch (Exception e) {
         }
 
-
+        //get brands of selected supplier and category
         if (selectedIndex != -1) {
-            itemCategoryIdTextField.setText(allCategories.get(selectedIndex).getItemCode());
-
             try {
-                generateId();
+
+                itemCategoryIdTextField.setText(supplierItems.get(selectedIndex).getItemCode());
+
+                setBrandIdForSupplierAndCategory(supplierIdTextField.getText(), itemCategoryIdTextField.getText());
+
             } catch (ClassNotFoundException | SQLException ex) {
-
-                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
-                    subIdTextField.setText("SB-0001");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
-                }
+                Logger.getLogger(SupplierOrderForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-
-            setCode();
-
 
 
         }
@@ -1042,20 +1052,7 @@ public class SupplierOrderForm extends javax.swing.JDialog {
     private void brandComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_brandComboItemStateChanged
         int selectedIndex = brandCombo.getSelectedIndex();
         if (selectedIndex != -1) {
-            brandTextField.setText(allBrands.get(selectedIndex).getBrandId());
-
-
-            try {
-                generateId();
-            } catch (ClassNotFoundException | SQLException ex) {
-
-                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
-                    subIdTextField.setText("SB-0001");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
-                }
-            }
-
+            brandTextField.setText(brandItems.get(selectedIndex).getBrandId());
             //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
             if (!itemCategoryIdTextField.getText().isEmpty()) {
                 setCode();
@@ -1078,13 +1075,13 @@ public class SupplierOrderForm extends javax.swing.JDialog {
                     generateId();
                     setCode();
                     times++;
-                    if(times<9000){
+                    if (times < 9000) {
                         kiyathAddButton.doClick();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(this, "ok");
                     }
-                    
-                    
+
+
 
                 }
             }
@@ -1217,28 +1214,21 @@ public class SupplierOrderForm extends javax.swing.JDialog {
     }//GEN-LAST:event_supplierIdTextFieldActionPerformed
 
     private void supplierComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_supplierComboItemStateChanged
+
+        //set supplieriD
         int selectedIndex = supplierCombo.getSelectedIndex();
         if (selectedIndex != -1) {
             supplierIdTextField.setText(allSuppliers.get(selectedIndex).getSupplierId());
-
-
-            try {
-                generateId();
-            } catch (ClassNotFoundException | SQLException ex) {
-
-                if (ex.getMessage().equals("Illegal operation on empty result set.")) {
-                    subIdTextField.setText("SB-0001");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Unable to genatateID due to " + ex.getMessage());
-                }
-            }
-
-            //when brandIdCombo's Item state is changed while loading constructor, itemCategoryIdTextField is empty. 
-            if (!itemCategoryIdTextField.getText().isEmpty()) {
-                setCode();
-            }
         }
+
+//get itemCategories selling by selected supplier
+        try {
+            getItemsOfSupplier();
+
             // TODO add your handling code here:
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SupplierOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_supplierComboItemStateChanged
 
     private void supplierAddButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierAddButton3ActionPerformed
@@ -1258,14 +1248,35 @@ public class SupplierOrderForm extends javax.swing.JDialog {
     }//GEN-LAST:event_supplierAddButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-addItemsToTable();        // TODO add your handling code here:
+        addItemsToTable();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-        /**
-         * @param args the command line arguments
-         */
-    
+    private void kiyathSizeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathSizeComboActionPerformed
+    }//GEN-LAST:event_kiyathSizeComboActionPerformed
 
+    private void kiyathTipesComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kiyathTipesComboActionPerformed
+        try {
+            setKiyathSubId();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SupplierOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_kiyathTipesComboActionPerformed
+
+    private void supplierComboInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_supplierComboInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supplierComboInputMethodTextChanged
+
+    private void kiyathSizeComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_kiyathSizeComboItemStateChanged
+        try {
+            setKiyathSubId();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SupplierOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_kiyathSizeComboItemStateChanged
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1329,8 +1340,6 @@ addItemsToTable();        // TODO add your handling code here:
     private javax.swing.JComboBox jComboBox15;
     private javax.swing.JComboBox jComboBox16;
     private javax.swing.JComboBox jComboBox17;
-    private javax.swing.JComboBox jComboBox5;
-    private javax.swing.JComboBox jComboBox6;
     private javax.swing.JComboBox jComboBox7;
     private javax.swing.JComboBox jComboBox8;
     private javax.swing.JComboBox jComboBox9;
@@ -1383,10 +1392,11 @@ addItemsToTable();        // TODO add your handling code here:
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JButton kiyathAddButton;
+    private javax.swing.JComboBox kiyathSizeCombo;
+    private javax.swing.JComboBox kiyathTipesCombo;
     private javax.swing.JButton planerBladeAddButton;
-    private javax.swing.JTextField priceTextField;
-    private javax.swing.JTextField qtyTextField;
-    private javax.swing.JTextField qtyTextField1;
+    private javax.swing.JSpinner priceSpinner;
+    private javax.swing.JSpinner qtySpinner;
     private javax.swing.JButton routerCutterAddButton;
     private javax.swing.JTextField subIdTextField;
     private javax.swing.JButton supplierAddButton1;
@@ -1398,6 +1408,7 @@ addItemsToTable();        // TODO add your handling code here:
     private javax.swing.JComboBox supplierCombo;
     private javax.swing.JTextField supplierIdTextField;
     private javax.swing.JButton tipAddButton;
+    private javax.swing.JTextField totAmountTestField;
     private javax.swing.JButton wheelAddButton;
     // End of variables declaration//GEN-END:variables
 
@@ -1427,20 +1438,20 @@ addItemsToTable();        // TODO add your handling code here:
     //----------------------------------Constructor calls---------------------------------------------------
     private void getAllBrands() throws ClassNotFoundException, SQLException {
         allBrands = BrandController.getAllBrands();
-        brandCombo.removeAllItems();
-        for (Brand brand : allBrands) {
-            brandCombo.addItem(brand.getBrand());
-        }
+        //brandCombo.removeAllItems();
+//        for (Brand brand : allBrands) {
+//            brandCombo.addItem(brand.getBrand());
+//        }
 
 
     }
 
     private void getAllItemCategories() throws ClassNotFoundException, SQLException {
         allCategories = ItemCategoryController.getAllItemCategories();
-        itemCategoryCombo.removeAllItems();
-        for (ItemCategory itemCategory : allCategories) {
-            itemCategoryCombo.addItem(itemCategory.getCategory());
-        }
+        //itemCategoryCombo.removeAllItems();
+//        for (ItemCategory itemCategory : allCategories) {
+//            itemCategoryCombo.addItem(itemCategory.getCategory());
+//        }
 
     }
 
@@ -1619,19 +1630,89 @@ addItemsToTable();        // TODO add your handling code here:
     }
 
     private void addItemsToTable() {
-        String supplierId=supplierIdTextField.getText();
-        String category=itemCategoryCombo.getSelectedItem().toString();
-        String code=codeTextField.getText();
-        String brand=brandCombo.getSelectedItem().toString();
-        String subId=subIdTextField.getText();
+        String supplierId = supplierIdTextField.getText();
+        String category = itemCategoryCombo.getSelectedItem().toString();
+        String code = codeTextField.getText();
+        String brand = brandCombo.getSelectedItem().toString();
+        String subId = subIdTextField.getText();
         //String category=
-        
-        String batch=batchTextFiled.getText();
-        String qty=qtyTextField.getText();
-        String price=priceTextField.getText();
-        
-        double tot=Double.parseDouble(qty)*Double.parseDouble(price);
-        
-        dtmForTable.addRow(new Object[]{code,category,brand,subId,batch,qty,price,tot});
+
+        String batch = batchTextFiled.getText();
+        String qty = qtySpinner.getValue().toString();
+        String price = priceSpinner.getValue().toString();
+
+        double tot = Double.parseDouble(qty) * Double.parseDouble(price);
+        if (isExistsInTable(code) == false) {
+            dtmForTable.addRow(new Object[]{code, category, brand, subId, batch, qty, price, tot});
+            calculateTableTotal();
+        } else {
+            JOptionPane.showMessageDialog(this, "Item already exists in table.Please update qty without adding");
+        }
+
+    }
+
+    private void calculateTableTotal() {
+        double tot = 0;
+        for (int i = 0; i < itemTable.getRowCount(); i++) {
+            tot += Double.parseDouble(dtmForTable.getValueAt(i, 7).toString());
+        }
+        totAmountTestField.setText(String.valueOf(tot));
+    }
+
+    private boolean isExistsInTable(String code) {
+
+        for (int i = 0; i < itemTable.getRowCount(); i++) {
+            if (code.equals(dtmForTable.getValueAt(i, 0).toString())) {
+                return true;
+            };
+        }
+        return false;       //not exists in table
+    }
+
+    private void setKiyathSubId() throws ClassNotFoundException, SQLException {
+        String kiyathSize = kiyathSizeCombo.getSelectedItem().toString();
+        String kiyathTips = kiyathTipesCombo.getSelectedItem().toString();
+
+        String supplierId = supplierIdTextField.getText().substring(2);
+        String category = itemCategoryIdTextField.getText().substring(2);
+        String brand = brandTextField.getText().substring(2);
+
+
+        String code = KiyathController.getCodeOfItem(supplierId, category, brand, kiyathSize, kiyathTips);
+
+        String subId = code.split(":")[3];
+        subIdTextField.setText("SB-" + subId);
+    }
+
+    private void getItemsOfSupplier() throws ClassNotFoundException, SQLException {
+
+        //get items supply by the supplier
+        supplierItems = ItemController.getSupplierItems(supplierIdTextField.getText());
+
+        itemCategoryCombo.removeAllItems();
+
+        for (ItemCategory item : supplierItems) {
+            for (ItemCategory category : allCategories) {
+                if (item.getItemCode().equals(category.getItemCode())) {
+                    itemCategoryCombo.addItem(category.getCategory());
+                    break;
+                }
+            }
+        }
+    }
+
+    private void setBrandIdForSupplierAndCategory(String supplierId, String categoryId) throws ClassNotFoundException, SQLException {
+
+        brandItems = ItemController.getSupplierItems(supplierId, categoryId);
+        brandCombo.removeAllItems();
+        System.out.println(supplierItems.size());
+        for (Item item : brandItems) {
+            for (Brand brand : allBrands) {
+                if (item.getBrandId().equals(brand.getBrandId())) {
+                    brandCombo.addItem(brand.getBrand());
+                    break;
+                }
+            }
+        }
     }
 }

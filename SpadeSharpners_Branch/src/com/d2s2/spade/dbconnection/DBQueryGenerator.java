@@ -86,6 +86,46 @@ public class DBQueryGenerator {
         return sql;
         
     }
+
+    public static String selectLimitedColumnswhereQuery(String[] columns, String tableName, String[] conditions) {
+        String a="SELECT ";
+        for (int i = 0; i < columns.length; i++) {
+            a+=columns[i];
+            if(i!=columns.length-1){
+                a+=",";
+            }
+        }
+        
+        a=a+" FROM "+tableName+" WHERE " ;
+        for (int i = 0; i < conditions.length; i++) {
+            a+=conditions[i]+"=?";
+            if(i!=conditions.length-1){
+                a+=" and ";
+            }
+        }
+        
+        return a;
+    }
+    
+    public static String selectLimitedColumnswhereQueryWIthLike(String[] columns, String tableName, String[] conditions,String like) {
+        String a="SELECT ";
+        for (int i = 0; i < columns.length; i++) {
+            a+=columns[i];
+            if(i!=columns.length-1){
+                a+=",";
+            }
+        }
+        
+        a=a+" FROM "+tableName+" WHERE " ;
+        for (int i = 0; i < conditions.length; i++) {
+            a+=conditions[i]+"=? and ";
+            
+        }
+        
+        a+=like+" like ? ";
+        
+        return a;
+    }
     
     
     
