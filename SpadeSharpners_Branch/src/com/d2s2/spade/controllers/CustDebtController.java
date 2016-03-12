@@ -9,6 +9,7 @@ import com.d2s2.spade.dbconnection.DBConnection;
 import com.d2s2.spade.dbconnection.DBHandler;
 import com.d2s2.spade.dbconnection.DBQueryGenerator;
 import com.d2s2.spade.models.CustDebt;
+import com.d2s2.spade.models.Customer;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class CustDebtController {
     }
     public static double getCustomerDebt(String customerID) throws ClassNotFoundException, SQLException {
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = DBQueryGenerator.selectAllQuery(CustDebt.class.getSimpleName());
+        String sql = DBQueryGenerator.selectwhereQuery(CustDebt.class.getSimpleName(),Customer.CUSTOMERID);
         ResultSet resultSet = DBHandler.getData(connection, sql,new Object[]{customerID});
         resultSet.next();
         return resultSet.getInt(CustDebt.AMOUNT);

@@ -315,6 +315,11 @@ public class UpdatePayment extends javax.swing.JDialog {
     private void jXButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton1ActionPerformed
         try {
             CustPaymentController.deletePayment(this.custPayment.getPaymentId());
+            CustCheque updatedCheque;
+            if (chequeRadioButton.isSelected()) {
+                 updatedCheque= getUpdatedCheque();
+                 CustPaymentController.addPaymentInfo(getUpdatedPayment(),updatedCheque);
+            }
             CustPaymentController.addPaymentInfo(getUpdatedPayment());
             CustChequeController.addCheque(getUpdatedCheque());
         } catch (ClassNotFoundException ex) {
