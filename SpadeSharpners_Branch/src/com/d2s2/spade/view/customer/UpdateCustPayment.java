@@ -407,10 +407,6 @@ public class UpdateCustPayment extends javax.swing.JDialog {
     private CustCheque fetchChequeData(int selectedRow) throws ClassNotFoundException, SQLException {
         CustCheque chequeDetails = CustChequeController.getChequeDetails(dtm.getValueAt(selectedRow, 0).toString());
         if (chequeDetails != null) {
-//            model.addRow(new Object[]{chequeDetails.getPaymentId(), chequeDetails.getChequeNo(),
-//                chequeDetails.getBank(), chequeDetails.getExpiryDate(), chequeDetails.getIssueDate(), chequeDetails.getStatus()
-//            });
-//            chequeDetailsTable.setModel(model);
             return chequeDetails;
         }
         return null;
