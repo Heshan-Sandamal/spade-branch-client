@@ -15,15 +15,19 @@ public class CustCheque {
     private String paymentId;
     private String chequeNo;
     private String bank;
-    private Date expiryDate;
-    private Date issueDate;
-    
+    private String expiryDate;
+    private String issueDate;
+    private String status;
     public static final String PAYMENTID="paymentId";
     public static final String CHEQUENO="chequeNo";
     public static final String BANK="bank";
-    public static final String EXPIRYDATE="expiryDate";
+    public static final String EXPIRYDATE="expDate";
     public static final String ISSUEDATE="issueDate";
-    
+    public static final String STATUS="status";
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     public String getPaymentId() {
         return paymentId;
     }
@@ -48,20 +52,24 @@ public class CustCheque {
         this.bank = bank;
     }
 
-    public Date getExpiryDate() {
+    public String getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    public Date getIssueDate() {
+    public String getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(String issueDate) {
         this.issueDate = issueDate;
+    }
+
+    public String getStatus() {
+       return status;
     }
     
     

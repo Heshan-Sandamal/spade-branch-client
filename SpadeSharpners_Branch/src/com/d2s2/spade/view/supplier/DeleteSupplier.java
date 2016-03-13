@@ -7,11 +7,12 @@ package com.d2s2.spade.view.supplier;
 
 import com.d2s2.spade.controllers.supplier.SupplierController;
 import com.d2s2.spade.models.Supplier;
-import com.d2s2.spade.models.SupplierTelephone;
+import com.d2s2.spade.models.SupplierBranch;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -63,8 +64,6 @@ public class DeleteSupplier extends javax.swing.JDialog {
         iDField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        addressField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -110,7 +109,7 @@ public class DeleteSupplier extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Supplier ID", "Name", "Address", "Email"
+                "Supplier ID", "Name", "Email"
             }
         ));
         supplierDetailsTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -125,8 +124,6 @@ public class DeleteSupplier extends javax.swing.JDialog {
         jLabel3.setText("Supplier ID");
 
         jLabel4.setText("Name");
-
-        jLabel5.setText("Address");
 
         jLabel6.setText("Email");
 
@@ -148,39 +145,31 @@ public class DeleteSupplier extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(iDField, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                    .addComponent(iDField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                     .addComponent(nameField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addressField, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(emailField))
-                .addGap(27, 27, 27)
-                .addComponent(jButton1)
+                .addGap(23, 23, 23)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(iDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(iDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -231,42 +220,49 @@ public class DeleteSupplier extends javax.swing.JDialog {
         int clickedRow =supplierDetailsTable.rowAtPoint(evt.getPoint());
         String SupplierID=(String) supplierDetailsTable.getModel().getValueAt(clickedRow, 0);
         String name =(String) supplierDetailsTable.getModel().getValueAt(clickedRow, 1);
-        String address =(String) supplierDetailsTable.getModel().getValueAt(clickedRow, 2);
-        String email =(String) supplierDetailsTable.getModel().getValueAt(clickedRow, 3);
+        
+        String email =(String) supplierDetailsTable.getModel().getValueAt(clickedRow, 2);
         iDField.setText(SupplierID);
         nameField.setText(name);
-        addressField.setText(address);
+        
         emailField.setText(email);
         iDField.setEditable(false);
         nameField.setEditable(false);
-        addressField.setEditable(false);
+        
         emailField.setEditable(false);
     }//GEN-LAST:event_supplierDetailsTableMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int removed=0;
         try {
-            removeFromDatabase(iDField.getText());
+            removed=removeFromDatabase(iDField.getText());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DeleteSupplier.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DeleteSupplier.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(removed==0){
+            JOptionPane.showMessageDialog(null, "Deleted Susseccfully", "Deleted", JOptionPane.WARNING_MESSAGE);
+            
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Deleting process cannot complete", "Process not complete", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-    public  boolean removeFromDatabase(String ID) throws ClassNotFoundException, SQLException{
+    public  int removeFromDatabase(String ID) throws ClassNotFoundException, SQLException{
     
-        boolean removed = false;
+        int removed = 0;
         SupplierController.removeSupplier(ID);
-        /*
+        
         try {
-            added = SupplierController.addSupplier(supplier,supplierTelephoneList);
+            removed = SupplierController.removeSupplier(ID);
         } catch (ClassNotFoundException ex) {
             System.out.println("Class not found");
         } catch (SQLException ex) {
             System.out.println("SQL Exception"+ ex);
         }
-        return added;
-        */
-        return true;
+        return removed;
+       
 }
     /**
      * @param args the command line arguments
@@ -315,19 +311,18 @@ public class DeleteSupplier extends javax.swing.JDialog {
       
         
         for (Supplier spl : supplierList) {
-             System.out.println(spl.getSupplierId()+spl.getName()+spl.getAddress()+spl.getEmail());
-             newModel.addRow(new Object[]{spl.getSupplierId(),spl.getName(),spl.getAddress(),spl.getEmail()});
+             System.out.println(spl.getSupplierId()+spl.getName()+spl.getEmail());
+             newModel.addRow(new Object[]{spl.getSupplierId(),spl.getName(),spl.getEmail()});
         }
         return newModel;
     }
     public void createModel(){
-        Object[] columns={"ID","Name", "Adress", "Email"};
+        Object[] columns={"ID","Name", "Email"};
         model.setColumnIdentifiers(columns);
         setModel(model);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressField;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
@@ -338,7 +333,6 @@ public class DeleteSupplier extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -356,8 +350,8 @@ public class DeleteSupplier extends javax.swing.JDialog {
 
     }
      private DefaultTableModel getSpecificSupplierDetails(String ID, DefaultTableModel model) throws ClassNotFoundException, SQLException{
-        ArrayList<SupplierTelephone> supplierContactList = SupplierController.getSupplierContactInfo(ID);
-        for (SupplierTelephone contact : supplierContactList) {
+        ArrayList<SupplierBranch> supplierContactList = SupplierController.getSupplierContactInfo(ID);
+        for (SupplierBranch contact : supplierContactList) {
             model.addRow(new Object[]{ID,contact.getContactName(),contact.getTelNo()});
             System.out.println("Contact Name="+ contact.getContactName()+contact.getTelNo());
         }

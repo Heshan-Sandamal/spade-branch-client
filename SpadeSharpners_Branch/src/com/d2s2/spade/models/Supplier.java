@@ -1,5 +1,7 @@
 package com.d2s2.spade.models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Dimuth Tharaka
@@ -8,17 +10,23 @@ public class Supplier {
 
     String supplierId;
     String name;
-    String address;
     String email;
+    ArrayList<SupplierBranch> branchContactList ;
+
+    public ArrayList<SupplierBranch> getBranchContactList() {
+        return branchContactList;
+    }
+
+    public void setBranchContactList(ArrayList<SupplierBranch> branchContactList) {
+        this.branchContactList = branchContactList;
+    }
     public static final String SUPPLIERID = "supplierId";
     public static final String NAME = "name";
-    public static final String ADDRESS = "supplierId";
     public static final String EMAIL = "email";
 
-    public Supplier(String supplierId, String name,String address,String email) {
+    public Supplier(String supplierId, String name,String email) {
         this.supplierId = supplierId;
         this.name = name;
-        this.address=address;
         this.email=email;
     }
 
@@ -41,13 +49,6 @@ public class Supplier {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getEmail() {
         return email;

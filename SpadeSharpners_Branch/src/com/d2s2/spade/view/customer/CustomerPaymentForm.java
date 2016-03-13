@@ -7,13 +7,13 @@ package com.d2s2.spade.view.customer;
 import com.d2s2.spade.controllers.CustDebtController;
 import com.d2s2.spade.controllers.CustPaymentController;
 import com.d2s2.spade.controllers.CustomerController;
+import com.d2s2.spade.models.CustCheque;
 import com.d2s2.spade.models.CustDebt;
 import com.d2s2.spade.models.CustPayment;
 import com.d2s2.spade.models.Customer;
 import com.d2s2.spade.models.paymentType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -47,9 +47,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         try {
             getAllCustomerDataBasic();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -176,6 +174,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         });
 
         jButton2.setText("cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -423,16 +426,14 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         pack();
@@ -486,6 +487,11 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         // TODO add your handling code here:
         updateTextFieldsWithDiscount();
     }//GEN-LAST:event_discountSpinnerKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        closeDialog();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -584,7 +590,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             customerNameComboBox.addItem(customer.getName());
 
         }
-        debtAmountTextField.setText(String.valueOf(CustPaymentController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
+        debtAmountTextField.setText(String.valueOf(CustDebtController.getCustomerDebt(customersBasicInfo.get(0).getCustomerId())));
     }
 
     /**
@@ -597,7 +603,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             try {
                 Customer customer = customersBasicInfo.get(selectedIndex);
                 customerNameComboBox.setSelectedItem(customer.getName());
-                System.out.println(String.valueOf(CustPaymentController.getCustomerDebt(customer.getCustomerId())));
+                System.out.println(String.valueOf(CustDebtController.getCustomerDebt(customer.getCustomerId())));
                 //debtAmountTextField.setText(String.valueOf(CustomerController.getCustomerDebt(customer.getCustomerId())));
 
             } catch (ClassNotFoundException | SQLException ex) {
@@ -617,7 +623,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
             Customer customer = customersBasicInfo.get(selectedIndex);
             customerNameComboBox.setSelectedItem(customer.getCustomerId());
             try {
-                debtAmountTextField.setText(String.valueOf(CustPaymentController.getCustomerDebt(customer.getCustomerId())));
+                debtAmountTextField.setText(String.valueOf(CustDebtController.getCustomerDebt(customer.getCustomerId())));
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -657,12 +663,16 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     private void confirmPayment() {
         // if the input data is validated then the form is submitted
         CustPayment custPayment = prepareCustPayment();
+        CustCheque cheque=prepareCustCheque();
         CustDebt custDebt = prepareCustDebt();
         try {
-            //CustPaymentController.addPaymentInfo(custPayment);
+            CustPaymentController.addPaymentInfo(custPayment,cheque);
             CustDebtController.updateDebtInfo(custDebt);
+            JOptionPane.showMessageDialog(this, "Success", "Successfully added transaction", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Failed", "Failed to create transaction", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -740,14 +750,21 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     }
 
     private CustPayment prepareCustPayment() {
-        CustPayment custPayment = new CustPayment();
-        custPayment.setAmount(Double.parseDouble(netAmountTextField.getText()));
-        custPayment.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
-        custPayment.setDate(getSQLdate());
-        custPayment.setDiscount(Double.parseDouble(String.valueOf( discountSpinner.getValue())));
-        custPayment.setType(paymentType.cs);
-        custPayment.setPaymentId(paymentIdTextField.getText());
-        return custPayment;
+        CustPayment custPayment = null;
+        try{
+            custPayment = new CustPayment();
+            custPayment.setAmount(Double.parseDouble(netAmountTextField.getText()));
+            custPayment.setCustomerId(customersBasicInfo.get(customerIDComboBox.getSelectedIndex()).getCustomerId());
+            custPayment.setDate(getSQLdate());
+            custPayment.setDiscount(Double.parseDouble(String.valueOf( discountSpinner.getValue())));
+            custPayment.setType(paymentType.cs);
+            custPayment.setPaymentId(paymentIdTextField.getText());
+            return custPayment;
+        
+        }catch(NumberFormatException numberFormatException){
+           JOptionPane.showMessageDialog(this, "Invalid input data for gross amount or the discount", "Error in data", JOptionPane.ERROR_MESSAGE);
+        }
+         return custPayment;
     }
 
     private CustDebt prepareCustDebt() {
@@ -766,4 +783,29 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         return date;
     }
 
+    private void closeDialog() {
+        this.dispose();
+    }
+
+    private CustCheque prepareCustCheque() {
+        if (chequeRadioButton.isSelected()) {
+            CustCheque cheque=new CustCheque();
+            cheque.setBank(chequeNoTextField.getText());
+            cheque.setChequeNo(grossAmountTextField.getText());
+            cheque.setExpiryDate(getSQLdate(issueDatePicker.getDate()));
+            cheque.setPaymentId(paymentIdTextField.getText());
+            cheque.setIssueDate(getSQLdate(expiryDatePicker.getDate()));
+            cheque.setStatus(statusTextField.getText());
+            return cheque;
+        }
+        return null;
+    }
+
+    private String getSQLdate(java.util.Date datePickerDate) {
+        java.text.SimpleDateFormat sdf
+                = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String date = sdf.format(datePickerDate);
+        return date;
+    }
 }
