@@ -315,7 +315,11 @@ public class UpdatePayment extends javax.swing.JDialog {
     private void jXButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXButton1ActionPerformed
         try {
             CustPaymentController.deletePayment(this.custPayment.getPaymentId());
-            CustChequeController.deleteCheque(this.custPayment.getPaymentId());
+            CustCheque updatedCheque;
+            if (chequeRadioButton.isSelected()) {
+                 updatedCheque= getUpdatedCheque();
+                 CustPaymentController.addPaymentInfo(getUpdatedPayment(),updatedCheque);
+            }
             CustPaymentController.addPaymentInfo(getUpdatedPayment());
             CustChequeController.addCheque(getUpdatedCheque());
         } catch (ClassNotFoundException ex) {
@@ -398,9 +402,9 @@ public class UpdatePayment extends javax.swing.JDialog {
         customerIDText.setText(custPayment.getCustomerId());
         amountText.setText(String.valueOf(custPayment.getAmount()));
         discountText.setText(String.valueOf(custPayment.getDiscount()));
-        date.setDate(Date.valueOf(custPayment.getDate()));
+        date.setDate(Date.valueOf(custPayment.getDate())); 
+        paymentIDText.setText(custPayment.getPaymentId());
         if (custCheque!=null) {
-            paymentIDText.setText(custPayment.getPaymentId());
             chequeRadioButton.setSelected(true);
             chequeRadioButton.setEnabled(true);
             cashRadioButton.setSelected(false);
@@ -409,13 +413,15 @@ public class UpdatePayment extends javax.swing.JDialog {
             chequeNoTextField.setEnabled(true);
             BankComboBox.setSelectedItem(custCheque.getBank());
             BankComboBox.setEnabled(true);
-            issueDatePicker.setDate(custCheque.getIssueDate());
+            issueDatePicker.setDate(Date.valueOf(custCheque.getIssueDate()));
             issueDatePicker.setEnabled(true);
-            expiryDatePicker.setDate(custCheque.getExpiryDate());
+            expiryDatePicker.setDate(Date.valueOf(custCheque.getExpiryDate()));
             expiryDatePicker.setEnabled(true);
             statusTextField.setText(custCheque.getStatus());
             statusTextField.setEnabled(true);
             
+        }else{
+            cashRadioButton.setSelected(true);
         }
     }
 
@@ -430,7 +436,7 @@ public class UpdatePayment extends javax.swing.JDialog {
         }
         cp.setDiscount(Double.valueOf(discountText.getText()));
         cp.setCustomerId(this.custPayment.getCustomerId());
-        cp.setDate(date.getDate().toString());
+        cp.setDate(getSQLdate((Date) date.getDate()));
         
         return cp;
     }
@@ -438,10 +444,19 @@ public class UpdatePayment extends javax.swing.JDialog {
         CustCheque cc=new CustCheque();
         cc.setBank((String) BankComboBox.getSelectedItem());
         cc.setChequeNo(chequeNoTextField.getText());
-        cc.setExpiryDate((Date) expiryDatePicker.getDate());
-        cc.setIssueDate((Date) issueDatePicker.getDate());
+        cc.setExpiryDate(getSQLdate((Date) expiryDatePicker.getDate()));
+        cc.setIssueDate(getSQLdate((Date) issueDatePicker.getDate()));
         cc.setPaymentId(this.custPayment.getPaymentId());
         cc.setStatus(statusTextField.getText());
         return cc;
     }
+    private String getSQLdate(Date d) {
+
+        java.text.SimpleDateFormat sdf
+                = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String dateFormat = sdf.format(d.getDate());
+        return dateFormat;
+    }
+
 }

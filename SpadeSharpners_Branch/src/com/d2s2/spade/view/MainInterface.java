@@ -243,9 +243,8 @@ public class MainInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_addSupplierButtonActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (customerPayment == null) {
-            customerPayment = new CustomerPaymentForm(this, true);
-        }
+        customerPayment = new CustomerPaymentForm(this, true);
+        
         customerPayment.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 

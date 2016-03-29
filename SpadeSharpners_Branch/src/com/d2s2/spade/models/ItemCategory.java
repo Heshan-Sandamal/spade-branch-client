@@ -20,6 +20,11 @@ public class ItemCategory {
         this.category = category;
     }
 
+    public ItemCategory() {
+    }
+    
+    
+
     /**
      * @return the itemCode
      */

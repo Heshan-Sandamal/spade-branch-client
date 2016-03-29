@@ -95,6 +95,16 @@ public class KiyathController {
         }
     
     }
+
+    public static String getCodeOfItem(String supplierId,String itemCode,String brandId,String kiyathSize, String kiyathTips)throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql = DBQueryGenerator.selectLimitedColumnswhereQueryWIthLike(new String[]{Kiyath.CODE}, Kiyath.class.getSimpleName(),new String[]{Kiyath.SIZE, Kiyath.NOOFTIPS},Kiyath.CODE);
+        String like=itemCode+":"+brandId+":"+supplierId+":%";
+        System.out.println(sql +" "+like);
+        ResultSet data = DBHandler.getData(connection, sql, new Object[]{kiyathSize,kiyathTips,like});
+        data.next();
+        return data.getString(Kiyath.CODE);
+    }
     
     
 }

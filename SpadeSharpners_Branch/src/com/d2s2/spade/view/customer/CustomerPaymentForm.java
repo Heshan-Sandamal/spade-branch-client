@@ -7,13 +7,13 @@ package com.d2s2.spade.view.customer;
 import com.d2s2.spade.controllers.CustDebtController;
 import com.d2s2.spade.controllers.CustPaymentController;
 import com.d2s2.spade.controllers.CustomerController;
+import com.d2s2.spade.models.CustCheque;
 import com.d2s2.spade.models.CustDebt;
 import com.d2s2.spade.models.CustPayment;
 import com.d2s2.spade.models.Customer;
 import com.d2s2.spade.models.paymentType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -47,9 +47,7 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
         try {
             getAllCustomerDataBasic();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(CustomerPaymentForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -665,9 +663,10 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
     private void confirmPayment() {
         // if the input data is validated then the form is submitted
         CustPayment custPayment = prepareCustPayment();
+        CustCheque cheque=prepareCustCheque();
         CustDebt custDebt = prepareCustDebt();
         try {
-            CustPaymentController.addPaymentInfo(custPayment);
+            CustPaymentController.addPaymentInfo(custPayment,cheque);
             CustDebtController.updateDebtInfo(custDebt);
             JOptionPane.showMessageDialog(this, "Success", "Successfully added transaction", JOptionPane.INFORMATION_MESSAGE);
             
@@ -786,5 +785,27 @@ public class CustomerPaymentForm extends javax.swing.JDialog {
 
     private void closeDialog() {
         this.dispose();
+    }
+
+    private CustCheque prepareCustCheque() {
+        if (chequeRadioButton.isSelected()) {
+            CustCheque cheque=new CustCheque();
+            cheque.setBank(chequeNoTextField.getText());
+            cheque.setChequeNo(grossAmountTextField.getText());
+            cheque.setExpiryDate(getSQLdate(issueDatePicker.getDate()));
+            cheque.setPaymentId(paymentIdTextField.getText());
+            cheque.setIssueDate(getSQLdate(expiryDatePicker.getDate()));
+            cheque.setStatus(statusTextField.getText());
+            return cheque;
+        }
+        return null;
+    }
+
+    private String getSQLdate(java.util.Date datePickerDate) {
+        java.text.SimpleDateFormat sdf
+                = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String date = sdf.format(datePickerDate);
+        return date;
     }
 }

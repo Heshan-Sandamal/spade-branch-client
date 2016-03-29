@@ -36,8 +36,8 @@ public class CustChequeController {
             custCheque.setChequeNo(resultSet.getString(CustCheque.CHEQUENO));
 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            custCheque.setExpiryDate(Date.valueOf(resultSet.getString(CustCheque.EXPIRYDATE)));
-            custCheque.setIssueDate(Date.valueOf(resultSet.getString(CustCheque.ISSUEDATE)));
+            custCheque.setExpiryDate(resultSet.getString(CustCheque.EXPIRYDATE));
+            custCheque.setIssueDate(resultSet.getString(CustCheque.ISSUEDATE));
             custCheque.setPaymentId(resultSet.getString(CustCheque.PAYMENTID));
             custCheque.setStatus(resultSet.getString(CustCheque.STATUS));
             System.out.println("Bank"+custCheque.getBank());
