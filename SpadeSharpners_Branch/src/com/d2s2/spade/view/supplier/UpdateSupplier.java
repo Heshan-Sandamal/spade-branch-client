@@ -29,6 +29,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
     public UpdateSupplier(Supplier supplier) throws ClassNotFoundException, SQLException {
         initComponents();
         this.supplierBranchList=supplier.getBranchContactList();
+        
         this.supplier=supplier;
         
         this.IdField.setText(supplier.getSupplierId());
@@ -123,16 +124,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
 
         contactDetailTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Branch", "Telephone Number", "Contact Name", "Address"
@@ -323,7 +315,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
         row[1]=branchAddressField.getText();
         row[2]=contactNameField.getText();
         row[3]=telephoneNumberField.getText();
-
+        
         if(row[0].equals("") || row[1].equals("") ||row[2].equals("") || row[3].equals("")){
             JOptionPane.showMessageDialog(this, "Please fill all details to add to table");
         }
@@ -331,6 +323,7 @@ public class UpdateSupplier extends javax.swing.JFrame {
 
             contactModel.addRow(row);
             clearBranchInputFields();
+            //setContactModel(contactModel);
         }
 
     }//GEN-LAST:event_addToTableButtonActionPerformed

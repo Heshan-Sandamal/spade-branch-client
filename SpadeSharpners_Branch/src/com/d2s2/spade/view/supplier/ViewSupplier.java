@@ -268,21 +268,27 @@ public class ViewSupplier extends javax.swing.JDialog {
         Supplier supplier = new Supplier();
         int clickedRow =supplierDetailsTable.getSelectedRow();   
         
-        System.out.println(clickedRow);
+        //System.out.println(clickedRow);
         supplier.setSupplierId((String) supplierDetailsTable.getValueAt(clickedRow, 0));
         supplier.setName((String) supplierDetailsTable.getValueAt(clickedRow, 1));
         supplier.setEmail((String) supplierDetailsTable.getValueAt(clickedRow, 2));
         ArrayList<SupplierBranch> supplierBranchList = new ArrayList<SupplierBranch>();
+        
         for (int count = 0; count < model.getRowCount(); count++){
             SupplierBranch supplierBranch = new SupplierBranch();
             supplierBranch.setSupplierId((String) supplierDetailsTable.getValueAt(clickedRow, 0));
-            supplierBranch.setBranchName((String) contactModel.getValueAt(count,0));
-            supplierBranch.setBranchId((int) contactModel.getValueAt(count,1));
-            supplierBranch.setAddress((String) contactModel.getValueAt(count,2));
-            supplierBranch.setContactName((String) contactModel.getValueAt(count,3));
-            supplierBranch.setTelNo((String) contactModel.getValueAt(count,4));
-            supplierBranchList.add(supplierBranch);
+            if(!(contactModel.getRowCount()==0)){
+                supplierBranch.setBranchName((String) contactModel.getValueAt(count,0));
+                supplierBranch.setBranchId((int) contactModel.getValueAt(count,1));
+                supplierBranch.setAddress((String) contactModel.getValueAt(count,2));
+                supplierBranch.setContactName((String) contactModel.getValueAt(count,3));
+                supplierBranch.setTelNo((String) contactModel.getValueAt(count,4));
+                supplierBranchList.add(supplierBranch);
+            }
+            
+            
         }
+        
         supplier.setBranchContactList(supplierBranchList);
         this.dispose();
         JFrame supplierUpdate=null;
