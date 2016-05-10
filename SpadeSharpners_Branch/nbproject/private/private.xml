@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Heshan%20Sandamal/Documents/NetBeansProjects/SpadeSharpnersBranch/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
             <file>file:/C:/Users/Heshan%20Sandamal/Documents/NetBeansProjects/SpadeSharpnersBranch/SpadeSharpners_Branch/src/com/d2s2/spade/view/order/supplier/SupplierOrderForm.java</file>
             <file>file:/C:/Users/Heshan%20Sandamal/Documents/NetBeansProjects/SpadeSharpnersBranch/SpadeSharpners_Branch/src/com/d2s2/spade/view/customer/AddCustomerReturnCheque.java</file>
@@ -12,6 +13,18 @@
             <file>file:/C:/Users/Heshan%20Sandamal/Documents/NetBeansProjects/SpadeSharpnersBranch/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/item/KiyathController.java</file>
             <file>file:/C:/Users/Heshan%20Sandamal/Documents/NetBeansProjects/SpadeSharpnersBranch/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBQueryGenerator.java</file>
             <file>file:/C:/Users/Heshan%20Sandamal/Documents/NetBeansProjects/SpadeSharpnersBranch/SpadeSharpners_Branch/src/com/d2s2/spade/models/Kiyath.java</file>
+=======
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/DeleteSupplier.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBQueryGenerator.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/CustomerController.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/ViewSupplier.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/AddSupplierForm.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/supplier/SupplierUpdateController.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/controllers/supplier/SupplierController.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/models/Supplier.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/view/supplier/UpdateSupplier.java</file>
+            <file>file:/F:/D2S2_Projects/spade/spadeBrach/SpadeSharpners_Branch/src/com/d2s2/spade/dbconnection/DBConnection.java</file>
+>>>>>>> d1450ff1aa4bcff9b729f9e5c5d75faeec94574e
         </group>
     </open-files>
 </project-private>
