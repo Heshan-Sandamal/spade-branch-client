@@ -150,13 +150,15 @@ public class SupplierController {
     }
     public static int getLastSupplierId() throws ClassNotFoundException, SQLException{
         Connection connection = DBConnection.getDBConnection().getConnection();
-        String sql = "SELECT branchId FROM supplierbranch ORDER BY branchId DESC LIMIT 1";
+        String sql= DBQueryGenerator.getLastIDQuery("supplier","supplierId");
+       //String sql = "SELECT branchId FROM supplierbranch ORDER BY branchId DESC LIMIT 1";
+        System.out.println(sql);
         ResultSet resultSet = DBHandler.getData(connection, sql);
         
         
         boolean s=resultSet.next();
         if(s){
-             String str = resultSet.getString("branchid");
+             String str = resultSet.getString("supplierid");
              int lastId= Integer.parseInt(str);
                 return lastId+1;
         }

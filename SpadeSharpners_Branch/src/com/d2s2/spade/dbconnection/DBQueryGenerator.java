@@ -126,6 +126,12 @@ public class DBQueryGenerator {
         
         return a;
     }
+    public static String getLastIDQuery(String tableName, String columnName){
+        String sql = "SELECT "+columnName+" FROM "+tableName+" ORDER BY "+columnName+" DESC LIMIT 1";
+        
+        return sql;
+        
+    }
     
     
     
