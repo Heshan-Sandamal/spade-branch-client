@@ -126,11 +126,30 @@ public class DBQueryGenerator {
         
         return a;
     }
+
     public static String getLastIDQuery(String tableName, String columnName){
         String sql = "SELECT "+columnName+" FROM "+tableName+" ORDER BY "+columnName+" DESC LIMIT 1";
         
         return sql;
         
+
+    }
+    public static String selectLimitedColumnLikeQuery(String[] columns, String tableName, String like) {
+         String a="SELECT distinct ";
+        for (int i = 0; i < columns.length; i++) {
+            a+=columns[i];
+            if(i!=columns.length-1){
+                a+=",";
+            }
+        }
+        
+        a=a+" FROM "+tableName+" WHERE " ;
+       
+        
+        a+=like+" like ? ";
+        
+        return a;
+
     }
     
     

@@ -11,6 +11,7 @@ import com.d2s2.spade.models.Kiyath;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -104,6 +105,45 @@ public class KiyathController {
         ResultSet data = DBHandler.getData(connection, sql, new Object[]{kiyathSize,kiyathTips,like});
         data.next();
         return data.getString(Kiyath.CODE);
+    }
+
+    public static ArrayList<Kiyath> getKiyathDetailsForCombo(String code) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectLimitedColumnLikeQuery(new String[]{Kiyath.SIZE}, Kiyath.class.getSimpleName(),Kiyath.CODE);
+        System.out.println(sql+code);
+         final ResultSet data = DBHandler.getData(connection, sql, new Object[]{code+"%"});
+        ArrayList<Kiyath> l = new ArrayList<Kiyath>();
+        
+        while (data.next()) {
+            l.add(new Kiyath() {
+                {
+                    setSize(data.getString(Kiyath.SIZE));
+                }
+            });
+        }
+
+        return l;
+        
+    }
+    
+    
+     public static ArrayList<Kiyath> getKiyathDetailsForTipsCombo(String code,String size) throws ClassNotFoundException, SQLException {
+        Connection connection = DBConnection.getDBConnection().getConnection();
+        String sql=DBQueryGenerator.selectLimitedColumnswhereQueryWIthLike(new String[]{Kiyath.SIZE}, Kiyath.class.getSimpleName(),new String[]{Kiyath.SIZE},Kiyath.CODE);
+        System.out.println(sql+code);
+         final ResultSet data = DBHandler.getData(connection, sql, new Object[]{size,code+"%"});
+        ArrayList<Kiyath> l = new ArrayList<Kiyath>();
+        
+        while (data.next()) {
+            l.add(new Kiyath() {
+                {
+                    setSize(data.getString(Kiyath.SIZE));
+                }
+            });
+        }
+
+        return l;
+        
     }
     
     
